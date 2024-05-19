@@ -4,9 +4,14 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "test": "mocha --timeout 10000"
   },
-  "keywords": ["Gestion de agua", "api", "cuyuraya"],
+  "keywords": [
+    "Gestion de agua",
+    "api",
+    "cuyuraya"
+  ],
   "author": "Victor Raul Mamani Condori",
   "license": "ISC",
   "dependencies": {
@@ -16,5 +21,10 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.3.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
+    "supertest": "^7.0.0"
   }
 }
