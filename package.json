@@ -2,12 +2,12 @@
   "name": "app-cuyuraya-srv",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Gestion de agua", "api", "cuyuraya"],
+  "author": "Victor Raul Mamani Condori",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
