@@ -26,7 +26,7 @@ const TipoMovimientoEstados = {
   ELIMINADO: 'ELIMINADO'
 };
 
-module.exports = {
+export {
   UsuarioEstados,
   RolEstados,
   RubroEstados,

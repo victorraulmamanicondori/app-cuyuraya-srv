@@ -1,4 +1,4 @@
-const usuarioServicio = require('../servicios/usuarioServicio');
+import usuarioServicio from '../servicios/usuarioServicio.js';
 
 class UsuarioControlador {
   async listarUsuarios(req, res) {
@@ -15,7 +15,7 @@ class UsuarioControlador {
       const dni = req.params.dni;
       const usuario = await usuarioServicio.obtenerUsuarioPorDni(dni);
       if (usuario) {
-        res.status(200).json(usuarios);
+        res.status(200).json(usuario);
       } else {
         res.status(404).json({ mensaje: 'Usuario no encontrado' });
       }
@@ -53,5 +53,5 @@ class UsuarioControlador {
   }
 }
 
-module.exports = new UsuarioControlador();
+export default new UsuarioControlador();
 

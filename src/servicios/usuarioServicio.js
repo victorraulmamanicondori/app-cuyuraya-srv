@@ -1,4 +1,5 @@
-const usuarioRepositorio = require('../repositorios/usuarioRepositorio.js');
+import bcrypt from 'bcrypt';
+import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 
 class UsuarioServicio {
   listarUsuarios() {
@@ -9,8 +10,10 @@ class UsuarioServicio {
     return usuarioRepositorio.obtenerUsuarioPorDni(dni);
   }
 
-  crearUsuario(usuario) {
-    return usuarioRepositorio.crearUsuario(usuario);
+  async crearUsuario(usuario) {
+    const { clave } = usuario;
+    const hashedClave = await bcrypt.hash(clave, 10);
+    return usuarioRepositorio.crearUsuario({ ...usuario, clave: hashedClave });
   }
 
   actualizarUsuario(usuario) {
@@ -22,5 +25,5 @@ class UsuarioServicio {
   }
 }
 
-module.exports = new UsuarioServicio();
+export default new UsuarioServicio();
 

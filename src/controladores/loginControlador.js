@@ -1,4 +1,4 @@
-const loginServicio = require('../servicios/loginServicio.js');
+import loginServicio from '../servicios/loginServicio.js';
 
 class LoginControlador {
 
@@ -23,5 +23,5 @@ class LoginControlador {
   } 
 }
 
-module.exports = new LoginControlador();
+export default new LoginControlador();
 

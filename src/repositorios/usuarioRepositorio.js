@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const pool = require('../config/db');
-const UsuarioModelo = require('../modelos/UsuarioModelo');
-const { UsuarioEstados } = require('../constantes/estados');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import pool from '../config/db.js';
+import UsuarioModelo from '../modelos/UsuarioModelo.js';
+import { UsuarioEstados } from '../constantes/estados.js';
 
 class UsuarioRepositorio {
   async listarUsuarios() {
@@ -10,8 +10,8 @@ class UsuarioRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_USUARIO ORDER BY PATERNO ASC");
-      return filas.map(fila => new Usuario(
-                                    fila.ID_USUARIO,
+      return filas.map(fila => new UsuarioModelo(
+                                    fila.ID_USUARIO.toString(),
                                     fila.NOMBRES,
                                     fila.PATERNO,
                                     fila.MATERNO,
@@ -38,7 +38,7 @@ class UsuarioRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_USUARIO WHERE DNI = ?", [dni]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Usuario(fila.ID_USUARIO,
+        return new UsuarioModelo(fila.ID_USUARIO.toString(),
                            fila.NOMBRES,
                            fila.PATERNO,
                            fila.MATERNO,
@@ -54,7 +54,7 @@ class UsuarioRepositorio {
       }
       return null;
     } catch(error) {
-      console.log(error);
+      console.log("obtenerUsuarioPorDni:Error:", error);
     } finally {
       if (conexion) conexion.release();
     }
@@ -74,7 +74,7 @@ class UsuarioRepositorio {
                                                                        CLAVE,
                                                                        ID_ROL,
                                                                        ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                                                      [usuario.nombres,
                                                       usuario.paterno,
                                                       usuario.materno,
@@ -85,7 +85,7 @@ class UsuarioRepositorio {
                                                       usuario.clave,
                                                       usuario.idRol,
                                                       usuario.estado]);
-      usuario.id = resultado.insertId;
+      usuario.id = resultado.insertId.toString();
       return usuario;
     } catch(error) {
       console.log(error);
@@ -102,25 +102,21 @@ class UsuarioRepositorio {
                             SET NOMBRES = ?,
                                 PATERNO = ?,
                                 MATERNO = ?,
-                                DNI = ?,
                                 DIRECCION = ?,
                                 NUM_CONTRATO = ?,
                                 TELEFONO = ?,
-                                CLAVE = ?,
-                                ID_ROL = ?
+                                ID_ROL = ?,
                                 ESTADO = ?
-                            WHERE ID_USUARIO = ?`,
+                            WHERE DNI = ?`,
                                 [usuario.nombres,
                                  usuario.paterno,
                                  usuario.materno,
-                                 usuario.dni,
                                  usuario.direccion,
                                  usuario.numContrato,
                                  usuario.telefono,
-                                 usuario.clave,
                                  usuario.idRol,
                                  usuario.estado,
-                                 usuario.id]);
+                                 usuario.dni]);
       return usuario;
     } catch(error) {
       console.log(error);
@@ -143,5 +139,5 @@ class UsuarioRepositorio {
 
 }
 
-module.exports = new UsuarioRepositorio();
+export default new UsuarioRepositorio();
 

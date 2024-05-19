@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import loginControlador from '../controladores/loginControlador.js';
 
-const loginControlador = require('../controladores/loginControlador');
+const router = express.Router();
 
 router.post('/login', loginControlador.login);
 
 router.post('/refreshToken', loginControlador.refreshToken);
 
-module.exports = router;
+export default router;
 

@@ -1,12 +1,12 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+import usuarioControlador from '../controladores/usuarioControlador.js';
+import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
-const usuarioControlador = require('../controladores/usuarioControlador');
-const { verificarToken } = require('../middlewares/autenticacionMiddleware');
+const router = express.Router();
 
 router.get('/', verificarToken, usuarioControlador.listarUsuarios);
 
-router.get('/:dni', verificarToken, usuarioControlador.obtenerUsuarioPorDni);
+router.get('/:dni', usuarioControlador.obtenerUsuarioPorDni);
 
 router.post('/', usuarioControlador.crearUsuario);
 
@@ -14,5 +14,5 @@ router.put('/', verificarToken, usuarioControlador.actualizarUsuario);
 
 router.delete('/:dni', verificarToken, usuarioControlador.eliminarUsuarioPorDni);
 
-module.exports = router;
+export default router;
 

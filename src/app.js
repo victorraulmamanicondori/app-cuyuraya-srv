@@ -1,8 +1,10 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const usuarioRutas = require('./rutas/usuarioRutas');
-const loginRutas = require('./rutas/loginRutas');
+import dotenv from 'dotenv';
+import express from 'express';
+import bodyParser from 'body-parser';
+import usuarioRutas from './rutas/usuarioRutas.js';
+import loginRutas from './rutas/loginRutas.js';
+
+dotenv.config();
 
 const app = express();
 const puerto = process.env.PUERTO || 9000;
@@ -28,4 +30,6 @@ app.use('/api/auth', loginRutas);
 app.listen(puerto, () => {
 	console.log(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
 });
+
+export default app;
 

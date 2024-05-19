@@ -17,5 +17,5 @@ class UsuarioModelo {
   }
 }
 
-module.exports = UsuarioModelo;
+export default UsuarioModelo;
 

@@ -1,11 +1,11 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const usuarioRepositorio = require('../repositorios/usuarioRepositorio.js');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 
 class LoginServicio {
 
   async login(dni, clave) {
-    const usuario = usuarioRepositorio.obtenerUsuarioPorDni(dni);
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
 
     if (!usuario) {
       // Si no se encuentra el usuario, devolver un error de autenticación
@@ -41,8 +41,6 @@ class LoginServicio {
     // Recibimos de la peticion (request) el token de refresco
     let accessToken = '';
 
-    console.log('Validando refresh token=', refreshToken);
-
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
     const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '5m';
@@ -68,5 +66,5 @@ class LoginServicio {
 
 }
 
-module.exports = new LoginServicio(); 
+export default new LoginServicio(); 
 
