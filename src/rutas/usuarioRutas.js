@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', verificarToken, usuarioControlador.listarUsuarios);
 
-router.get('/:dni', usuarioControlador.obtenerUsuarioPorDni);
+router.get('/:dni', verificarToken, usuarioControlador.obtenerUsuarioPorDni);
 
 router.post('/', usuarioControlador.crearUsuario);
 
