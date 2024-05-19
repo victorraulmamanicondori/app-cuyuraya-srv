@@ -8,5 +8,5 @@ class HistoricoLoginModelo {
   }
 }
 
-module.exports = HistoricoLoginModelo;
+export default HistoricoLoginModelo;
 

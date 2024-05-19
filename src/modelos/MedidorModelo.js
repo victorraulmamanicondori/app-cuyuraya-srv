@@ -9,5 +9,5 @@ class MedidorModelo {
   }
 }
 
-module.exports = MedidorModelo;
+export default MedidorModelo;
 

@@ -13,5 +13,5 @@ class CajaModelo {
   }
 }
 
-module.exports = CajaModelo;
+export default CajaModelo;
 

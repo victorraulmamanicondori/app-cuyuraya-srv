@@ -19,5 +19,5 @@ class LecturaModelo {
   }
 }
 
-module.exports = LecturaModelo;
+export default LecturaModelo;
 

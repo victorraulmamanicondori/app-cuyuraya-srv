@@ -9,5 +9,5 @@ class TipoMovimientoModelo {
   }
 }
 
-module.exports = TipoMovimientoModelo;
+export default TipoMovimientoModelo;
 

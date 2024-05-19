@@ -8,5 +8,5 @@ class RolModelo {
   }
 }
 
-module.exports = RolModelo;
+export default RolModelo;
 

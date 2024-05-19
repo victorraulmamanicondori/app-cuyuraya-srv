@@ -9,5 +9,5 @@ class TarifaModelo {
   }
 }
 
-module.exports = TarifaModelo;
+export default TarifaModelo;
 

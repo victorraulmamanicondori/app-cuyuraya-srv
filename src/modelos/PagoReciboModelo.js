@@ -12,5 +12,5 @@ class PagoReciboModelo {
   }
 }
 
-module.exports = PagoReciboModelo;
+export default PagoReciboModelo;
 

@@ -8,5 +8,5 @@ class RubroModelo {
   }
 }
 
-module.exports = RubroModelo;
+export default RubroModelo;
 
