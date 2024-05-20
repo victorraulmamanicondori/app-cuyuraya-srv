@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
+import logger from '../config/logger.js';
 import UsuarioModelo from '../modelos/UsuarioModelo.js';
 import { UsuarioEstados } from '../constantes/estados.js';
 
@@ -25,7 +26,7 @@ class UsuarioRepositorio {
                                     fila.FEC_CREACION,
                                     fila.FEC_ACTUALIZACION));
     } catch(error) {
-      console.log(error);
+      logger.error(`Error al listar usuarios:${error}`);
     } finally {
       if (conexion) conexion.release();
     }
@@ -54,7 +55,7 @@ class UsuarioRepositorio {
       }
       return null;
     } catch(error) {
-      console.log("obtenerUsuarioPorDni:Error:", error);
+      logger.error(`Error al obtener usuario por dni:${dni}`);
     } finally {
       if (conexion) conexion.release();
     }
@@ -88,7 +89,7 @@ class UsuarioRepositorio {
       usuario.id = resultado.insertId.toString();
       return usuario;
     } catch(error) {
-      console.log(error);
+      logger.error(`Error al crear usuario:${error}`);
     } finally {
       if (conexion) conexion.release();
     }
@@ -119,7 +120,7 @@ class UsuarioRepositorio {
                                  usuario.dni]);
       return usuario;
     } catch(error) {
-      console.log(error);
+      logger.error(`Error al actualizar usuario:${error}`);
     } finally {
       if (conexion) conexion.release();
     }
@@ -131,7 +132,7 @@ class UsuarioRepositorio {
       conexion = await pool.getConnection();
       await conexion.query("UPDATE TBL_USUARIO SET ESTADO = ? WHERE DNI = ?", [UsuarioEstados.ELIMINADO, dni]);
     } catch(error) {
-      console.log(error);
+      logger.error(`Error al eliminar usuario por dni:${error}`);
     } finally {
       if (conexion) conexion.release();
     }

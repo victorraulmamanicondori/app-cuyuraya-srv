@@ -1,8 +1,8 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const pool = require('../config/db');
-const RolModelo = require('../modelos/RolModelo');
-const { RolEstados } = require('../constantes/estados');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import pool from '../config/db.js';
+import RolModelo from '../modelos/RolModelo.js';
+import { RolEstados } from '../constantes/estados.js';
 
 class RolRepositorio {
   async listarRoles() {
@@ -94,5 +94,5 @@ class RolRepositorio {
 
 }
 
-module.exports = new RolRepositorio();
+export default new RolRepositorio();
 
