@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 // Middleware de autenticación
 function verificarToken(request, response, next) {
@@ -25,6 +25,6 @@ function verificarToken(request, response, next) {
   });
 }
 
-module.exports = {
-  verificarToken,
-};
+export {
+  verificarToken
+}

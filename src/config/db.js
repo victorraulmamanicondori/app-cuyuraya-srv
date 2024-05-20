@@ -1,6 +1,6 @@
-const mysql = require('mariadb');
+import mariadb from 'mariadb';
 
-const pool = mysql.createPool({
+const pool = mariadb.createPool({
 	host: '127.0.0.1',
 	database: 'CUYURAYA',
 	user: 'root',
@@ -9,4 +9,4 @@ const pool = mysql.createPool({
 	connectionLimit: 5
 });
 
-module.exports = pool;
+export default pool;

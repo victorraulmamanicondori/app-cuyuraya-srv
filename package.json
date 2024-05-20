@@ -2,13 +2,19 @@
   "name": "app-cuyuraya-srv",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js",
+    "test": "mocha --timeout 10000 'test/**/*.test.js'"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Gestion de agua",
+    "api",
+    "cuyuraya"
+  ],
+  "author": "Victor Raul Mamani Condori",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -16,5 +22,11 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.3.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.4.0",
+    "supertest": "^7.0.0"
   }
 }
