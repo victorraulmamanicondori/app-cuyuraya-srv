@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from './config/logger.js';
 import usuarioRutas from './rutas/usuarioRutas.js';
 import loginRutas from './rutas/loginRutas.js';
+import medidorRutas from './rutas/medidorRutas.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get('/', paginaInicio);
 
 app.use('/api/usuarios', usuarioRutas);
 app.use('/api/auth', loginRutas);
+app.use('/api/medidores', medidorRutas);
 
 app.listen(puerto, () => {
 	logger.info(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);

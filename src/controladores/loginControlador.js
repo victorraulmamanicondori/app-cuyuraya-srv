@@ -1,3 +1,4 @@
+import logger from '../config/logger.js';
 import loginServicio from '../servicios/loginServicio.js';
 
 class LoginControlador {
@@ -8,6 +9,7 @@ class LoginControlador {
       const tokenes = await loginServicio.login(dni, clave);
       res.status(200).json(tokenes);
     } catch(error) {
+      logger.error(errror);
       res.status(401).json({ mensaje: error.message });
     }
   }
@@ -18,6 +20,7 @@ class LoginControlador {
       const tokenes = loginServicio.refreshToken(refreshToken);
       res.status(200).json(tokenes);
     } catch(error) {
+      logger.error(errror);
       res.status(400).json({ mensaje: error.message });
     }
   } 

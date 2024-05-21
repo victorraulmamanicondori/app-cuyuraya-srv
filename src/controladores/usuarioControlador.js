@@ -1,3 +1,4 @@
+import logger from '../config/logger.js';
 import usuarioServicio from '../servicios/usuarioServicio.js';
 
 class UsuarioControlador {
@@ -6,6 +7,7 @@ class UsuarioControlador {
       const usuarios = await usuarioServicio.listarUsuarios();
       res.status(200).json(usuarios);
     } catch(error) {
+      logger.error(error);
       res.status(500).json({ mensaje: error.message });
     }
   }
@@ -20,6 +22,7 @@ class UsuarioControlador {
         res.status(404).json({ mensaje: 'Usuario no encontrado' });
       }
     } catch(error) {
+      logger.error(error);
       res.status(500).json({ mensaje: error.message });
     } 
   }
@@ -29,6 +32,7 @@ class UsuarioControlador {
       const nuevoUsuario = await usuarioServicio.crearUsuario(req.body);
       res.status(201).json(nuevoUsuario);
     } catch(error) {
+      logger.error(error);
       res.status(400).json({ mensaje: error.message });
     }
   }
@@ -38,6 +42,7 @@ class UsuarioControlador {
       const usuarioActualizado = await usuarioServicio.actualizarUsuario(req.body);
       res.status(200).json(usuarioActualizado);
     } catch(error) {
+      logger.error(error);
       res.status(400).json({ mensaje: error.message });
     }
   }
@@ -48,6 +53,7 @@ class UsuarioControlador {
       await usuarioServicio.eliminarUsuarioPorDni(dni);
       res.status(204).end();
     } catch(error) {
+      logger.error(error);
       res.status(500).json({ mensaje: error.message });
     }
   }
