@@ -1,8 +1,10 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
+import logger from './config/logger.js';
 import usuarioRutas from './rutas/usuarioRutas.js';
 import loginRutas from './rutas/loginRutas.js';
+import medidorRutas from './rutas/medidorRutas.js';
 
 dotenv.config();
 
@@ -14,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Middleware para manejo de errores global
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error(err.stack);
   res.status(500).send('Error interno del servidor!');
 });
 
@@ -26,9 +28,10 @@ app.get('/', paginaInicio);
 
 app.use('/api/usuarios', usuarioRutas);
 app.use('/api/auth', loginRutas);
+app.use('/api/medidores', medidorRutas);
 
 app.listen(puerto, () => {
-	console.log(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
+	logger.info(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
 });
 
 export default app;

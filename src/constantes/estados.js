@@ -26,10 +26,15 @@ const TipoMovimientoEstados = {
   ELIMINADO: 'ELIMINADO'
 };
 
+const MedidorEstados = {
+  ASIGNADO: 'ASIGNADO'
+};
+
 export {
   UsuarioEstados,
   RolEstados,
   RubroEstados,
-  TipoMovimientoEstados
+  TipoMovimientoEstados,
+  MedidorEstados
 };
 

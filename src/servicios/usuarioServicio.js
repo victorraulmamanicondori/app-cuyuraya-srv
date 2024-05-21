@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
+import { UsuarioEstados } from '../constantes/estados.js';
 
 class UsuarioServicio {
   listarUsuarios() {
@@ -13,7 +14,7 @@ class UsuarioServicio {
   async crearUsuario(usuario) {
     const { clave } = usuario;
     const hashedClave = await bcrypt.hash(clave, 10);
-    return usuarioRepositorio.crearUsuario({ ...usuario, clave: hashedClave });
+    return usuarioRepositorio.crearUsuario({ ...usuario, clave: hashedClave, estado: UsuarioEstados.ACTIVO });
   }
 
   actualizarUsuario(usuario) {
