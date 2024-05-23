@@ -4,15 +4,15 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', verificarToken, usuarioControlador.listarUsuarios);
+router.get('/', usuarioControlador.listarUsuarios);
 
-router.get('/:dni', verificarToken, usuarioControlador.obtenerUsuarioPorDni);
+router.get('/:dni', usuarioControlador.obtenerUsuarioPorDni);
 
 router.post('/', usuarioControlador.crearUsuario);
 
-router.put('/', verificarToken, usuarioControlador.actualizarUsuario);
+router.put('/', usuarioControlador.actualizarUsuario);
 
-router.delete('/:dni', verificarToken, usuarioControlador.eliminarUsuarioPorDni);
+router.delete('/:dni', usuarioControlador.eliminarUsuarioPorDni);
 
 export default router;
 
