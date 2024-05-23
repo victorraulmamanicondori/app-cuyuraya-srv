@@ -1,40 +1,52 @@
 const UsuarioEstados = {
   ACTIVO: 'ACTIVO',
   INACTIVO: 'INACTIVO',
-  SUSPENDIDO: 'SUSPENDIDO',
+  BLOQUEADO: 'BLOQUEADO',
   ELIMINADO: 'ELIMINADO'
 };
 
 const RolEstados = {
   ACTIVO: 'ACTIVO',
   INACTIVO: 'INACTIVO',
-  SUSPENDIDO: 'SUSPENDIDO',
   ELIMINADO: 'ELIMINADO'
 };
 
 const RubroEstados = {
   ACTIVO: 'ACTIVO',
   INACTIVO: 'INACTIVO',
-  SUSPENDIDO: 'SUSPENDIDO',
   ELIMINADO: 'ELIMINADO'
 };
 
 const TipoMovimientoEstados = {
   ACTIVO: 'ACTIVO',
   INACTIVO: 'INACTIVO',
-  SUSPENDIDO: 'SUSPENDIDO',
   ELIMINADO: 'ELIMINADO'
 };
 
 const MedidorEstados = {
-  ASIGNADO: 'ASIGNADO'
+  ASIGNADO: 'ASIGNADO',
+  LIBERADO: 'LIBERADO',
+  REPARACION: 'REPARACION',
+  REPARADO: 'REPARADO',
+  DESECHADO: 'DESECHADO'
 };
+
+const LecturaEstados = {
+  REGISTRADO: 'REGISTRADO'
+};
+
+const CajaEstados = {
+  REGISTRADO: 'REGISTRADO',
+  ANULADO: 'ANULADO'
+}; 
 
 export {
   UsuarioEstados,
   RolEstados,
   RubroEstados,
   TipoMovimientoEstados,
-  MedidorEstados
+  MedidorEstados,
+  LecturaEstados,
+  CajaEstados
 };
 

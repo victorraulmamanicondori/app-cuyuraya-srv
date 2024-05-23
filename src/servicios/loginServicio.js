@@ -22,11 +22,13 @@ class LoginServicio {
 
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
-    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '5m';
+    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '30m';
 
     // Datos para generar token de refresco
-    const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'eas';
+    const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'senati';
     const tiempoExpiracionRefresh = process.env.TIEMPO_EXPIRA_REFRESH_TOKEN || '1d';
+
+    console.log('Login:secretoAccessToken:', secreto);
 
     // Generacion de tokens
     const accessToken = jwt.sign({ usuario: dni }, secreto, { expiresIn: tiempoExpiracion });
@@ -43,7 +45,7 @@ class LoginServicio {
 
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
-    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '5m';
+    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '30m';
 
     // Datos para generar token de refresco
     const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'senati';

@@ -1,10 +1,10 @@
 import express from 'express';
-import medidorControlador from '../controladores/medidorControlador.js';
+import cajaControlador from '../controladores/cajaControlador.js';
 import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', verificarToken, medidorControlador.asignarMedidor);
+router.post('/', verificarToken, cajaControlador.registrarCaja);
 
 export default router;
 

@@ -1,4 +1,5 @@
 class LecturaModelo {
+
   constructor(id, idMedidor, lecturaActual, lecturaAnterior, m3Consumido, idTarifa, montoPagar, porcentajeDescuento, montoMulta, numeroRecibo, fechaLimitePago, fechaCorte, comentario, estado, fecCreacion, fecActualizacion) {
     this.id = id;
     this.idMedidor = idMedidor;
@@ -17,6 +18,7 @@ class LecturaModelo {
     this.fecCreacion = fecCreacion;
     this.fecActualizacion = fecActualizacion;
   }
+
 }
 
 export default LecturaModelo;
