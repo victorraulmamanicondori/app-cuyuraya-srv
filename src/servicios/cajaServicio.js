@@ -4,11 +4,11 @@ import { CajaEstados } from '../constantes/estados.js';
 
 class CajaServicio {
 
-  async registrarCaja({ numeroComprobante, idTipoMovimiento, fechaMovimiento, descripcion, monto, idPagoRecibo }) {
+  async registrarCaja({ numeroComprobante, idTipoMovimiento, descripcion, monto, idPagoRecibo }) {
     const idCaja = await cajaRepositorio.registrarCaja({
       numeroComprobante,
       idTipoMovimiento,
-      fechaMovimiento,
+      fechaMovimiento: new Date(),
       descripcion,
       monto,
       idPagoRecibo,
