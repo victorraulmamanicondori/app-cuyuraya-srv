@@ -5,6 +5,9 @@ import logger from './config/logger.js';
 import usuarioRutas from './rutas/usuarioRutas.js';
 import loginRutas from './rutas/loginRutas.js';
 import medidorRutas from './rutas/medidorRutas.js';
+import tipoMovimientoRutas from './rutas/tipoMovimientoRutas.js';
+import cajaRutas from './rutas/cajaRutas.js';
+import lecturaRutas from './rutas/lecturaRutas.js';
 
 dotenv.config();
 
@@ -29,6 +32,9 @@ app.get('/', paginaInicio);
 app.use('/api/usuarios', usuarioRutas);
 app.use('/api/auth', loginRutas);
 app.use('/api/medidores', medidorRutas);
+app.use('/api/tipos-movimientos', tipoMovimientoRutas);
+app.use('/api/cajas', cajaRutas);
+app.use('/api/lecturas', lecturaRutas);
 
 app.listen(puerto, () => {
 	logger.info(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
