@@ -4,7 +4,7 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', verificarToken, medidorControlador.asignarMedidor);
+router.post('/', medidorControlador.asignarMedidor);
 
 export default router;
 
