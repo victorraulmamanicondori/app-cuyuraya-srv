@@ -28,8 +28,6 @@ class LoginServicio {
     const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'senati';
     const tiempoExpiracionRefresh = process.env.TIEMPO_EXPIRA_REFRESH_TOKEN || '1d';
 
-    console.log('Login:secretoAccessToken:', secreto);
-
     // Generacion de tokens
     const accessToken = jwt.sign({ usuario: dni }, secreto, { expiresIn: tiempoExpiracion });
     const refreshToken = jwt.sign({ usuario: dni }, secretoRefresh, { expiresIn: tiempoExpiracionRefresh });
