@@ -1,7 +1,4 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
-import RolModelo from '../modelos/RolModelo.js';
 import { RolEstados } from '../constantes/estados.js';
 
 class RolRepositorio {
@@ -52,7 +49,7 @@ class RolRepositorio {
                                               VALUES (?, ?)`,
                                                      [rol.nombre,
                                                       rol.estado]);
-      rol.id = resultado.insertId;
+      rol.id = resultado.insertId.toString();
       return rol;
     } catch(error) {
       console.log(error);

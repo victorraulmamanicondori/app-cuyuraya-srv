@@ -17,8 +17,10 @@ function verificarToken(request, response, next) {
     });
   }
 
+  const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
+
   // Verificar y decodificar el token JWT
-  jwt.verify(token, process.env.SECRETO_ACCESS_TOKEN, (error, decoded) => {
+  jwt.verify(token, secreto, (error, decoded) => {
     if (error) {
       console.log('process.env.SECRETO_ACCESS_TOKEN:', process.env.SECRETO_ACCESS_TOKEN);
       mensaje = `Token de autorización inválido: ${token}`

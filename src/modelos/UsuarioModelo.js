@@ -1,5 +1,10 @@
 class UsuarioModelo {
-  constructor(id, nombres, paterno, materno, dni, direccion, numeroContrato, telefono, clave, idRol, estado, numeroIntentos, fecCreacion, fecActualizacion) {
+  constructor({ id, nombres, paterno, materno, dni, direccion, 
+    numeroContrato, telefono, clave, idRol, estado, 
+    numeroIntentos, fecCreacion, fecActualizacion,
+    idDepartamento, idProvincia, idDistrito, idCentroPoblado, 
+    idComunidadCampesina, idSector }) {
+    
     this.id = id;
     this.nombres = nombres;
     this.paterno = paterno;
@@ -14,8 +19,13 @@ class UsuarioModelo {
     this.numeroIntentos = numeroIntentos;
     this.fecCreacion = fecCreacion;
     this.fecActualizacion = fecActualizacion;
+    this.idDepartamento = idDepartamento;
+    this.idProvincia = idProvincia;
+    this.idDistrito = idDistrito;
+    this.idCentroPoblado = idCentroPoblado;
+    this.idComunidadCampesina = idComunidadCampesina;
+    this.idSector = idSector;
   }
 }
 
 export default UsuarioModelo;
-
