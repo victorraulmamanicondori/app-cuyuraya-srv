@@ -50,8 +50,8 @@ class DepartamentoControlador {
 
   async eliminarDepartamentoPorCodigo(req, res) {
     try {
-      const id = req.params.id;
-      await departamentoServicio.eliminarDepartamentoPorCodigo(id);
+      const codigo = req.params.codigo;
+      await departamentoServicio.eliminarDepartamentoPorCodigo(codigo);
       res.status(204).end();
     } catch(error) {
       logger.error(error);

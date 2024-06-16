@@ -80,6 +80,7 @@ class ProvinciaRepositorio {
       await conexion.query("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigo]);
     } catch(error) {
       console.log(error);
+      throw new Error('Error al tratar de eliminar provincia');
     } finally {
       if (conexion) conexion.release();
     }
