@@ -1,8 +1,8 @@
 class DistritoModelo {
-    constructor({ id, nombre, idProvincia }) {
-        this.id = id;
+    constructor({ codigo, nombre, codigoProvincia }) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.idProvincia = idProvincia;
+        this.codigoProvincia = codigoProvincia;
     }
 }
 

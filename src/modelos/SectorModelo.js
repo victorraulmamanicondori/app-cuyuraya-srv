@@ -1,9 +1,9 @@
 
 class SectorModelo {
-    constructor({ id, nombre, idComunidadCampesina }) {
-        this.id = id;
+    constructor({ codigo, nombre, codigoComunidadCampesina }) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.idComunidadCampesina = idComunidadCampesina;
+        this.codigoComunidadCampesina = codigoComunidadCampesina;
     }
 }
 

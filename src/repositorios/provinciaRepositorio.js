@@ -1,16 +1,17 @@
 import pool from '../config/db.js';
+import ProvinciaModelo from '../modelos/ProvinciaModelo.js';
 
 class ProvinciaRepositorio {
 
-  async listarProvinciasPorDepartamento(idDepartamento) {
+  async listarProvinciasPorDepartamento(codigoDepartamento) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE ID_DEPARTAMENTO = ? ORDER BY NOMBRE ASC", [idDepartamento]);
-      return filas.map(fila => new Provincia({
-                                        idProvincia: fila.ID_PROVINCIA,
+      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE COD_DEPARTAMENTO = ? ORDER BY NOMBRE ASC", [codigoDepartamento]);
+      return filas.map(fila => new ProvinciaModelo({
+                                        codigo: fila.CODIGO,
                                         nombre: fila.NOMBRE,
-                                        idDepartamento: fila.ID_DEPARTAMENTO
+                                        codigoDepartamento: fila.COD_DEPARTAMENTO
                                     }));
     } catch(error) {
       console.log(error);
@@ -19,17 +20,17 @@ class ProvinciaRepositorio {
     }
   }
 
-  async obtenerProvinciaPorId(id) {
+  async obtenerProvinciaPorCodigo(codigo) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE ID_PROVINCIA = ?", [id]);
+      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigo]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Provincia({
-                              idProvincia: fila.ID_PROVINCIA,
+        return new ProvinciaModelo({
+                              codigo: fila.CODIGO,
                               nombre: fila.NOMBRE,
-                              idDepartamento: fila.ID_DEPARTAMENTO
+                              codigoDepartamento: fila.COD_DEPARTAMENTO
                             });
       }
       return null;
@@ -43,10 +44,10 @@ class ProvinciaRepositorio {
   async crearProvincia(provincia) {
     let conexion;
     try {
+      const { codigo, nombre, codigoDepartamento } = provincia;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_PROVINCIA (NOMBRE, ID_DEPARTAMENTO) VALUES (?, ?)`, 
-                                            [provincia.nombre, provincia.idDepartamento]);
-      provincia.id = resultado.insertId.toString();
+      await conexion.query(`INSERT INTO TBL_PROVINCIA (CODIGO, NOMBRE, COD_DEPARTAMENTO) VALUES (?, ?, ?)`, 
+                                            [codigo, nombre, codigoDepartamento]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -58,11 +59,12 @@ class ProvinciaRepositorio {
   async actualizarProvincia(provincia) {
     let conexion;
     try {
+      const { codigo, nombre, codigoDepartamento } = provincia;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_PROVINCIA
-                            SET NOMBRE = ?, ID_DEPARTAMENTO = ?
-                            WHERE ID_PROVINCIA = ?`,
-                                [provincia.nombre, provincia.idDepartamento, provincia.id]);
+                            SET NOMBRE = ?, COD_DEPARTAMENTO = ?
+                            WHERE CODIGO = ?`,
+                                [nombre, codigoDepartamento, codigo]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -71,11 +73,11 @@ class ProvinciaRepositorio {
     }
   }
 
-  async eliminarProvinciaPorId(id) {
+  async eliminarProvinciaPorCodigo(codigo) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_PROVINCIA WHERE ID_PROVINCIA = ?", [id]);
+      await conexion.query("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigo]);
     } catch(error) {
       console.log(error);
     } finally {

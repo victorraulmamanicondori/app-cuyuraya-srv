@@ -1,4 +1,5 @@
 import pool from '../config/db.js';
+import DepartamentoModelo from '../modelos/DepartamentoModelo.js';
 
 class DepartamentoRepositorio {
 
@@ -7,7 +8,7 @@ class DepartamentoRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO ORDER BY NOMBRE ASC");
-      return filas.map(fila => new Departamento({ idDepartamento: fila.ID_DEPARTAMENTO, 
+      return filas.map(fila => new DepartamentoModelo({ codigo: fila.CODIGO, 
                                                   nombre: fila.NOMBRE }));
     } catch(error) {
       console.log(error);
@@ -17,14 +18,14 @@ class DepartamentoRepositorio {
     }
   }
 
-  async obtenerDepartamentoPorId(id) {
+  async obtenerDepartamentoPorCodigo(codigo) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO WHERE ID_DEPARTAMENTO = ?", [id]);
+      const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Departamento({ idDepartamento: fila.ID_DEPARTAMENTO, 
+        return new DepartamentoModelo({ codigo: fila.CODIGO, 
                                   nombre: fila.NOMBRE });
       }
       return null;
@@ -39,9 +40,9 @@ class DepartamentoRepositorio {
   async crearDepartamento(departamento) {
     let conexion;
     try {
+      const { codigo, nombre } = departamento;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_DEPARTAMENTO (NOMBRE) VALUES (?)`, [departamento.nombre]);
-      departamento.id = resultado.insertId.toString();
+      await conexion.query(`INSERT INTO TBL_DEPARTAMENTO (CODIGO, NOMBRE) VALUES (?, ?)`, [codigo, nombre]);
       return departamento;
     } catch(error) {
       console.log(error);
@@ -54,11 +55,12 @@ class DepartamentoRepositorio {
   async actualizarDepartamento(departamento) {
     let conexion;
     try {
+      const { codigo, nombre } = departamento;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_DEPARTAMENTO
                             SET NOMBRE = ?
-                            WHERE ID_DEPARTAMENTO = ?`,
-                                [departamento.nombre, departamento.id]);
+                            WHERE CODIGO = ?`,
+                                [nombre, codigo]);
       return departamento;
     } catch(error) {
       console.log(error);
@@ -68,11 +70,11 @@ class DepartamentoRepositorio {
     }
   }
 
-  async eliminarDepartamentoPorId(id) {
+  async eliminarDepartamentoPorCodigo(codigo) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_DEPARTAMENTO WHERE ID_DEPARTAMENTO = ?", [id]);
+      await conexion.query("DELETE FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar departamento');

@@ -1,10 +1,10 @@
-class ComunidadCampesinaModelo {
-    constructor({ id, nombre, idDistrito }) {
-        this.id = id;
+class ComuncodigoadCampesinaModelo {
+    constructor({ codigo, nombre, codigoDistrito }) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.idDistrito = idDistrito;
+        this.codigoDistrito = codigoDistrito;
     }
 }
 
-export default ComunidadCampesinaModelo;
+export default ComuncodigoadCampesinaModelo;
 
