@@ -1,6 +1,6 @@
 class DepartamentoModelo {
-    constructor({ id, nombre }) {
-        this.id = id;
+    constructor({ codigo, nombre }) {
+        this.codigo = codigo;
         this.nombre = nombre;
     }
 }

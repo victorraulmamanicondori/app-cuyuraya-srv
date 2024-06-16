@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.get('/', verificarToken, departamentoControlador.listarDepartamentos);
 
-router.get('/:id', verificarToken, departamentoControlador.obtenerDepartamentoPorId);
+router.get('/:codigo', verificarToken, departamentoControlador.obtenerDepartamentoPorCodigo);
 
 router.post('/', verificarToken, departamentoControlador.crearDepartamento);
 
 router.put('/', verificarToken, departamentoControlador.actualizarDepartamento);
 
-router.delete('/:id', verificarToken, departamentoControlador.eliminarDepartamentoPorId);
+router.delete('/:codigo', verificarToken, departamentoControlador.eliminarDepartamentoPorCodigo);
 
 export default router;

@@ -1,4 +1,4 @@
-class ComuncodigoadCampesinaModelo {
+class CentroProbadoModelo {
     constructor({ idCentroPoblado, nombre, codigoDistrito }) {
         this.idCentroPoblado = idCentroPoblado;
         this.nombre = nombre;
@@ -6,5 +6,4 @@ class ComuncodigoadCampesinaModelo {
     }
 }
 
-export default ComuncodigoadCampesinaModelo;
-
+export default CentroProbadoModelo;
