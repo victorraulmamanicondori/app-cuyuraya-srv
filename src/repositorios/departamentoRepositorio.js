@@ -7,7 +7,8 @@ class DepartamentoRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO ORDER BY NOMBRE ASC");
-      return filas.map(fila => new Departamento(fila.ID_DEPARTAMENTO, fila.NOMBRE));
+      return filas.map(fila => new Departamento({ idDepartamento: fila.ID_DEPARTAMENTO, 
+                                                  nombre: fila.NOMBRE }));
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de listar departamentos');
@@ -23,7 +24,8 @@ class DepartamentoRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO WHERE ID_DEPARTAMENTO = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Departamento(fila.ID_DEPARTAMENTO, fila.NOMBRE);
+        return new Departamento({ idDepartamento: fila.ID_DEPARTAMENTO, 
+                                  nombre: fila.NOMBRE });
       }
       return null;
     } catch(error) {

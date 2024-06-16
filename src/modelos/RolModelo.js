@@ -1,5 +1,5 @@
 class RolModelo {
-  constructor(id, nombre, estado, fecCreacion, fecActualizacion) {
+  constructor({ id, nombre, estado, fecCreacion, fecActualizacion }) {
     this.id = id;
     this.nombre = nombre;
     this.estado = estado;

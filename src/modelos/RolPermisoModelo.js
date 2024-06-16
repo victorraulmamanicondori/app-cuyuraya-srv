@@ -1,5 +1,5 @@
 class RolPermisoModelo {
-    constructor(idRol, idPermiso, fecCreacion, fecActualizacion) {
+    constructor({ idRol, idPermiso, fecCreacion, fecActualizacion }) {
         this.idRol = idRol;
         this.idPermiso = idPermiso;
         this.fecCreacion = fecCreacion;

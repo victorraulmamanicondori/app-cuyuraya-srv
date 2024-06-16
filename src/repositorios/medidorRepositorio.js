@@ -12,12 +12,14 @@ class MedidorRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ?", [codigoMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new MedidorModelo(fila.ID_MEDIDOR.toString(),
-                           fila.COD_MEDIDOR,
-                           fila.ID_USUARIO.toString(),
-                           fila.ESTADO,
-                           fila.FEC_CREACION,
-                           fila.FEC_ACTUALIZACION);
+        return new MedidorModelo({ 
+                          idMedidor: fila.ID_MEDIDOR.toString(),
+                          codMedidor: fila.COD_MEDIDOR,
+                          idUsuario: fila.ID_USUARIO.toString(),
+                          estado: fila.ESTADO,
+                          fecCreacion: fila.FEC_CREACION,
+                          fecActualizacion: fila.FEC_ACTUALIZACION
+                        });
       }
       return null;
     } catch(error) {

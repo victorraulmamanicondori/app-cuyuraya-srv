@@ -1,5 +1,5 @@
 class RubroModelo {
-  constructor(id, tipoRubro, estado, fecCreacion, fecActualizacion) {
+  constructor({ id, tipoRubro, estado, fecCreacion, fecActualizacion }) {
     this.id = id;
     this.tipoRubro = tipoRubro;
     this.estado = estado;

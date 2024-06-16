@@ -7,7 +7,9 @@ class DistritoRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE ID_PROVINCIA = ? ORDER BY NOMBRE ASC", [idProvincia]);
-      return filas.map(fila => new Distrito(fila.ID_DISTRITO, fila.NOMBRE, fila.ID_PROVINCIA));
+      return filas.map(fila => new Distrito({ idDistrito: fila.ID_DISTRITO, 
+                                              nombre: fila.NOMBRE, 
+                                              idProvincia: fila.ID_PROVINCIA }));
     } catch(error) {
       console.log(error);
     } finally {
@@ -22,7 +24,9 @@ class DistritoRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE ID_DISTRITO = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Distrito(fila.ID_DISTRITO, fila.NOMBRE, fila.ID_PROVINCIA);
+        return new Distrito({ idDistrito: fila.ID_DISTRITO, 
+                              nombre: fila.NOMBRE, 
+                              idProvincia: fila.ID_PROVINCIA });
       }
       return null;
     } catch(error) {

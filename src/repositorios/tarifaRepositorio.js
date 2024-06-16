@@ -11,13 +11,15 @@ class TarifaRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_TARIFA WHERE COD_TARIFA = ?", [codigoTarifa]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new TarifaModelo(fila.ID_TARIFA.toString(),
-                           fila.COD_TARIFA,
-                           fila.DESCRIPCION,
-                           fila.MONTO_TARIFA,
-                           fila.ESTADO,
-                           fila.FEC_CREACION,
-                           fila.FEC_ACTUALIZACION);
+        return new TarifaModelo({
+                          idTarifa: fila.ID_TARIFA.toString(),
+                          codigoTarifa: fila.COD_TARIFA,
+                          descripcion: fila.DESCRIPCION,
+                          montoTarifa: fila.MONTO_TARIFA,
+                          estado: fila.ESTADO,
+                          fecCreacion: fila.FEC_CREACION,
+                          fecActualizacion: fila.FEC_ACTUALIZACION
+                        });
       }
       return null;
     } catch(error) {
