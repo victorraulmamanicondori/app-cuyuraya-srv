@@ -1,5 +1,5 @@
 class ComunidadCampesinaModelo {
-    constructor(id, nombre, idDistrito) {
+    constructor({ id, nombre, idDistrito }) {
         this.id = id;
         this.nombre = nombre;
         this.idDistrito = idDistrito;

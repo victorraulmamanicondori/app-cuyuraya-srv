@@ -4,6 +4,7 @@ import UsuarioModelo from '../modelos/UsuarioModelo.js';
 import { UsuarioEstados } from '../constantes/estados.js';
 
 class UsuarioRepositorio {
+
   async listarUsuarios() {
     let conexion;
     try {
@@ -19,14 +20,8 @@ class UsuarioRepositorio {
                                     numeroContrato: fila.NUM_CONTRATO,
                                     telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
-                                    idRol: fila.ID_ROL,
                                     estado: fila.ESTADO,
-                                    idDepartamento: fila.ID_DEPARTAMENTO,
-                                    idProvincia: fila.ID_PROVINCIA,
-                                    idDistrito: fila.ID_DISTRITO,
-                                    idCentroPoblado: fila.ID_CENTRO_POBLADO,
-                                    idComunidadCampesina: fila.ID_COMUNIDAD_CAMPESINA,
-                                    idSector: fila.ID_SECTOR,
+                                    idUbigeo: fila.ID_UBIGEO,
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                 }));
@@ -54,14 +49,8 @@ class UsuarioRepositorio {
                                     numeroContrato: fila.NUM_CONTRATO,
                                     telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
-                                    idRol: fila.ID_ROL,
                                     estado: fila.ESTADO,
-                                    idDepartamento: fila.ID_DEPARTAMENTO,
-                                    idProvincia: fila.ID_PROVINCIA,
-                                    idDistrito: fila.ID_DISTRITO,
-                                    idCentroPoblado: fila.ID_CENTRO_POBLADO,
-                                    idComunidadCampesina: fila.ID_COMUNIDAD_CAMPESINA,
-                                    idSector: fila.ID_SECTOR,
+                                    idUbigeo: fila.ID_UBIGEO,
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                   });
@@ -86,15 +75,9 @@ class UsuarioRepositorio {
                                                                        NUM_CONTRATO,
                                                                        TELEFONO,
                                                                        CLAVE,
-                                                                       ID_ROL,
-                                                                       ID_DEPARTAMENTO,
-                                                                       ID_PROVINCIA,
-                                                                       ID_DISTRITO,
-                                                                       ID_CENTRO_POBLADO,
-                                                                       ID_COMUNIDAD_CAMPESINA,
-                                                                       ID_SECTOR,
+                                                                       ID_UBIGEO,
                                                                        ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                                                      [usuario.nombres,
                                                       usuario.paterno,
                                                       usuario.materno,
@@ -103,13 +86,7 @@ class UsuarioRepositorio {
                                                       usuario.numContrato,
                                                       usuario.telefono,
                                                       usuario.clave,
-                                                      usuario.idRol,
-                                                      usuario.idDepartamento,
-                                                      usuario.idProvincia,
-                                                      usuario.idDistrito,
-                                                      usuario.idCentroPoblado,
-                                                      usuario.idComunidadCampesina,
-                                                      usuario.idSector,
+                                                      usuario.idUbigeo,
                                                       usuario.estado]);
       usuario.id = resultado.insertId.toString();
       return usuario;
@@ -132,13 +109,7 @@ class UsuarioRepositorio {
                                 DIRECCION = ?,
                                 NUM_CONTRATO = ?,
                                 TELEFONO = ?,
-                                ID_ROL = ?,
-                                ID_DEPARTAMENTO,
-                                ID_PROVINCIA,
-                                ID_DISTRITO,
-                                ID_CENTRO_POBLADO,
-                                ID_COMUNIDAD_CAMPESINA,
-                                ID_SECTOR,
+                                ID_UBIGEO= ?,
                                 ESTADO = ?
                             WHERE DNI = ?`,
                                 [usuario.nombres,
@@ -147,13 +118,7 @@ class UsuarioRepositorio {
                                  usuario.direccion,
                                  usuario.numContrato,
                                  usuario.telefono,
-                                 usuario.idRol,
-                                 usuario.idDepartamento,
-                                 usuario.idProvincia,
-                                 usuario.idDistrito,
-                                 usuario.idCentroPoblado,
-                                 usuario.idComunidadCampesina,
-                                 usuario.idSector,
+                                 usuario.idUbigeo,
                                  usuario.estado,
                                  usuario.dni]);
       return usuario;

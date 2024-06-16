@@ -4,28 +4,30 @@ import LecturaModelo from '../modelos/LecturaModelo.js';
 import { LecturaEstados } from '../constantes/estados.js';
 
 class LecturaRepositorio {
+
   async listarLecturas() {
     let conexion;
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_LECTURA ORDER BY FEC_CREACION DESC");
-      return filas.map(fila => new LecturaModelo(
-                                    fila.ID_LECTURA.toString(),
-                                    fila.ID_MEDIDOR.toString(),
-                                    fila.LECTURA_ACTUAL.toString(),
-                                    fila.LECTURA_ANTERIOR.toString(),
-                                    fila.M3_CONSUMIDO,
-                                    fila.ID_TARIFA.toString(),
-                                    fila.MONTO_PAGAR,
-                                    fila.PORC_DESCUENTO,
-                                    fila.MONTO_MULTA,
-                                    fila.NUM_RECIBO,
-                                    fila.FECHA_LIMT_PAGO,
-                                    fila.FECHA_CORTE,
-                                    fila.COMENTARIO,
-                                    fila.ESTADO,
-                                    fila.FEC_CREACION,
-                                    fila.FEC_ACTUALIZACION));
+      return filas.map(fila => new LecturaModelo({
+                                    idLectura: fila.ID_LECTURA.toString(),
+                                    idMedidor: fila.ID_MEDIDOR.toString(),
+                                    lecturaActual: fila.LECTURA_ACTUAL.toString(),
+                                    lecturaAnterior: fila.LECTURA_ANTERIOR.toString(),
+                                    m3Consumido: fila.M3_CONSUMIDO,
+                                    idTarifa: fila.ID_TARIFA.toString(),
+                                    montoPagar: fila.MONTO_PAGAR,
+                                    porcDescuento: fila.PORC_DESCUENTO,
+                                    montoMulta: fila.MONTO_MULTA,
+                                    numRecibo: fila.NUM_RECIBO,
+                                    fechaLimtPago: fila.FECHA_LIMT_PAGO,
+                                    fechaCorte: fila.FECHA_CORTE,
+                                    comentario: fila.COMENTARIO,
+                                    estado: fila.ESTADO,
+                                    fecCreacion: fila.FEC_CREACION,
+                                    fecActualizacion: fila.FEC_ACTUALIZACION
+                                  }));
     } catch(error) {
       logger.error(`Error al listar lecturas:${error}`);
     } finally {
@@ -39,26 +41,12 @@ class LecturaRepositorio {
       logger.info(`LecturaRepositorio:obtenerLecturaAnterior: idMedidor=${idMedidor}`);
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
+      const filas = await conexion.query("SELECT LECTURA_ANTERIOR FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new LecturaModelo(
-            fila.ID_LECTURA.toString(),
-            fila.ID_MEDIDOR.toString(),
-            fila.LECTURA_ACTUAL.toString(),
-            fila.LECTURA_ANTERIOR.toString(),
-            fila.M3_CONSUMIDO,
-            fila.ID_TARIFA.toString(),
-            fila.MONTO_PAGAR,
-            fila.PORC_DESCUENTO,
-            fila.MONTO_MULTA,
-            fila.NUM_RECIBO,
-            fila.FECHA_LIMT_PAGO,
-            fila.FECHA_CORTE,
-            fila.COMENTARIO,
-            fila.ESTADO,
-            fila.FEC_CREACION,
-            fila.FEC_ACTUALIZACION);
+        return new LecturaModelo({
+            idLecturaAnterior: fila.LECTURA_ANTERIOR.toString()
+          });
       }
       return null;
     } catch(error) {
@@ -68,7 +56,9 @@ class LecturaRepositorio {
     }
   }
 
-  async registrarLectura({idMedidor, lecturaActual, lecturaAnterior, m3Consumido, idTarifa, montoPagar, numeroRecibo, fechaLimitePago, estado}) {
+  async registrarLectura({ idMedidor, lecturaActual, lecturaAnterior, 
+                           m3Consumido, idTarifa, montoPagar, 
+                           numeroRecibo, fechaLimitePago, estado }) {
     let conexion;
     try {
       conexion = await pool.getConnection();

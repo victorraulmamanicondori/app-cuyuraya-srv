@@ -7,11 +7,13 @@ class RolRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_ROL ORDER BY NOMBRE ASC");
-      return filas.map(fila => new Rol(fila.ID_ROL,
-                                       fila.NOMBRE,
-                                       fila.ESTADO,
-                                       fila.FEC_CREACION,
-                                       fila.FEC_ACTUALIZACION));
+      return filas.map(fila => new Rol({
+                                      idRol: fila.ID_ROL,
+                                      nombre: fila.NOMBRE,
+                                      estado: fila.ESTADO,
+                                      fecCreacion: fila.FEC_CREACION,
+                                      fecActualizacion: fila.FEC_ACTUALIZACION
+                                    }));
     } catch(error) {
       console.log(error);
     } finally {
@@ -26,11 +28,13 @@ class RolRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_ROL WHERE ID_ROL = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Rol(fila.ID_ROL,
-                       fila.NOMBRE,
-                       fila.ESTADO,
-                       fila.FEC_CREACION,
-                       fila.FEC_ACTUALIZACION);
+        return new Rol({
+                      idRol: fila.ID_ROL,
+                      nombre: fila.NOMBRE,
+                      estado: fila.ESTADO,
+                      fecCreacion: fila.FEC_CREACION,
+                      fecActualizacion: fila.FEC_ACTUALIZACION
+                    });
       }
       return null;
     } catch(error) {

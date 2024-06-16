@@ -1,5 +1,5 @@
 class PermisoModelo {
-    constructor(id, nombre, descripcion, fecCreacion, fecActualizacion) {
+    constructor({ id, nombre, descripcion, fecCreacion, fecActualizacion }) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

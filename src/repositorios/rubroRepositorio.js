@@ -11,11 +11,13 @@ class RubroRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_RUBRO WHERE TIPO_RUBRO = ? AND ESTADO = ?", [tipoRubro, estado]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new RubroModelo(fila.ID_RUBRO,
-                       fila.TIPO_RUBRO,
-                       fila.ESTADO,
-                       fila.FEC_CREACION,
-                       fila.FEC_ACTUALIZACION);
+        return new RubroModelo({
+                      idRubro: fila.ID_RUBRO,
+                      tipoRubro: fila.TIPO_RUBRO,
+                      estado: fila.ESTADO,
+                      fecCreacion: fila.FEC_CREACION,
+                      fecActualizacion: fila.FEC_ACTUALIZACION
+                    });
       }
       return null;
     } catch(error) {

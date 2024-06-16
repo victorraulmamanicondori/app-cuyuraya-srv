@@ -1,5 +1,7 @@
 class CajaModelo {
-  constructor(id, numeroComprobante, idTipoMovimiento, fechaMovimiento, descripcion, monto, idPagoRecibo, estado, fecCreacion, fecActualizacion) {
+  constructor({ id, numeroComprobante, idTipoMovimiento, 
+                fechaMovimiento, descripcion, monto, 
+                idPagoRecibo, estado, fecCreacion, fecActualizacion }) {
     this.id = id;
     this.numeroComprobante = numeroComprobante;
     this.idTipoMovimiento = idTipoMovimiento;

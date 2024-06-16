@@ -7,7 +7,11 @@ class ProvinciaRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE ID_DEPARTAMENTO = ? ORDER BY NOMBRE ASC", [idDepartamento]);
-      return filas.map(fila => new Provincia(fila.ID_PROVINCIA, fila.NOMBRE, fila.ID_DEPARTAMENTO));
+      return filas.map(fila => new Provincia({
+                                        idProvincia: fila.ID_PROVINCIA,
+                                        nombre: fila.NOMBRE,
+                                        idDepartamento: fila.ID_DEPARTAMENTO
+                                    }));
     } catch(error) {
       console.log(error);
     } finally {
@@ -22,7 +26,11 @@ class ProvinciaRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE ID_PROVINCIA = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Provincia(fila.ID_PROVINCIA, fila.NOMBRE);
+        return new Provincia({
+                              idProvincia: fila.ID_PROVINCIA,
+                              nombre: fila.NOMBRE,
+                              idDepartamento: fila.ID_DEPARTAMENTO
+                            });
       }
       return null;
     } catch(error) {
@@ -36,7 +44,8 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_PROVINCIA (NOMBRE, ID_DEPARTAMENTO) VALUES (?, ?)`, [provincia.nombre, provincia.idDepartamento]);
+      const resultado = await conexion.query(`INSERT INTO TBL_PROVINCIA (NOMBRE, ID_DEPARTAMENTO) VALUES (?, ?)`, 
+                                            [provincia.nombre, provincia.idDepartamento]);
       provincia.id = resultado.insertId.toString();
       return provincia;
     } catch(error) {
