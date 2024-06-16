@@ -1,6 +1,6 @@
 class CentroProbadoModelo {
-    constructor({ codigo, nombre, codigoDistrito }) {
-        this.codigo = codigo;
+    constructor({ idCentroPoblado, nombre, codigoDistrito }) {
+        this.idCentroPoblado = idCentroPoblado;
         this.nombre = nombre;
         this.codigoDistrito = codigoDistrito;
     }
