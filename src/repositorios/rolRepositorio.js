@@ -1,4 +1,5 @@
 import pool from '../config/db.js';
+import RolModelo from '../modelos/RolModelo.js';
 import { RolEstados } from '../constantes/estados.js';
 
 class RolRepositorio {
@@ -7,7 +8,7 @@ class RolRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_ROL ORDER BY NOMBRE ASC");
-      return filas.map(fila => new Rol({
+      return filas.map(fila => new RolModelo({
                                       idRol: fila.ID_ROL,
                                       nombre: fila.NOMBRE,
                                       estado: fila.ESTADO,
@@ -28,7 +29,7 @@ class RolRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_ROL WHERE ID_ROL = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Rol({
+        return new RolModelo({
                       idRol: fila.ID_ROL,
                       nombre: fila.NOMBRE,
                       estado: fila.ESTADO,
@@ -85,7 +86,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("UPDATE TBL_ROL SET ESTADO = ? WHERE ID_ROL = ?", [RolEstados.ELIMINADO, id]);
+      await conexion.query("DELETE FROM TBL_ROL WHERE ID_ROL = ?", [id]);
     } catch(error) {
       console.log(error);
     } finally {

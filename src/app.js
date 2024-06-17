@@ -14,6 +14,8 @@ import distritoRutas from './rutas/distritoRutas.js';
 import centroPobladoRutas from './rutas/centroPobladoRutas.js';
 import comunidadCampesinaRutas from './rutas/comunidadCampesinaRutas.js';
 import sectorRutas from './rutas/sectorRutas.js';
+import rolRutas from './rutas/rolRutas.js';
+import permisoRutas from './rutas/permisoRutas.js';
 
 dotenv.config();
 
@@ -47,6 +49,8 @@ app.use('/api/distritos', distritoRutas);
 app.use('/api/centros-poblados', centroPobladoRutas);
 app.use('/api/comunidades-campesinas', comunidadCampesinaRutas);
 app.use('/api/sectores', sectorRutas);
+app.use('/api/roles', rolRutas);
+app.use('/api/permisos', permisoRutas);
 
 app.listen(puerto, () => {
 	logger.info(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
