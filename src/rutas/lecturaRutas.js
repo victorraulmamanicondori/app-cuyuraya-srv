@@ -4,7 +4,7 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', lecturaControlador.registrarLectura);
+router.post('/', verificarToken, lecturaControlador.registrarLectura);
 
 export default router;
 

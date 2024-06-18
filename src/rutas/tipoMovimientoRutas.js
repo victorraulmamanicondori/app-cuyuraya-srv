@@ -4,7 +4,7 @@ import tipoMovimientoControlador from '../controladores/tipoMovimientoControlado
 
 const router = express.Router();
 
-router.get('/rubro/:tipoRubro', tipoMovimientoControlador.listarPorTipoRubro);
+router.get('/rubro/:tipoRubro', verificarToken, tipoMovimientoControlador.listarPorTipoRubro);
 
 export default router;
 
