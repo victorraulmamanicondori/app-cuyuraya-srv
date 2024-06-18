@@ -1,4 +1,5 @@
 import pool from '../config/db.js';
+import RolModelo from '../modelos/RolModelo.js';
 import { RolEstados } from '../constantes/estados.js';
 
 class RolRepositorio {
@@ -7,7 +8,30 @@ class RolRepositorio {
     try {
       conexion = await pool.getConnection();
       const filas = await conexion.query("SELECT * FROM TBL_ROL ORDER BY NOMBRE ASC");
-      return filas.map(fila => new Rol({
+      return filas.map(fila => new RolModelo({
+                                      idRol: fila.ID_ROL,
+                                      nombre: fila.NOMBRE,
+                                      estado: fila.ESTADO,
+                                      fecCreacion: fila.FEC_CREACION,
+                                      fecActualizacion: fila.FEC_ACTUALIZACION
+                                    }));
+    } catch(error) {
+      console.log(error);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async listarRolesPorUsuario(dni) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT R.* FROM TBL_ROL R 
+                                          INNER JOIN TBL_USUARIO_ROL UR ON UR.ID_ROL = R.ID_ROL
+                                          INNER JOIN TBL_USUARIO U ON U.ID_USUARIO = UR.ID_USUARIO
+                                          WHERE U.DNI = ?
+                                          ORDER BY NOMBRE ASC`, [dni]);
+      return filas.map(fila => new RolModelo({
                                       idRol: fila.ID_ROL,
                                       nombre: fila.NOMBRE,
                                       estado: fila.ESTADO,
@@ -28,7 +52,7 @@ class RolRepositorio {
       const filas = await conexion.query("SELECT * FROM TBL_ROL WHERE ID_ROL = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new Rol({
+        return new RolModelo({
                       idRol: fila.ID_ROL,
                       nombre: fila.NOMBRE,
                       estado: fila.ESTADO,
@@ -85,7 +109,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("UPDATE TBL_ROL SET ESTADO = ? WHERE ID_ROL = ?", [RolEstados.ELIMINADO, id]);
+      await conexion.query("DELETE FROM TBL_ROL WHERE ID_ROL = ?", [id]);
     } catch(error) {
       console.log(error);
     } finally {
