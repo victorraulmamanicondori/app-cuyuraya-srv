@@ -22,6 +22,58 @@ class PermisoRepositorio {
     }
   }
 
+  async listarPermisosPorRol(idRol) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT P.* FROM TBL_PERMISO P 
+                                          INNER JOIN TBL_ROL_PERMISO RP ON RP.ID_PERMISO = P.ID_PERMISO
+                                          WHERE RP.ID_ROL = ? 
+                                          ORDER BY NOMBRE ASC`, [idRol]);
+      return filas.map(fila => new PermisoModelo({
+                                      idPermiso: fila.ID_PERMISO,
+                                      nombre: fila.NOMBRE,
+                                      descripcion: fila.DESCRIPCION,
+                                      fecCreacion: fila.FEC_CREACION,
+                                      fecActualizacion: fila.FEC_ACTUALIZACION
+                                    }));
+    } catch(error) {
+      console.log(error);
+      throw new Error("Error al listar permisos por rol");
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async listarPermisosPorUsuario(dni) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT P.* FROM TBL_PERMISO P 
+                                          INNER JOIN TBL_ROL_PERMISO RP ON RP.ID_PERMISO = P.ID_PERMISO
+                                          WHERE RP.ID_ROL IN (
+                                            SELECT UR.ID_ROL 
+                                            FROM TBL_USUARIO_ROL UR 
+                                            INNER JOIN TBL_USUARIO U 
+                                            ON U.ID_USUARIO = UR.ID_USUARIO 
+                                            WHERE U.DNI = ?
+                                          ) 
+                                          ORDER BY NOMBRE ASC`, [dni]);
+      return filas.map(fila => new PermisoModelo({
+                                      idPermiso: fila.ID_PERMISO,
+                                      nombre: fila.NOMBRE,
+                                      descripcion: fila.DESCRIPCION,
+                                      fecCreacion: fila.FEC_CREACION,
+                                      fecActualizacion: fila.FEC_ACTUALIZACION
+                                    }));
+    } catch(error) {
+      console.log(error);
+      throw new Error("Error al listar permisos por usuario");
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async obtenerPermisoPorId(id) {
     let conexion;
     try {

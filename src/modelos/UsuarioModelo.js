@@ -1,10 +1,10 @@
 class UsuarioModelo {
-  constructor({ id, nombres, paterno, materno, dni, direccion, 
+  constructor({ idUsuario, nombres, paterno, materno, dni, direccion, 
     numeroContrato, telefono, clave, idUbigeo, estado, 
     numeroIntentos, fecCreacion, fecActualizacion,
     }) {
     
-    this.id = id;
+    this.idUsuario = idUsuario;
     this.nombres = nombres;
     this.paterno = paterno;
     this.materno = materno;

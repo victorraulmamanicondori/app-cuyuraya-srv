@@ -22,6 +22,29 @@ class RolRepositorio {
     }
   }
 
+  async listarRolesPorUsuario(dni) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT R.* FROM TBL_ROL R 
+                                          INNER JOIN TBL_USUARIO_ROL UR ON UR.ID_ROL = R.ID_ROL
+                                          INNER JOIN TBL_USUARIO U ON U.ID_USUARIO = UR.ID_USUARIO
+                                          WHERE U.DNI = ?
+                                          ORDER BY NOMBRE ASC`, [dni]);
+      return filas.map(fila => new RolModelo({
+                                      idRol: fila.ID_ROL,
+                                      nombre: fila.NOMBRE,
+                                      estado: fila.ESTADO,
+                                      fecCreacion: fila.FEC_CREACION,
+                                      fecActualizacion: fila.FEC_ACTUALIZACION
+                                    }));
+    } catch(error) {
+      console.log(error);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async obtenerRolPorId(id) {
     let conexion;
     try {

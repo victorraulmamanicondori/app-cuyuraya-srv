@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
+import rolRepositorio from '../repositorios/rolRepositorio.js';
+import permisoRepositorio from '../repositorios/permisoRepositorio.js';
 
 class LoginServicio {
 
@@ -20,6 +22,12 @@ class LoginServicio {
       throw new Error('Credenciales incorrectas');
     }
 
+    // Obtenemos Roles del usuario
+    const rolesUsuario = await rolRepositorio.listarRolesPorUsuario(dni);
+
+    // Obtenemos permisos del usuario
+    const permisosUsuario = await permisoRepositorio.listarPermisosPorUsuario(dni);
+
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
     const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '30m';
@@ -33,10 +41,10 @@ class LoginServicio {
     const refreshToken = jwt.sign({ usuario: dni }, secretoRefresh, { expiresIn: tiempoExpiracionRefresh });
 
     // Devolver token acceso y refresco al cliente
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, rolesUsuario, permisosUsuario };
   }
 
-  // Ruta para manejar las solicitudes de renovación de token
+  // Funcion para renovación de token JWT
   refreshToken(refreshToken) {
     // Recibimos de la peticion (request) el token de refresco
     let accessToken = '';

@@ -12,6 +12,18 @@ class UsuarioControlador {
     }
   }
 
+  async asignarRolAlUsuario(req, res) {
+    try {
+      const dni = req.params.dni;
+      const idRol = req.params.idRol;
+      const rol = await usuarioServicio.asignarRolAlUsuario(dni, idRol);
+      res.status(201).json(rol);
+    } catch(error) {
+      logger.error(error);
+      res.status(400).json({ mensaje: error.message });
+    }
+  }
+
   async obtenerUsuarioPorDni(req, res) {
     try {
       const dni = req.params.dni;

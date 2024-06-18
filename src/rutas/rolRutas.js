@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/', verificarToken, rolControlador.listarRoles);
 
+router.get('/usuario/:dni', verificarToken, rolControlador.listarRolesPorUsuario);
+
 router.get('/:id', verificarToken, rolControlador.obtenerRolPorId);
 
 router.post('/', verificarToken, rolControlador.crearRol);

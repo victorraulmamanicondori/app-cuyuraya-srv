@@ -6,6 +6,14 @@ class PermisoServicio {
     return permisoRepositorio.listarPermisos();
   }
 
+  listarPermisosPorRol(idRol) {
+    return permisoRepositorio.listarPermisosPorRol(idRol);
+  }
+
+  listarPermisosPorUsuario(dni) {
+    return permisoRepositorio.listarPermisosPorUsuario(dni);
+  }
+
   obtenerPermisoPorId(id) {
     return permisoRepositorio.obtenerPermisoPorId(id);
   }

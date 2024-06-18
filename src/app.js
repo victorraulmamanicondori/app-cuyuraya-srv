@@ -16,11 +16,14 @@ import comunidadCampesinaRutas from './rutas/comunidadCampesinaRutas.js';
 import sectorRutas from './rutas/sectorRutas.js';
 import rolRutas from './rutas/rolRutas.js';
 import permisoRutas from './rutas/permisoRutas.js';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const puerto = process.env.PUERTO || 9000;
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

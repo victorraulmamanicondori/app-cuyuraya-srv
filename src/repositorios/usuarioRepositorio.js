@@ -21,7 +21,7 @@ class UsuarioRepositorio {
                                     telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
-                                    idUbigeo: fila.ID_UBIGEO,
+                                    idUbigeo: (fila.ID_UBIGEO ? fila.ID_UBIGEO.toString() : null),
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                 }));

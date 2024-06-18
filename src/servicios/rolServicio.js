@@ -7,6 +7,10 @@ class RolServicio {
     return rolRepositorio.listarRoles();
   }
 
+  listarRolesPorUsuario(dni) {
+    return rolRepositorio.listarRolesPorUsuario(dni);
+  }
+
   obtenerRolPorId(id) {
     return rolRepositorio.obtenerRolPorId(id);
   }

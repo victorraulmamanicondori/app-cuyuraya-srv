@@ -13,6 +13,28 @@ class PermisoControlador {
     }
   }
 
+  async listarPermisosPorRol(req, res) {
+    try {
+      const idRol = req.params.idRol;
+      const permisos = await permisoServicio.listarPermisosPorRol(idRol);
+      res.status(200).json(permisos);
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
+
+  async listarPermisosPorUsuario(req, res) {
+    try {
+      const dni = req.params.dni;
+      const permisos = await permisoServicio.listarPermisosPorUsuario(dni);
+      res.status(200).json(permisos);
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
+
   async obtenerPermisoPorId(req, res) {
     try {
       const id = req.params.id;

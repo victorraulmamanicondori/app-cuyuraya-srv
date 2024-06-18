@@ -13,6 +13,17 @@ class RolControlador {
     }
   }
 
+  async listarRolesPorUsuario(req, res) {
+    try {
+      const dni = req.params.dni;
+      const roles = await rolServicio.listarRolesPorUsuario(dni);
+      res.status(200).json(roles); 
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
+
   async obtenerRolPorId(req, res) {
     try {
       const id = req.params.id;

@@ -1,17 +1,21 @@
 import express from 'express';
-import permisoContpermisoador from '../controladores/permisoControlador.js';
+import permisoControlador from '../controladores/permisoControlador.js';
 import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', verificarToken, permisoContpermisoador.listarPermisos);
+router.get('/', verificarToken, permisoControlador.listarPermisos);
 
-router.get('/:id', verificarToken, permisoContpermisoador.obtenerPermisoPorId);
+router.get('/rol/:idRol', verificarToken, permisoControlador.listarPermisosPorRol);
 
-router.post('/', verificarToken, permisoContpermisoador.crearPermiso);
+router.get('/usuario/:dni', verificarToken, permisoControlador.listarPermisosPorUsuario);
 
-router.put('/', verificarToken, permisoContpermisoador.actualizarPermiso);
+router.get('/:id', verificarToken, permisoControlador.obtenerPermisoPorId);
 
-router.delete('/:id', verificarToken, permisoContpermisoador.eliminarPermisoPorId);
+router.post('/', verificarToken, permisoControlador.crearPermiso);
+
+router.put('/', verificarToken, permisoControlador.actualizarPermiso);
+
+router.delete('/:id', verificarToken, permisoControlador.eliminarPermisoPorId);
 
 export default router;
