@@ -1,6 +1,6 @@
 class MedidorModelo {
-  constructor({ id, codMedidor, idUsuario, estado, fecCreacion, fecActualizacion }) {
-    this.id = id;
+  constructor({ idMedidor, codMedidor, idUsuario, estado, fecCreacion, fecActualizacion }) {
+    this.idMedidor = idMedidor;
     this.codMedidor = codMedidor;
     this.idUsuario = idUsuario;
     this.estado = estado;
