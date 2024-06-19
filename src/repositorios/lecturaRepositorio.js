@@ -45,7 +45,7 @@ class LecturaRepositorio {
       if (filas.length > 0) {
         const fila = filas[0];
         return new LecturaModelo({
-            idLecturaActual: fila.LECTURA_ACTUAL.toString()
+            lecturaActual: fila.LECTURA_ACTUAL.toString()
           });
       }
       return null;
