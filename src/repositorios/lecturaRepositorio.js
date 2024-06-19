@@ -90,6 +90,21 @@ class LecturaRepositorio {
     }
   }
 
+  async obtenerLecturasPorIdMedidor(idMedidor) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT M3_CONSUMIDO, FEC_CREACION FROM TBL_LECTURA TL 
+                            WHERE TL.ID_MEDIDOR = ?
+                            ORDER BY FEC_CREACION DESC LIMIT 10`, [idMedidor]);
+      return filas.map(fila => ({ value: fila.M3_CONSUMIDO, date: fila.FEC_CREACION }));
+    } catch(error) {
+      logger.error(`Error al listar lecturas por idMedidor:${error}`);
+      throw new Error('Error al listar lecturas por idMedidor');
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
 }
 
 export default new LecturaRepositorio();

@@ -1,5 +1,7 @@
 import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
+import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
+import DetectorApi from '../api/Detector.api.js';
 
 class MedidorServicio {
 
@@ -25,6 +27,21 @@ class MedidorServicio {
 
     // Devolvemos codigo de asignacion 
     return { codigoAsignacion };
+  }
+
+  async detectarAnomaliasPorMedidor(idMedidor) {
+    console.log('idMedidor:', idMedidor);
+
+    const lecturas = await lecturaRepositorio.obtenerLecturasPorIdMedidor(idMedidor);
+
+    console.log('Lecturas:', lecturas);
+
+    if (lecturas && lecturas.length > 0) {
+      const detectorApi = new DetectorApi();
+      return detectorApi.peticionPOST(lecturas);
+    }
+
+    return null;
   }
 }
 
