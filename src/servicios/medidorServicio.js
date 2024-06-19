@@ -29,10 +29,10 @@ class MedidorServicio {
     return { codigoAsignacion };
   }
 
-  async detectarAnomaliasPorMedidor(idMedidor) {
-    console.log('idMedidor:', idMedidor);
+  async detectarAnomaliasPorMedidor(codigoMedidor) {
+    console.log('codigoMedidor:', codigoMedidor);
 
-    const lecturas = await lecturaRepositorio.obtenerLecturasPorIdMedidor(idMedidor);
+    const lecturas = await lecturaRepositorio.obtenerLecturasPorCodigoMedidor(codigoMedidor);
 
     console.log('Lecturas:', JSON.stringify(lecturas));
 

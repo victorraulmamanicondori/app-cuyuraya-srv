@@ -91,17 +91,18 @@ class LecturaRepositorio {
     }
   }
 
-  async obtenerLecturasPorIdMedidor(idMedidor) {
+  async obtenerLecturasPorCodigoMedidor(codigoMedidor) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT M3_CONSUMIDO, FEC_CREACION FROM TBL_LECTURA TL 
-                            WHERE TL.ID_MEDIDOR = ?
-                            ORDER BY FEC_CREACION DESC LIMIT 10`, [idMedidor]);
+      const filas = await conexion.query(`SELECT TL.M3_CONSUMIDO, TL.FEC_CREACION FROM TBL_LECTURA TL 
+                            INNER JOIN TBL_MEDIDOR TM ON TM.ID_MEDIDOR = TL.ID_MEDIDOR
+                            WHERE TM.COD_MEDIDOR = ?
+                            ORDER BY FEC_CREACION DESC LIMIT 10`, [codigoMedidor]);
       return filas.map(fila => ({ "value": fila.M3_CONSUMIDO, "date": fila.FEC_CREACION.toISOString() }));
     } catch(error) {
-      logger.error(`Error al listar lecturas por idMedidor:${error}`);
-      throw new Error('Error al listar lecturas por idMedidor');
+      logger.error(`Error al listar lecturas por codigoMedidor:${error}`);
+      throw new Error('Error al listar lecturas por codigoMedidor');
     } finally {
       if (conexion) conexion.release();
     }

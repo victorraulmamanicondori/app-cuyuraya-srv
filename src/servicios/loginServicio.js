@@ -30,7 +30,7 @@ class LoginServicio {
 
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
-    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '30m';
+    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '5h';
 
     // Datos para generar token de refresco
     const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'senati';
@@ -51,7 +51,7 @@ class LoginServicio {
 
     // Datos para generar token de acceso
     const secreto = process.env.SECRETO_ACCESS_TOKEN || 'eas';
-    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '30m';
+    const tiempoExpiracion = process.env.TIEMPO_EXPIRA_ACCESS_TOKEN || '5h';
 
     // Datos para generar token de refresco
     const secretoRefresh = process.env.SECRETO_REFRESH_TOKEN || 'senati';
