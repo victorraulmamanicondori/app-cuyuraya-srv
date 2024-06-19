@@ -11,7 +11,7 @@ class TipoMovimientoServicio {
       throw new Error(`Rubro ${tipoRubro} no existe`);
     }
 
-    const tiposMovimientos = await tipoMovimientoRepositorio.listarPorRubroEstado(rubroActivo.id, TipoMovimientoEstados.ACTIVO);
+    const tiposMovimientos = await tipoMovimientoRepositorio.listarPorRubroEstado(rubroActivo.idRubro, TipoMovimientoEstados.ACTIVO);
 
     return tiposMovimientos; 
   }
