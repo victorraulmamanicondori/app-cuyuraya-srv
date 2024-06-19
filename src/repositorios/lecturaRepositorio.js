@@ -41,10 +41,11 @@ class LecturaRepositorio {
       logger.info(`LecturaRepositorio:obtenerLecturaAnterior: idMedidor=${idMedidor}`);
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
+      const filas = await conexion.query("SELECT ID_LECTURA, LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new LecturaModelo({
+            idLectura: fila.ID_LECTURA.toString(),
             lecturaActual: fila.LECTURA_ACTUAL.toString()
           });
       }
@@ -97,7 +98,7 @@ class LecturaRepositorio {
       const filas = await conexion.query(`SELECT M3_CONSUMIDO, FEC_CREACION FROM TBL_LECTURA TL 
                             WHERE TL.ID_MEDIDOR = ?
                             ORDER BY FEC_CREACION DESC LIMIT 10`, [idMedidor]);
-      return filas.map(fila => ({ value: fila.M3_CONSUMIDO, date: fila.FEC_CREACION }));
+      return filas.map(fila => ({ "value": fila.M3_CONSUMIDO, "date": fila.FEC_CREACION.toISOString() }));
     } catch(error) {
       logger.error(`Error al listar lecturas por idMedidor:${error}`);
       throw new Error('Error al listar lecturas por idMedidor');

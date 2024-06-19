@@ -34,11 +34,13 @@ class MedidorServicio {
 
     const lecturas = await lecturaRepositorio.obtenerLecturasPorIdMedidor(idMedidor);
 
-    console.log('Lecturas:', lecturas);
+    console.log('Lecturas:', JSON.stringify(lecturas));
 
     if (lecturas && lecturas.length > 0) {
       const detectorApi = new DetectorApi();
-      return detectorApi.peticionPOST(lecturas);
+      const resultado = await detectorApi.peticionPOST(lecturas);
+      console.log('Resultado:', resultado);
+      return resultado;
     }
 
     return null;
