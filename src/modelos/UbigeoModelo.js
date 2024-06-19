@@ -1,10 +1,10 @@
 class UbigeoModelo {
-  constructor({ id,
+  constructor({ idUbigeo,
     idDepartamento, idProvincia, idDistrito, 
     idCentroPoblado, idComunidadCampesina, idSector,
     fecCreacion, fecActualizacion }) {
     
-    this.id = id;
+    this.idUbigeo = idUbigeo;
     this.idDepartamento = idDepartamento;
     this.idProvincia = idProvincia;
     this.idDistrito = idDistrito;

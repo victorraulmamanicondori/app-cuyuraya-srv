@@ -1,6 +1,6 @@
 class TarifaModelo {
-  constructor({ id, codigoTarifa, descripcion, montoTarifa, estado, fecCreacion, fecActualizacion }) {
-    this.id = id;
+  constructor({ idTarifa, codigoTarifa, descripcion, montoTarifa, estado, fecCreacion, fecActualizacion }) {
+    this.idTarifa = idTarifa;
     this.codigoTarifa = codigoTarifa;
     this.descripcion = descripcion;
     this.montoTarifa = montoTarifa;

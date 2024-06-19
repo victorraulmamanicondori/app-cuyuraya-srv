@@ -1,6 +1,6 @@
 class PagoReciboModelo {
-  constructor({ id, fechaPago, montoPago, idLectura, numComprobante, estado, fecCreacion, fecActualizacion }) {
-    this.id = id;
+  constructor({ idPagoRecibo, fechaPago, montoPago, idLectura, numComprobante, estado, fecCreacion, fecActualizacion }) {
+    this.idPagoRecibo = idPagoRecibo;
     this.fechaPago = fechaPago;
     this.montoPago = montoPago;
     this.idLectura = idLectura;

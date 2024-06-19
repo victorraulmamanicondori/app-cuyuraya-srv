@@ -1,6 +1,6 @@
 class TipoMovimientoModelo {
-  constructor({ id, concepto, idRubro, estado, fecCreacion, fecActualizacion }) {
-    this.id = id;
+  constructor({ idTipoMovimiento, concepto, idRubro, estado, fecCreacion, fecActualizacion }) {
+    this.idTipoMovimiento = idTipoMovimiento;
     this.concepto = concepto;
     this.idRubro = idRubro;
     this.estado = estado;
