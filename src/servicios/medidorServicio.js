@@ -16,7 +16,7 @@ class MedidorServicio {
       throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado`);
     }
 
-    const codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.id);
+    const codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.idUsuario);
 
     if (!codigoAsignacion) {
       // Si no logra asignar, lanzar error
