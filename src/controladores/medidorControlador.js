@@ -14,6 +14,17 @@ class MedidorControlador {
     }
   }
 
+  async detectarAnomaliasPorMedidor(req, res) {
+    try {
+      const codigoMedidor = req.params.codigoMedidor;
+      const resultado = await medidorServicio.detectarAnomaliasPorMedidor(codigoMedidor);
+      res.status(200).json(resultado);
+    } catch(error) {
+      logger.error(error);
+      res.status(401).json({ mensaje: error.message });
+    }
+  }
+
 }
 
 export default new MedidorControlador();
