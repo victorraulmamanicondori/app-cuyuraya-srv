@@ -41,11 +41,11 @@ class LecturaRepositorio {
       logger.info(`LecturaRepositorio:obtenerLecturaAnterior: idMedidor=${idMedidor}`);
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT LECTURA_ANTERIOR FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
+      const filas = await conexion.query("SELECT LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new LecturaModelo({
-            idLecturaAnterior: fila.LECTURA_ANTERIOR.toString()
+            idLecturaActual: fila.LECTURA_ACTUAL.toString()
           });
       }
       return null;
