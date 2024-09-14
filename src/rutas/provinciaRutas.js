@@ -4,9 +4,9 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/:codigoDepartamento', verificarToken, provinciaControlador.listarProvinciasPorDepartamento);
+router.get('/:codigoDepartamento', provinciaControlador.listarProvinciasPorDepartamento);
 
-router.get('/:codigo', verificarToken, provinciaControlador.obtenerProvinciaPorCodigo);
+router.get('/:codigo', provinciaControlador.obtenerProvinciaPorCodigo);
 
 router.post('/', verificarToken, provinciaControlador.crearProvincia);
 
