@@ -4,9 +4,9 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', verificarToken, departamentoControlador.listarDepartamentos);
+router.get('/', departamentoControlador.listarDepartamentos);
 
-router.get('/:codigo', verificarToken, departamentoControlador.obtenerDepartamentoPorCodigo);
+router.get('/:codigo', departamentoControlador.obtenerDepartamentoPorCodigo);
 
 router.post('/', verificarToken, departamentoControlador.crearDepartamento);
 
