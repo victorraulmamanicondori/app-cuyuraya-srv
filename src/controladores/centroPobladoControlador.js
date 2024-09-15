@@ -5,8 +5,8 @@ class CentroPobladoControlador {
 
   async listarCentrosPobladosPorDistrito(req, res) {
     try {
-      const codigoDistrito = req.params.codigoDistrito;
-      const centroPoblados = await centroPobladoServicio.listarCentrosPobladosPorDistrito(codigoDistrito);
+      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
+      const centroPoblados = await centroPobladoServicio.listarCentrosPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
       res.status(200).json(centroPoblados);
     } catch(error) {
       logger.error(error);

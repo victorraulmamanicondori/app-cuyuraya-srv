@@ -15,8 +15,8 @@ class DepartamentoControlador {
 
   async obtenerDepartamentoPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      const departamento = await departamentoServicio.obtenerDepartamentoPorCodigo(codigo);
+      const codigoDepartamento = req.params.codigoDepartamento;
+      const departamento = await departamentoServicio.obtenerDepartamentoPorCodigo(codigoDepartamento);
       if (departamento) {
         res.status(200).json(departamento);
       } else {
@@ -50,8 +50,8 @@ class DepartamentoControlador {
 
   async eliminarDepartamentoPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      await departamentoServicio.eliminarDepartamentoPorCodigo(codigo);
+      const codigoDepartamento = req.params.codigoDepartamento;
+      await departamentoServicio.eliminarDepartamentoPorCodigo(codigoDepartamento);
       res.status(204).end();
     } catch(error) {
       logger.error(error);

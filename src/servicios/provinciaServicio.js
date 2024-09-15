@@ -6,8 +6,9 @@ class ProvinciaServicio {
     return provinciaRepositorio.listarProvinciasPorDepartamento(codigoDepartamento);
   }
 
-  obtenerProvinciaPorCodigo(codigo) {
-    return provinciaRepositorio.obtenerProvinciaPorCodigo(codigo);
+  obtenerProvinciaPorCodigo(codigoDepartamento, codigoProvincia) {
+    return provinciaRepositorio
+      .obtenerProvinciaPorCodigo(codigoDepartamento, codigoProvincia);
   }
 
   async crearProvincia(provincia) {
@@ -18,8 +19,9 @@ class ProvinciaServicio {
     return provinciaRepositorio.actualizarProvincia(provincia);
   }
 
-  eliminarProvinciaPorCodigo(codigo) {
-    return provinciaRepositorio.eliminarProvinciaPorCodigo(codigo);
+  eliminarProvinciaPorCodigo(codigoDepartamento, codigoProvincia) {
+    return provinciaRepositorio
+      .eliminarProvinciaPorCodigo(codigoDepartamento, codigoProvincia);
   }
 
 }

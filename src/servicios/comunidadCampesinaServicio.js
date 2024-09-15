@@ -2,8 +2,9 @@ import comunidadCampesinaRepositorio from '../repositorios/comunidadCampesinaRep
 
 class ComunidadCampesinaServicio {
 
-  listarComunidadesCampesinasPorDistrito(codigoDistrito) {
-    return comunidadCampesinaRepositorio.listarComunidadesCampesinasPorDistrito(codigoDistrito);
+  listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
+    return comunidadCampesinaRepositorio
+      .listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
   }
 
   obtenerComunidadCampesinaPorId(id) {

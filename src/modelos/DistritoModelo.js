@@ -1,7 +1,8 @@
 class DistritoModelo {
-    constructor({ codigo, nombre, codigoProvincia }) {
-        this.codigo = codigo;
+    constructor({ codigoDistrito, nombre, codigoDepartamento, codigoProvincia }) {
+        this.codigoDistrito = codigoDistrito;
         this.nombre = nombre;
+        this.codigoDepartamento = codigoDepartamento;
         this.codigoProvincia = codigoProvincia;
     }
 }

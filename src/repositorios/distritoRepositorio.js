@@ -3,13 +3,14 @@ import DistritoModelo from '../modelos/DistritoModelo.js';
 
 class DistritoRepositorio {
 
-  async listarDistritosPorProvincia(codigoProvincia) {
+  async listarDistritosPorProvincia(codigoDepartamento, codigoProvincia) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE COD_PROVINCIA = ? ORDER BY NOMBRE ASC", [codigoProvincia]);
-      return filas.map(fila => new DistritoModelo({ codigo: fila.CODIGO, 
+      const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? ORDER BY NOMBRE ASC", [codigoDepartamento, codigoProvincia]);
+      return filas.map(fila => new DistritoModelo({ codigoDistrito: fila.COD_DISTRITO, 
                                               nombre: fila.NOMBRE, 
+                                              codigoDepartamento: fila.COD_DEPARTAMENTO,
                                               codigoProvincia: fila.COD_PROVINCIA }));
     } catch(error) {
       console.log(error);
@@ -18,15 +19,16 @@ class DistritoRepositorio {
     }
   }
 
-  async obtenerDistritoPorCodigo(codigo) {
+  async obtenerDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE CODIGO = ?", [codigo]);
+      const filas = await conexion.query("SELECT * FROM TBL_DISTRITO WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ?", [codigoDepartamento, codigoProvincia, codigoDistrito]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new DistritoModelo({ codigo: fila.CODIGO, 
+        return new DistritoModelo({ codigoDistrito: fila.COD_DISTRITO, 
                               nombre: fila.NOMBRE, 
+                              codigoDepartamento: fila.COD_DEPARTAMENTO,
                               codigoProvincia: fila.COD_PROVINCIA });
       }
       return null;
@@ -40,9 +42,9 @@ class DistritoRepositorio {
   async crearDistrito(distrito) {
     let conexion;
     try {
-      const { codigo, nombre, codigoProvincia } = distrito;
+      const { codigoDistrito, nombre, codigoDepartamento, codigoProvincia } = distrito;
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_DISTRITO (CODIGO, NOMBRE, COD_PROVINCIA) VALUES (?, ?, ?)`, [codigo, nombre, codigoProvincia]);
+      await conexion.query(`INSERT INTO TBL_DISTRITO (COD_DISTRITO, NOMBRE, COD_DEPARTAMENTO, COD_PROVINCIA) VALUES (?, ?, ?, ?)`, [codigoDistrito, nombre, codigoDepartamento, codigoProvincia]);
       return distrito;
     } catch(error) {
       console.log(error);
@@ -54,12 +56,12 @@ class DistritoRepositorio {
   async actualizarDistrito(distrito) {
     let conexion;
     try {
-      const { codigo, nombre, codigoProvincia } = distrito;
+      const { codigoDistrito, nombre, codigoDepartamento, codigoProvincia } = distrito;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_DISTRITO
-                            SET NOMBRE = ?, COD_PROVINCIA = ?
-                            WHERE CODIGO = ?`,
-                                [nombre, codigoProvincia, codigo]);
+                            SET NOMBRE = ?
+                            WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ?`,
+                                [nombre, codigoDepartamento, codigoProvincia, codigoDistrito]);
       return distrito;
     } catch(error) {
       console.log(error);
@@ -68,11 +70,11 @@ class DistritoRepositorio {
     }
   }
 
-  async eliminarDistritoPorCodigo(codigo) {
+  async eliminarDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_DISTRITO WHERE CODIGO = ?", [codigo]);
+      await conexion.query("DELETE FROM TBL_DISTRITO WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ?", [codigoDepartamento, codigoProvincia, codigoDistrito]);
     } catch(error) {
       console.log(error);
     } finally {

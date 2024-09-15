@@ -16,8 +16,8 @@ class provinciaControlador {
 
   async obtenerProvinciaPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      const provincia = await provinciaServicio.obtenerProvinciaPorcodigo(codigo);
+      const { codigoDepartamento, codigoProvincia } = req.params;
+      const provincia = await provinciaServicio.obtenerProvinciaPorCodigo(codigoDepartamento, codigoProvincia);
       if (provincia) {
         res.status(200).json(provincia);
       } else {
@@ -51,8 +51,8 @@ class provinciaControlador {
 
   async eliminarProvinciaPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      await provinciaServicio.eliminarProvinciaPorCodigo(codigo);
+      const { codigoDepartamento, codigoProvincia } = req.params;
+      await provinciaServicio.eliminarProvinciaPorCodigo(codigoDepartamento, codigoProvincia);
       res.status(204).end();
     } catch(error) {
       logger.error(error);

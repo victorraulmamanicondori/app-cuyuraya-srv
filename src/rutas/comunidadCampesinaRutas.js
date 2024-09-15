@@ -4,7 +4,8 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/:codigoDistrito', comunidadCampesinaControlador.listarComunidadesCampesinasPorDistrito);
+router.get('/:codigoDepartamento/:codigoProvincia/:codigoDistrito', 
+    comunidadCampesinaControlador.listarComunidadesCampesinasPorDistrito);
 
 router.get('/:id', comunidadCampesinaControlador.obtenerComunidadCampesinaPorId);
 

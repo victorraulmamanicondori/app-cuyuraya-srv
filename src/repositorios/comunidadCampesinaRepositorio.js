@@ -3,14 +3,17 @@ import ComunidadCampesinaModelo from '../modelos/ComunidadCampesinaModelo.js';
 
 class ComunidadCampesinaRepositorio {
 
-  async listarComunidadesCampesinasPorDistrito(codigoDistrito) {
+  async listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE COD_DISTRITO = ? ORDER BY NOMBRE ASC", [codigoDistrito]);
+      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ? ORDER BY NOMBRE ASC", 
+        [codigoDepartamento, codigoProvincia, codigoDistrito]);
       return filas.map(fila => new ComunidadCampesinaModelo({ idComunidadCampesina: fila.ID_COMUNIDAD_CAMPESINA, 
-                                                          nombre: fila.NOMBRE,
-                                                         codigoDistrito: fila.COD_DISTRITO }));
+                                                              nombre: fila.NOMBRE,
+                                                              codigoDepartamento: fila.COD_DEPARTAMENTO,
+                                                              codigoProvincia: fila.COD_PROVINCIA,
+                                                              codigoDistrito: fila.COD_DISTRITO }));
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de listar comunidadCampesinas');
@@ -28,6 +31,8 @@ class ComunidadCampesinaRepositorio {
         const fila = filas[0];
         return new ComunidadCampesinaModelo({ idComunidadCampesina: fila.ID_COMUNIDAD_CAMPESINA, 
                                          nombre: fila.NOMBRE,
+                                         codigoDepartamento: fila.COD_DEPARTAMENTO,
+                                         codigoProvincia: fila.COD_PROVINCIA,
                                          codigoDistrito: fila.COD_DISTRITO });
       }
       return null;
@@ -42,9 +47,10 @@ class ComunidadCampesinaRepositorio {
   async crearComunidadCampesina(comunidadCampesina) {
     let conexion;
     try {
-      const { idComunidadCampesina, nombre, codigoDistrito } = comunidadCampesina;
+      const { nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = comunidadCampesina;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_COMUNIDAD_CAMPESINA (ID_COMUNIDAD_CAMPESINA, NOMBRE, COD_DISTRITO) VALUES (?, ?, ?)`, [idComunidadCampesina, nombre, codigoDistrito]);
+      const resultado = await conexion.query(`INSERT INTO TBL_COMUNIDAD_CAMPESINA (NOMBRE, COD_DEPARTAMENTO, COD_PROVINCIA, COD_DISTRITO) VALUES (?, ?, ?, ?)`, 
+        [nombre, codigoDepartamento, codigoProvincia, codigoDistrito]);
       comunidadCampesina.idComunidadCampesina = resultado.insertId.toString();
       return comunidadCampesina;
     } catch(error) {
@@ -58,12 +64,12 @@ class ComunidadCampesinaRepositorio {
   async actualizarComunidadCampesina(comunidadCampesina) {
     let conexion;
     try {
-      const { idComunidadCampesina, nombre, codigoDistrito } = comunidadCampesina;
+      const { idComunidadCampesina, nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = comunidadCampesina;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_COMUNIDAD_CAMPESINA
-                            SET NOMBRE = ?, COD_DISTRITO = ?
+                            SET NOMBRE = ?, COD_DEPARTAMENTO = ?, COD_PROVINCIA = ?, COD_DISTRITO = ?
                             WHERE ID_COMUNIDAD_CAMPESINA = ?`,
-                                [nombre, codigoDistrito, idComunidadCampesina]);
+                                [nombre, codigoDepartamento, codigoProvincia, codigoDistrito, idComunidadCampesina]);
       return comunidadCampesina;
     } catch(error) {
       console.log(error);

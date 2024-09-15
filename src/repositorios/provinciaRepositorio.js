@@ -20,15 +20,15 @@ class ProvinciaRepositorio {
     }
   }
 
-  async obtenerProvinciaPorCodigo(codigo) {
+  async obtenerProvinciaPorCodigo(codigoDepartamento, codigoProvincia) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigo]);
+      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ?", [codigoDepartamento, codigoProvincia]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ProvinciaModelo({
-                              codigo: fila.CODIGO,
+                              codigoProvincia: fila.COD_PROVINCIA,
                               nombre: fila.NOMBRE,
                               codigoDepartamento: fila.COD_DEPARTAMENTO
                             });
@@ -44,10 +44,10 @@ class ProvinciaRepositorio {
   async crearProvincia(provincia) {
     let conexion;
     try {
-      const { codigo, nombre, codigoDepartamento } = provincia;
+      const { codigoProvincia, nombre, codigoDepartamento } = provincia;
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_PROVINCIA (CODIGO, NOMBRE, COD_DEPARTAMENTO) VALUES (?, ?, ?)`, 
-                                            [codigo, nombre, codigoDepartamento]);
+      await conexion.query(`INSERT INTO TBL_PROVINCIA (COD_PROVINCIA, NOMBRE, COD_DEPARTAMENTO) VALUES (?, ?, ?)`, 
+                                            [codigoProvincia, nombre, codigoDepartamento]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -59,12 +59,12 @@ class ProvinciaRepositorio {
   async actualizarProvincia(provincia) {
     let conexion;
     try {
-      const { codigo, nombre, codigoDepartamento } = provincia;
+      const { codigoProvincia, nombre, codigoDepartamento } = provincia;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_PROVINCIA
-                            SET NOMBRE = ?, COD_DEPARTAMENTO = ?
-                            WHERE CODIGO = ?`,
-                                [nombre, codigoDepartamento, codigo]);
+                            SET NOMBRE = ?
+                            WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ?`,
+                                [nombre, codigoDepartamento, codigoProvincia]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -73,11 +73,11 @@ class ProvinciaRepositorio {
     }
   }
 
-  async eliminarProvinciaPorCodigo(codigo) {
+  async eliminarProvinciaPorCodigo(codigoProvincia) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigo]);
+      await conexion.query("DELETE FROM TBL_PROVINCIA WHERE COD_PROVINCIA = ?", [codigoProvincia]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar provincia');

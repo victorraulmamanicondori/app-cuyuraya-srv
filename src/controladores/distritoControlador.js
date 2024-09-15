@@ -16,8 +16,9 @@ class distritoControlador {
 
   async obtenerDistritoPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      const distrito = await distritoServicio.obtenerDistritoPorCodigo(codigo);
+      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
+      const distrito = await distritoServicio
+        .obtenerDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
       if (distrito) {
         res.status(200).json(distrito);
       } else {
@@ -51,8 +52,8 @@ class distritoControlador {
 
   async eliminarDistritoPorCodigo(req, res) {
     try {
-      const codigo = req.params.codigo;
-      await distritoServicio.eliminarDistritoPorCodigo(codigo);
+      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
+      await distritoServicio.eliminarDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
       res.status(204).end();
     } catch(error) {
       logger.error(error);

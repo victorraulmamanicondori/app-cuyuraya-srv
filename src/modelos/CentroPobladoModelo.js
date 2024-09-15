@@ -1,9 +1,11 @@
-class CentroProbadoModelo {
-    constructor({ idCentroPoblado, nombre, codigoDistrito }) {
+class CentroPobladoModelo {
+    constructor({ idCentroPoblado, nombre, codigoDepartamento, codigoProvincia, codigoDistrito }) {
         this.idCentroPoblado = idCentroPoblado;
         this.nombre = nombre;
+        this.codigoDepartamento = codigoDepartamento;
+        this.codigoProvincia = codigoProvincia;
         this.codigoDistrito = codigoDistrito;
     }
 }
 
-export default CentroProbadoModelo;
+export default CentroPobladoModelo;

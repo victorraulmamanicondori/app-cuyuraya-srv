@@ -6,8 +6,8 @@ class DepartamentoServicio {
     return departamentoRepositorio.listarDepartamentos();
   }
 
-  obtenerDepartamentoPorCodigo(codigo) {
-    return departamentoRepositorio.obtenerDepartamentoPorCodigo(codigo);
+  obtenerDepartamentoPorCodigo(codigoDepartamento) {
+    return departamentoRepositorio.obtenerDepartamentoPorCodigo(codigoDepartamento);
   }
 
   async crearDepartamento(departamento) {
@@ -18,8 +18,8 @@ class DepartamentoServicio {
     return departamentoRepositorio.actualizarDepartamento(departamento);
   }
 
-  eliminarDepartamentoPorCodigo(codigo) {
-    return departamentoRepositorio.eliminarDepartamentoPorCodigo(codigo);
+  eliminarDepartamentoPorCodigo(codigoDepartamento) {
+    return departamentoRepositorio.eliminarDepartamentoPorCodigo(codigoDepartamento);
   }
 
 }

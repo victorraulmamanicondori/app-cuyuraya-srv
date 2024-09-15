@@ -4,7 +4,7 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/:codigoDistrito', centroPobladoControlador.listarCentrosPobladosPorDistrito);
+router.get('/:codigoDepartamento/:codigoProvincia/:codigoDistrito', centroPobladoControlador.listarCentrosPobladosPorDistrito);
 
 router.get('/:id', centroPobladoControlador.obtenerCentroPobladoPorId);
 

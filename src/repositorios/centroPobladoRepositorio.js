@@ -3,13 +3,16 @@ import CentroPobladoModelo from '../modelos/CentroPobladoModelo.js';
 
 class CentroPobladoRepositorio {
 
-  async listarCentroPobladosPorDistrito(codigoDistrito) {
+  async listarCentroPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE COD_DISTRITO = ? ORDER BY NOMBRE ASC", [codigoDistrito]);
+      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ? ORDER BY NOMBRE ASC", 
+        [codigoDepartamento, codigoProvincia, codigoDistrito]);
       return filas.map(fila => new CentroPobladoModelo({ idCentroPoblado: fila.ID_CENTRO_POBLADO, 
-                                                          nombre: fila.NOMBRE,
+                                                         nombre: fila.NOMBRE,
+                                                         codigoDepartamento: fila.COD_DEPARTAMENTO,
+                                                         codigoProvincia: fila.COD_PROVINCIA,
                                                          codigoDistrito: fila.COD_DISTRITO }));
     } catch(error) {
       console.log(error);
@@ -28,6 +31,8 @@ class CentroPobladoRepositorio {
         const fila = filas[0];
         return new CentroPobladoModelo({ idCentroPoblado: fila.ID_CENTRO_POBLADO, 
                                          nombre: fila.NOMBRE,
+                                         codigoDepartamento: fila.COD_DEPARTAMENTO,
+                                         codigoProvincia: fila.COD_PROVINCIA,
                                          codigoDistrito: fila.COD_DISTRITO });
       }
       return null;
@@ -42,9 +47,10 @@ class CentroPobladoRepositorio {
   async crearCentroPoblado(centroPoblado) {
     let conexion;
     try {
-      const { nombre, codigoDistrito } = centroPoblado;
+      const { nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = centroPoblado;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_CENTRO_POBLADO (NOMBRE, COD_DISTRITO) VALUES (?, ?)`, [nombre, codigoDistrito]);
+      const resultado = await conexion.query(`INSERT INTO TBL_CENTRO_POBLADO (NOMBRE, COD_DEPARTAMENTO, COD_PROVINCIA, COD_DISTRITO) VALUES (?, ?, ?, ?)`, 
+        [nombre, codigoDepartamento, codigoProvincia, codigoDistrito]);
       centroPoblado.idCentroPoblado = resultado.insertId.toString();
       return centroPoblado;
     } catch(error) {
@@ -58,12 +64,12 @@ class CentroPobladoRepositorio {
   async actualizarCentroPoblado(centroPoblado) {
     let conexion;
     try {
-      const { idCentroPoblado, nombre, codigoDistrito } = centroPoblado;
+      const { idCentroPoblado, nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = centroPoblado;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_CENTRO_POBLADO
-                            SET NOMBRE = ?, COD_DISTRITO = ?
+                            SET NOMBRE = ?, COD_DEPARTAMENTO = ?, COD_PROVINCIA = ?, COD_DISTRITO = ?
                             WHERE ID_CENTRO_POBLADO = ?`,
-                                [nombre, codigoDistrito, idCentroPoblado]);
+                                [nombre, codigoDepartamento, codigoProvincia, codigoDistrito, idCentroPoblado]);
       return centroPoblado;
     } catch(error) {
       console.log(error);

@@ -2,8 +2,8 @@ import centroPobladoRepositorio from '../repositorios/centroPobladoRepositorio.j
 
 class CentroPobladoServicio {
 
-  listarCentrosPobladosPorDistrito(codigoDistrito) {
-    return centroPobladoRepositorio.listarCentroPobladosPorDistrito(codigoDistrito);
+  listarCentrosPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
+    return centroPobladoRepositorio.listarCentroPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
   }
 
   obtenerCentroPobladoPorId(id) {

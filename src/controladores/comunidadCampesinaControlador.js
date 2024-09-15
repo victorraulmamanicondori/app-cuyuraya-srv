@@ -5,8 +5,9 @@ class ComunidadCampesinaControlador {
 
   async listarComunidadesCampesinasPorDistrito(req, res) {
     try {
-      const codigoDistrito = req.params.codigoDistrito;
-      const comunidadCampesinas = await comunidadCampesinaServicio.listarComunidadesCampesinasPorDistrito(codigoDistrito);
+      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
+      const comunidadCampesinas = await comunidadCampesinaServicio
+        .listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
       res.status(200).json(comunidadCampesinas);
     } catch(error) {
       logger.error(error);
