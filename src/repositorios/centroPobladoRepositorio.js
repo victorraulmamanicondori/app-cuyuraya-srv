@@ -3,37 +3,33 @@ import CentroPobladoModelo from '../modelos/CentroPobladoModelo.js';
 
 class CentroPobladoRepositorio {
 
-  async listarCentroPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
+  async listarCentroPobladosPorDistrito(codigoDistrito) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE COD_DEPARTAMENTO = ? AND COD_PROVINCIA = ? AND COD_DISTRITO = ? ORDER BY NOMBRE ASC", 
-        [codigoDepartamento, codigoProvincia, codigoDistrito]);
-      return filas.map(fila => new CentroPobladoModelo({ idCentroPoblado: fila.ID_CENTRO_POBLADO, 
+      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
+        [`${codigoDistrito}%`]);
+      return filas.map(fila => new CentroPobladoModelo({ codigo: fila.CODIGO, 
                                                          nombre: fila.NOMBRE,
-                                                         codigoDepartamento: fila.COD_DEPARTAMENTO,
-                                                         codigoProvincia: fila.COD_PROVINCIA,
-                                                         codigoDistrito: fila.COD_DISTRITO }));
+                                                         area: fila.AREA }));
     } catch(error) {
       console.log(error);
-      throw new Error('Error al tratar de listar centroPoblados');
+      throw new Error('Error al tratar de listar Centro Poblados');
     } finally {
       if (conexion) conexion.release();
     }
   }
 
-  async obtenerCentroPobladoPorId(id) {
+  async obtenerCentroPobladoPorCodigo(codigoCentroPoblado) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE ID_CENTRO_POBLADO = ?", [id]);
+      const filas = await conexion.query("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [codigoCentroPoblado]);
       if (filas.length > 0) {
         const fila = filas[0];
-        return new CentroPobladoModelo({ idCentroPoblado: fila.ID_CENTRO_POBLADO, 
+        return new CentroPobladoModelo({ codigo: fila.CODIGO, 
                                          nombre: fila.NOMBRE,
-                                         codigoDepartamento: fila.COD_DEPARTAMENTO,
-                                         codigoProvincia: fila.COD_PROVINCIA,
-                                         codigoDistrito: fila.COD_DISTRITO });
+                                         area: fila.AREA });
       }
       return null;
     } catch(error) {
@@ -47,15 +43,14 @@ class CentroPobladoRepositorio {
   async crearCentroPoblado(centroPoblado) {
     let conexion;
     try {
-      const { nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = centroPoblado;
+      const { codigo, nombre, area } = centroPoblado;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_CENTRO_POBLADO (NOMBRE, COD_DEPARTAMENTO, COD_PROVINCIA, COD_DISTRITO) VALUES (?, ?, ?, ?)`, 
-        [nombre, codigoDepartamento, codigoProvincia, codigoDistrito]);
-      centroPoblado.idCentroPoblado = resultado.insertId.toString();
+      const resultado = await conexion.query(`INSERT INTO TBL_CENTRO_POBLADO (CODIGO, NOMBRE, AREA) VALUES (?, ?, ?)`, 
+        [codigo, nombre, area]);
       return centroPoblado;
     } catch(error) {
       console.log(error);
-      throw new Error('Error al tratar de registrar centroPoblado');
+      throw new Error('Error al tratar de registrar Centro Poblado');
     } finally {
       if (conexion) conexion.release();
     }
@@ -64,12 +59,12 @@ class CentroPobladoRepositorio {
   async actualizarCentroPoblado(centroPoblado) {
     let conexion;
     try {
-      const { idCentroPoblado, nombre, codigoDepartamento, codigoProvincia, codigoDistrito } = centroPoblado;
+      const { codigo, nombre, area } = centroPoblado;
       conexion = await pool.getConnection();
       await conexion.query(`UPDATE TBL_CENTRO_POBLADO
-                            SET NOMBRE = ?, COD_DEPARTAMENTO = ?, COD_PROVINCIA = ?, COD_DISTRITO = ?
-                            WHERE ID_CENTRO_POBLADO = ?`,
-                                [nombre, codigoDepartamento, codigoProvincia, codigoDistrito, idCentroPoblado]);
+                            SET NOMBRE = ?, AREA = ?
+                            WHERE CODIGO = ?`,
+                                [nombre, area, codigo]);
       return centroPoblado;
     } catch(error) {
       console.log(error);
@@ -79,14 +74,14 @@ class CentroPobladoRepositorio {
     }
   }
 
-  async eliminarCentroPobladoPorId(id) {
+  async eliminarCentroPobladoPorCodigo(codigoCentroPoblado) {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_CENTRO_POBLADO WHERE ID_CENTRO_POBLADO = ?", [id]);
+      await conexion.query("DELETE FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [codigoCentroPoblado]);
     } catch(error) {
       console.log(error);
-      throw new Error('Error al tratar de eliminar centroPoblado');
+      throw new Error('Error al tratar de eliminar Centro Poblado');
     } finally {
       if (conexion) conexion.release();
     }

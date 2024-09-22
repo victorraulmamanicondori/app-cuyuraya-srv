@@ -4,14 +4,14 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-router.get('/:codigoDepartamento/:codigoProvincia/:codigoDistrito', centroPobladoControlador.listarCentrosPobladosPorDistrito);
+router.get('/distrito/:codigoDistrito', centroPobladoControlador.listarCentrosPobladosPorDistrito);
 
-router.get('/:id', centroPobladoControlador.obtenerCentroPobladoPorId);
+router.get('/:codigoCentroPoblado', centroPobladoControlador.obtenerCentroPobladoPorCodigo);
 
 router.post('/', verificarToken, centroPobladoControlador.crearCentroPoblado);
 
 router.put('/', verificarToken, centroPobladoControlador.actualizarCentroPoblado);
 
-router.delete('/:id', verificarToken, centroPobladoControlador.eliminarCentroPobladoPorId);
+router.delete('/:codigoCentroPoblado', verificarToken, centroPobladoControlador.eliminarCentroPobladoPorCodigo);
 
 export default router;

@@ -5,9 +5,8 @@ class ComunidadCampesinaControlador {
 
   async listarComunidadesCampesinasPorDistrito(req, res) {
     try {
-      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
-      const comunidadCampesinas = await comunidadCampesinaServicio
-        .listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
+      const { codigoDistrito } = req.params;
+      const comunidadCampesinas = await comunidadCampesinaServicio.listarComunidadesCampesinasPorDistrito(codigoDistrito);
       res.status(200).json(comunidadCampesinas);
     } catch(error) {
       logger.error(error);
@@ -15,10 +14,10 @@ class ComunidadCampesinaControlador {
     }
   }
 
-  async obtenerComunidadCampesinaPorId(req, res) {
+  async obtenerComunidadCampesinaPorCodigo(req, res) {
     try {
-      const id = req.params.id;
-      const comunidadCampesina = await comunidadCampesinaServicio.obtenerComunidadCampesinaPorId(id);
+      const codigoComunidadCampesina = req.params.codigoComunidadCampesina;
+      const comunidadCampesina = await comunidadCampesinaServicio.obtenerComunidadCampesinaPorCodigo(codigoComunidadCampesina);
       if (comunidadCampesina) {
         res.status(200).json(comunidadCampesina);
       } else {
@@ -50,10 +49,10 @@ class ComunidadCampesinaControlador {
     }
   }
 
-  async eliminarComunidadCampesinaPorId(req, res) {
+  async eliminarComunidadCampesinaPorCodigo(req, res) {
     try {
-      const id = req.params.id;
-      await comunidadCampesinaServicio.eliminarComunidadCampesinaPorId(id);
+      const codigoComunidadCampesina = req.params.codigoComunidadCampesina;
+      await comunidadCampesinaServicio.eliminarComunidadCampesinaPorCodigo(codigoComunidadCampesina);
       res.status(204).end();
     } catch(error) {
       logger.error(error);

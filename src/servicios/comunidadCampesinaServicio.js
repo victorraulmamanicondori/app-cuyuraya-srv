@@ -2,13 +2,12 @@ import comunidadCampesinaRepositorio from '../repositorios/comunidadCampesinaRep
 
 class ComunidadCampesinaServicio {
 
-  listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
-    return comunidadCampesinaRepositorio
-      .listarComunidadesCampesinasPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
+  listarComunidadesCampesinasPorDistrito(codigoDistrito) {
+    return comunidadCampesinaRepositorio.listarComunidadesCampesinasPorDistrito(codigoDistrito);
   }
 
-  obtenerComunidadCampesinaPorId(id) {
-    return comunidadCampesinaRepositorio.obtenerComunidadCampesinaPorId(id);
+  obtenerComunidadCampesinaPorCodigo(codigo) {
+    return comunidadCampesinaRepositorio.obtenerComunidadCampesinaPorCodigo(codigo);
   }
 
   async crearComunidadCampesina(comunidadCampesina) {
@@ -19,8 +18,8 @@ class ComunidadCampesinaServicio {
     return comunidadCampesinaRepositorio.actualizarComunidadCampesina(comunidadCampesina);
   }
 
-  eliminarComunidadCampesinaPorId(id) {
-    return comunidadCampesinaRepositorio.eliminarComunidadCampesinaPorId(id);
+  eliminarComunidadCampesinaPorCodigo(codigo) {
+    return comunidadCampesinaRepositorio.eliminarComunidadCampesinaPorCodigo(codigo);
   }
 
 }

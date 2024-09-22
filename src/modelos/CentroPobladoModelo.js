@@ -1,10 +1,8 @@
 class CentroPobladoModelo {
-    constructor({ idCentroPoblado, nombre, codigoDepartamento, codigoProvincia, codigoDistrito }) {
-        this.idCentroPoblado = idCentroPoblado;
+    constructor({ codigo, nombre, area }) {
+        this.codigo = codigo;
         this.nombre = nombre;
-        this.codigoDepartamento = codigoDepartamento;
-        this.codigoProvincia = codigoProvincia;
-        this.codigoDistrito = codigoDistrito;
+        this.area = area;
     }
 }
 

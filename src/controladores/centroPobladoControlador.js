@@ -5,8 +5,8 @@ class CentroPobladoControlador {
 
   async listarCentrosPobladosPorDistrito(req, res) {
     try {
-      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
-      const centroPoblados = await centroPobladoServicio.listarCentrosPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
+      const { codigoDistrito } = req.params;
+      const centroPoblados = await centroPobladoServicio.listarCentrosPobladosPorDistrito(codigoDistrito);
       res.status(200).json(centroPoblados);
     } catch(error) {
       logger.error(error);
@@ -14,10 +14,10 @@ class CentroPobladoControlador {
     }
   }
 
-  async obtenerCentroPobladoPorId(req, res) {
+  async obtenerCentroPobladoPorCodigo(req, res) {
     try {
-      const id = req.params.id;
-      const centroPoblado = await centroPobladoServicio.obtenerCentroPobladoPorId(id);
+      const codigoCentroPoblado = req.params.codigoCentroPoblado;
+      const centroPoblado = await centroPobladoServicio.obtenerCentroPobladoPorCodigo(codigoCentroPoblado);
       if (centroPoblado) {
         res.status(200).json(centroPoblado);
       } else {
@@ -49,10 +49,10 @@ class CentroPobladoControlador {
     }
   }
 
-  async eliminarCentroPobladoPorId(req, res) {
+  async eliminarCentroPobladoPorCodigo(req, res) {
     try {
-      const id = req.params.id;
-      await centroPobladoServicio.eliminarCentroPobladoPorId(id);
+      const codigoCentroPoblado = req.params.codigoCentroPoblado;
+      await centroPobladoServicio.eliminarCentroPobladoPorCodigo(codigoCentroPoblado);
       res.status(204).end();
     } catch(error) {
       logger.error(error);
