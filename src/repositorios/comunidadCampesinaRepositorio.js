@@ -7,7 +7,7 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ? ORDER BY NOMBRE ASC", 
+      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
         [`${codigoDistrito}%`]);
       return filas.map(fila => new ComunidadCampesinaModelo({ codigo: fila.CODIGO, 
                                                               nombre: fila.NOMBRE }));

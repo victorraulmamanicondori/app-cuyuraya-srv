@@ -7,7 +7,7 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ? ORDER BY NOMBRE ASC", 
+      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
         [`${codigoDistrito}%`]);
       return filas.map(fila => new ComunidadNativaModelo({ codigo: fila.CODIGO, 
                                                             nombre: fila.NOMBRE,
