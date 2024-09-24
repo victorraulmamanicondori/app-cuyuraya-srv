@@ -50,7 +50,7 @@ def doPOST(excelName):
 		    print("Error:", response.status_code, response.text)
 		    print(f"{department}-{province}-{dis_code}{dis_name}-{dis_code}{cN_code}{cN_name}")
 
-directorio="/home/miguel/Projects/eas/cargar-ubigeo"
+directorio = os.getcwd()
 patron = os.path.join(directorio, "rptComunidadNativa_amazonas.xls")
 archivos = glob.glob(patron)
 

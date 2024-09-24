@@ -45,7 +45,7 @@ def doPOST(excelName):
 		else:
 		    print("Error:", response.status_code, response.text)
 
-directorio="/home/miguel/Projects/eas/cargar-ubigeo"
+directorio = os.getcwd()
 patron = os.path.join(directorio, "ReporteCCPP_*v2.xls")
 archivos = glob.glob(patron)
 
