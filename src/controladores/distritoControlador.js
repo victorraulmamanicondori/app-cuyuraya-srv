@@ -1,7 +1,7 @@
 import logger from '../config/logger.js';
 import distritoServicio from '../servicios/distritoServicio.js';
 
-class distritoControlador {
+class DistritoControlador {
 
   async listarDistritosPorProvincia(req, res) {
     try {
@@ -16,9 +16,8 @@ class distritoControlador {
 
   async obtenerDistritoPorCodigo(req, res) {
     try {
-      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
-      const distrito = await distritoServicio
-        .obtenerDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
+      const { codigoDistrito } = req.params;
+      const distrito = await distritoServicio.obtenerDistritoPorCodigo(codigoDistrito);
       if (distrito) {
         res.status(200).json(distrito);
       } else {
@@ -52,8 +51,8 @@ class distritoControlador {
 
   async eliminarDistritoPorCodigo(req, res) {
     try {
-      const { codigoDepartamento, codigoProvincia, codigoDistrito } = req.params;
-      await distritoServicio.eliminarDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
+      const { codigoDistrito } = req.params;
+      await distritoServicio.eliminarDistritoPorCodigo(codigoDistrito);
       res.status(204).end();
     } catch(error) {
       logger.error(error);
@@ -62,5 +61,5 @@ class distritoControlador {
   }
 }
 
-export default new distritoControlador();
+export default new DistritoControlador();
 

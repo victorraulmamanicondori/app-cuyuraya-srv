@@ -2,13 +2,12 @@ import distritoRepositorio from '../repositorios/distritoRepositorio.js';
 
 class DistritoServicio {
 
-  listarDistritosPorProvincia(codigoDepartamento, codigoProvincia) {
-    return distritoRepositorio.listarDistritosPorProvincia(codigoDepartamento, codigoProvincia);
+  listarDistritosPorProvincia(codigoProvincia) {
+    return distritoRepositorio.listarDistritosPorProvincia(codigoProvincia);
   }
 
-  obtenerDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito) {
-    return distritoRepositorio
-      .obtenerDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
+  obtenerDistritoPorCodigo(codigoDistrito) {
+    return distritoRepositorio.obtenerDistritoPorCodigo(codigoDistrito);
   }
 
   async crearDistrito(distrito) {
@@ -19,9 +18,8 @@ class DistritoServicio {
     return distritoRepositorio.actualizarDistrito(distrito);
   }
 
-  eliminarDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito) {
-    return distritoRepositorio
-      .eliminarDistritoPorCodigo(codigoDepartamento, codigoProvincia, codigoDistrito);
+  eliminarDistritoPorCodigo(codigoDistrito) {
+    return distritoRepositorio.eliminarDistritoPorCodigo(codigoDistrito);
   }
 
 }

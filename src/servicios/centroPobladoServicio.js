@@ -2,12 +2,12 @@ import centroPobladoRepositorio from '../repositorios/centroPobladoRepositorio.j
 
 class CentroPobladoServicio {
 
-  listarCentrosPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito) {
-    return centroPobladoRepositorio.listarCentroPobladosPorDistrito(codigoDepartamento, codigoProvincia, codigoDistrito);
+  listarCentrosPobladosPorDistrito(codigoDistrito) {
+    return centroPobladoRepositorio.listarCentroPobladosPorDistrito(codigoDistrito);
   }
 
-  obtenerCentroPobladoPorId(id) {
-    return centroPobladoRepositorio.obtenerCentroPobladoPorId(id);
+  obtenerCentroPobladoPorCodigo(codigoCentroPoblado) {
+    return centroPobladoRepositorio.obtenerCentroPobladoPorCodigo(codigoCentroPoblado);
   }
 
   async crearCentroPoblado(centroPoblado) {
@@ -18,8 +18,8 @@ class CentroPobladoServicio {
     return centroPobladoRepositorio.actualizarCentroPoblado(centroPoblado);
   }
 
-  eliminarCentroPobladoPorId(id) {
-    return centroPobladoRepositorio.eliminarCentroPobladoPorId(id);
+  eliminarCentroPobladoPorCentroPoblado(codigoCentroPoblado) {
+    return centroPobladoRepositorio.eliminarCentroPobladoPorCodigo(codigoCentroPoblado);
   }
 
 }

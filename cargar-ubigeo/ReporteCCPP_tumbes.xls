@@ -1,0 +1,5474 @@
+
+
+
+
+	
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/css/plugin/winModal/basic.css"></link>
+<!-- IE6 "fix" for the close png image -->
+<!--[if lt IE 7]>
+<link type='text/css' href='../resources/css/plugin/winModal/basic_ie.css' rel='stylesheet' media='screen' />
+<![endif]-->
+<script type="text/javascript" src="../resources/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../resources/js/plugin/winModal/jquery.simplemodal.js"></script>
+
+<script type="text/javascript">
+function winModal(id){	
+	$("#"+id).modal();
+}
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Lista de Centros Poblados - INEI</title>
+<style type="text/css">
+body{
+	font-family: "Arial","Helvetica",sans-serif;
+	font-size: 11px; 
+}
+table {
+   
+   text-align: left;
+   border-collapse: collapse;
+   margin: 0 0 1em 0;
+   caption-side: top;
+}
+th{
+color: #436EE3;
+}
+caption, td, th {
+   padding: 0.3em;
+   text-align: left;
+}
+td{
+ border-bottom: 1px solid #ccc;
+ color:#444444;
+}
+td.last{
+ border-bottom: none;
+}
+
+tbody {
+   border-top: 1px solid #000;
+   border-bottom: 1px solid #000;
+}
+tbody th, tfoot th {
+   border: 0;
+}
+th.name {
+   width: 25%;
+}
+th.location {
+   width: 20%;
+}
+th.lasteruption {
+   width: 30%;
+}
+th.eruptiontype {
+   width: 25%;
+}
+tfoot {
+   text-align: center;
+   color: #555;
+   font-size: 0.8em;
+}
+</style>
+</head>
+<body>
+
+
+<h3>BÚSQUEDA DE CENTROS POBLADOS </h3>
+
+		
+
+<table width="400px">
+	<thead>
+		<tr>
+		<th colspan="3">Críterio de Búsqueda   </th>
+		</tr>
+		<!-- 
+			<tr>
+			<th colspan="3">MEDIO:  </th>
+			</tr>
+		 -->
+	</thead>
+	
+	<tbody>
+		<tr>
+			<td width="20%">Ubigeo</td>
+			<td>:</td>
+			<td>2016 - 5</td>
+		</tr>
+		<tr>
+			<td>Nivel</td>
+			<td>:</td>
+			<td>
+			
+									
+				 DEPARTAMENTO 
+				
+				
+			
+			</td>
+		</tr>
+				
+		<tr>
+			<td>Encontrados:</td>
+			<td>:</td>
+			<td>190 Registro(s)</td>
+		</tr>
+	</tbody>	
+</table> 
+
+<div id="load" style="display: block;background-color: #4888F0;padding:3px;color:#fff;font-weight: bold;">
+	<!-- 
+	  &nbsp;&nbsp;<img alt="Cargando..." src="../resources/images/varios/load.gif">&nbsp;&nbsp;Cargando...
+	 -->
+</div>  
+
+<table border=0 width="800px" align="center">	
+<thead>
+	<tr><th width="20px">#</th>
+	<th width="160px">DEPARTAMENTO</th>
+	<th width="220px">PROVINCIA</th>
+	<th width="235px">DISTRITO</th> 
+    <th width="235px">CENTRO POBLADO </th>
+    <th width="100px">AREA</th>
+    </thead>
+
+<tbody>
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">1  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0001 TUMBES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">2  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0002 HUAQUILLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">3  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0003 PUERTO PIZARRO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">4  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0004 CRUCE PIZARRO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">5  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0005 LA PRIMAVERA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">6  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0006 LA BOTELLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">7  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0008 LA HUACA DEL SOL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">8  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0009 PEDRO EL VIEJO (PUERTO EL CURA)
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">9  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0011 EL VENADO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">10  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0012 VILLA CORPAC
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">11  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0013 EL TROMPEZON
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">12  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240101 Tumbes
+	</td>
+	
+	<td> 
+		0017 LA VICTORIA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">13  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0001 SAN PEDRO DE LOS INCAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">14  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0002 PLAYA HERMOSA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">15  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0003 LA CANELA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">16  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0004 PUEBLO NUEVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">17  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0005 LA JOTA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">18  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0006 LOS CEDROS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">19  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0007 SAN ISIDRO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">20  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0008 PAMPA SAN ISIDRO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">21  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0009 REALENGAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">22  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0015 MIRAMAR
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">23  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240102 Corrales
+	</td>
+	
+	<td> 
+		0016 EL CHIVATO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">24  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0001 CALETA CRUZ
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">25  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0002 LA LADRILLERA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">26  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0003 LOS CEREZOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">27  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0004 SAN JOSE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">28  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0005 EL CHARAN I
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">29  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240103 La Cruz
+	</td>
+	
+	<td> 
+		0006 EL CHARAN II
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">30  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0001 PAMPAS DE HOSPITAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">31  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0002 CRUZ BLANCA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">32  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0003 CABEZA DE LAGARTO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">33  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0004 PEÑA BLANCA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">34  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0005 BIGOTES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">35  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0006 SANTA MARIA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">36  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0007 CARDALITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">37  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0008 CHACRITAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">38  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0009 BELEN
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">39  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0010 CABUYAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">40  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0012 EL LIMON
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">41  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0013 EL RODEO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">42  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0014 BECERRA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">43  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0015 PUEBLO NUEVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">44  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0016 LA ANGOSTURA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">45  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0018 EL PRADO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">46  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0019 EL NARANJO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">47  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0021 EL ZAPAYAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">48  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0022 PUERTO RICO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">49  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240104 Pampas de Hospital
+	</td>
+	
+	<td> 
+		0025 EL HIGUERON
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">50  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0001 SAN JACINTO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">51  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0002 PECHICHAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">52  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0003 PLATEROS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">53  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0004 SANTA ROSA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">54  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0005 LA PEÑA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">55  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0006 BOCA TOMA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">56  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0007 FRANCOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">57  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0008 VAQUERIA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">58  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0009 OIDOR
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">59  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0010 CASA BLANQUEADA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">60  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0011 CARRETAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">61  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0012 HIGUERON
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">62  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0013 LA CAPITANA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">63  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0014 RICA PLAYA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">64  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0015 TENIENTE ASTETE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">65  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0016 CAPITAN HOYLE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">66  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0017 TABLAZO DE RICA PLAYA (RICA PLAYA EL TABLAZO)
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">67  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0018 LOS POZOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">68  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0019 BRUNOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">69  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0020 EL BURRO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">70  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0021 ALGARROBILLO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">71  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0022 MADERALES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">72  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0024 HUALTACAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">73  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0025 SAJINOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">74  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0026 EL ALAMO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">75  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0027 PUEBLO NUEVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">76  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240105 San Jacinto
+	</td>
+	
+	<td> 
+		0028 SALADILLO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">77  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0001 SAN JUAN DE LA VIRGEN
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">78  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0002 GARBANZAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">79  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0003 TACURAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">80  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0004 CERRO BLANCO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">81  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0005 CAFETERIA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">82  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0006 MIRAFLORES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">83  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0007 LAS PEÑAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">84  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2401 Tumbes 
+	</td>
+	<td>
+		240106 San Juan de la Virgen
+	</td>
+	
+	<td> 
+		0008 CERRO BLANCO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">85  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0001 ZORRITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">86  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0002 NUEVA ESPERANZA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">87  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0003 GRAU
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">88  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0004 BOCAPAN
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">89  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0005 HOYOLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">90  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0006 BONANZA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">91  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0007 PEÑA NEGRA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">92  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0008 ACAPULCO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">93  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0009 HUACURA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">94  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0010 NUEVO PARAISO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">95  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0011 PEDREGAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">96  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0013 PEÑA REDONDA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">97  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0014 SUAREZ
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">98  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0015 PAN VIEJO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">99  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0016 EL ABEJAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">100  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0017 EL RUBIO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">101  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0033 PUNTA PICO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">102  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0034 PAMPA DE LOS CHIVATOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">103  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0035 LAS ANIMAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">104  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0036 LOS POZOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">105  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0037 PLAYA FLORIDA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">106  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0039 PALO SANTO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">107  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240201 Zorritos
+	</td>
+	
+	<td> 
+		0041 DOS BOCANAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">108  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0001 CAÑAVERAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">109  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0002 TRIGAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">110  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0003 PAMPA DEL TRIGAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">111  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0004 PUEBLO NUEVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">112  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0005 AVERIAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">113  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0007 TAMARINDO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">114  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0008 SAN MARCOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">115  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0009 CHARANAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">116  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0010 HUAQUILLAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">117  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0011 LA RINCONADA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">118  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0012 CASITAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">119  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0014 CARDALITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">120  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0015 TACNA LIBRE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">121  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0016 EL PALMO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">122  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0017 BELLAVISTA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">123  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0018 CHERRELIQUE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">124  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0019 LA CHOZA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">125  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0020 EL CIENEGO SUR
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">126  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0021 CARRIZAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">127  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0022 CIENEGO NORTE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">128  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0023 PAVAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">129  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0024 ROCOCHE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">130  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0025 EL ANGELITO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">131  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0026 CIMARRON
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">132  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0027 CHICAMA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">133  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0028 EL CARDO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">134  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0029 TOTORILLO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">135  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240202 Casitas
+	</td>
+	
+	<td> 
+		0030 CHARANAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">136  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0001 CANCAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">137  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0002 PLATERITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">138  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0003 PUNTA MERO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">139  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0004 PLATERITOS CAMPO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">140  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0005 CANOAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">141  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0006 SALAO CHICO SALAO GRANDE
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">142  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0007 PUNTA SAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">143  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0008 CARPITAS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">144  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0009 QUEBRADA SECA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">145  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0010 LA NORIA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">146  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0011 PAJARITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">147  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0012 NEGRITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">148  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0013 URBAN
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">149  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0014 CERRO PELADO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">150  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0015 IPAN
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">151  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0016 ANGOLO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">152  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0017 BARRANCOS (CORRAL DE OVEJAS)
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">153  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0019 FERNANDEZ
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">154  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0022 LOS DELFINES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">155  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0023 SALAO CHICO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">156  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0024 SAPOTITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">157  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0025 EL BRAVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">158  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2402 Contralmirante Villar 
+	</td>
+	<td>
+		240203 Canoas de Punta Sal
+	</td>
+	
+	<td> 
+		0026 EL CURO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">159  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240301 Zarumilla
+	</td>
+	
+	<td> 
+		0001 ZARUMILLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">160  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240301 Zarumilla
+	</td>
+	
+	<td> 
+		0002 EL BENDITO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">161  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240301 Zarumilla
+	</td>
+	
+	<td> 
+		0003 VILLA PRIMAVERA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">162  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0001 AGUAS VERDES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">163  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0002 LA CURVA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">164  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0004 LOMA SAAVEDRA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">165  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0005 POCITOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">166  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0006 SALITRAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">167  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0007 CUCHARETA BAJA - CUCHARETA ALTA - NUEVA ESPERANZA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">168  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240302 Aguas Verdes
+	</td>
+	
+	<td> 
+		0010 CHACRA GONZALES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">169  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0001 MATAPALO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">170  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0002 QUEBRADA SECA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">171  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0003 LEANDRO CAMPOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">172  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0004 LA TOTORA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">173  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0005 ISLA NOBLECILLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">174  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0007 NUEVO PROGRESO - EL TUTUMO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">175  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0009 ALGARROBAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">176  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0010 BALSAMAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">177  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240303 Matapalo
+	</td>
+	
+	<td> 
+		0012 CARISALIO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">178  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0001 PAPAYAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">179  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0002 QUEBRADA GRANDE (ALAN GARCIA)
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">180  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0003 UÑA DE GATO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">181  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0004 EL PORVENIR
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">182  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0006 LA PALMA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">183  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0007 LA COJA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">184  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0008 LOS LIMOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">185  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0009 LECHUGAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">186  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0010 PUEBLO NUEVO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">187  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0012 EL GRAN CEIBO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">188  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0013 ALGARROBAL
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">189  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0014 JOSE ABELARDO QUIÑONES
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">190  </td>
+	<td>
+		24 Tumbes		
+	</td>
+	<td> 
+			2403 Zarumilla 
+	</td>
+	<td>
+		240304 Papayal
+	</td>
+	
+	<td> 
+		0015 LOS OLIVOS
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+</tbody> 
+<tfoot>
+<tr>
+<td class="last" colspan="5">Derechos Reservados INEI</td>
+</tr>
+</tfoot>
+</table>
+<script type="text/javascript">
+ $("#load").hide("slow");
+</script>
+</body>
+</html>

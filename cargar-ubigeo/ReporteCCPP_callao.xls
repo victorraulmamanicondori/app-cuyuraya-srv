@@ -1,0 +1,349 @@
+
+
+
+
+	
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="../resources/css/plugin/winModal/basic.css"></link>
+<!-- IE6 "fix" for the close png image -->
+<!--[if lt IE 7]>
+<link type='text/css' href='../resources/css/plugin/winModal/basic_ie.css' rel='stylesheet' media='screen' />
+<![endif]-->
+<script type="text/javascript" src="../resources/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../resources/js/plugin/winModal/jquery.simplemodal.js"></script>
+
+<script type="text/javascript">
+function winModal(id){	
+	$("#"+id).modal();
+}
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Lista de Centros Poblados - INEI</title>
+<style type="text/css">
+body{
+	font-family: "Arial","Helvetica",sans-serif;
+	font-size: 11px; 
+}
+table {
+   
+   text-align: left;
+   border-collapse: collapse;
+   margin: 0 0 1em 0;
+   caption-side: top;
+}
+th{
+color: #436EE3;
+}
+caption, td, th {
+   padding: 0.3em;
+   text-align: left;
+}
+td{
+ border-bottom: 1px solid #ccc;
+ color:#444444;
+}
+td.last{
+ border-bottom: none;
+}
+
+tbody {
+   border-top: 1px solid #000;
+   border-bottom: 1px solid #000;
+}
+tbody th, tfoot th {
+   border: 0;
+}
+th.name {
+   width: 25%;
+}
+th.location {
+   width: 20%;
+}
+th.lasteruption {
+   width: 30%;
+}
+th.eruptiontype {
+   width: 25%;
+}
+tfoot {
+   text-align: center;
+   color: #555;
+   font-size: 0.8em;
+}
+</style>
+</head>
+<body>
+
+
+<h3>BÚSQUEDA DE CENTROS POBLADOS </h3>
+
+		
+
+<table width="400px">
+	<thead>
+		<tr>
+		<th colspan="3">Críterio de Búsqueda   </th>
+		</tr>
+		<!-- 
+			<tr>
+			<th colspan="3">MEDIO:  </th>
+			</tr>
+		 -->
+	</thead>
+	
+	<tbody>
+		<tr>
+			<td width="20%">Ubigeo</td>
+			<td>:</td>
+			<td>2016 - 5</td>
+		</tr>
+		<tr>
+			<td>Nivel</td>
+			<td>:</td>
+			<td>
+			
+									
+				 DEPARTAMENTO 
+				
+				
+			
+			</td>
+		</tr>
+				
+		<tr>
+			<td>Encontrados:</td>
+			<td>:</td>
+			<td>7 Registro(s)</td>
+		</tr>
+	</tbody>	
+</table> 
+
+<div id="load" style="display: block;background-color: #4888F0;padding:3px;color:#fff;font-weight: bold;">
+	<!-- 
+	  &nbsp;&nbsp;<img alt="Cargando..." src="../resources/images/varios/load.gif">&nbsp;&nbsp;Cargando...
+	 -->
+</div>  
+
+<table border=0 width="800px" align="center">	
+<thead>
+	<tr><th width="20px">#</th>
+	<th width="160px">DEPARTAMENTO</th>
+	<th width="220px">PROVINCIA</th>
+	<th width="235px">DISTRITO</th> 
+    <th width="235px">CENTRO POBLADO </th>
+    <th width="100px">AREA</th>
+    </thead>
+
+<tbody>
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">1  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070101 Callao
+	</td>
+	
+	<td> 
+		0001 CALLAO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">2  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070102 Bellavista
+	</td>
+	
+	<td> 
+		0001 BELLAVISTA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">3  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070103 Carmen de la Legua Reynoso
+	</td>
+	
+	<td> 
+		0001 CARMEN DE LA LEGUA REYNOSO
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">4  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070104 La Perla
+	</td>
+	
+	<td> 
+		0001 LA PERLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">5  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070105 La Punta
+	</td>
+	
+	<td> 
+		0001 LA PUNTA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+	bgcolor="#F1F1F1"
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">6  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070106 Ventanilla
+	</td>
+	
+	<td> 
+		0001 VENTANILLA
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+<tr
+
+> 	
+	<td align="center" style="border-right:solid 1px #ccc">7  </td>
+	<td>
+		07 Callao		
+	</td>
+	<td> 
+			0701 Prov. Const. del Callao
+	</td>
+	<td>
+		070107 Mi Perú
+	</td>
+	
+	<td> 
+		0001 MI PERU
+		
+	</td>
+    <td>	
+		
+		
+	</td>
+	
+
+</tr>	
+ 
+
+</tbody> 
+<tfoot>
+<tr>
+<td class="last" colspan="5">Derechos Reservados INEI</td>
+</tr>
+</tfoot>
+</table>
+<script type="text/javascript">
+ $("#load").hide("slow");
+</script>
+</body>
+</html>
