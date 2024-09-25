@@ -21,7 +21,10 @@ class UsuarioRepositorio {
                                     telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
-                                    idUbigeo: (fila.ID_UBIGEO ? fila.ID_UBIGEO.toString() : null),
+                                    codigoDistrito: fila.COD_DISTRITO,
+                                    codigoCentroPoblado: fila.COD_CENTRO_POBLADO,
+                                    codigoComunidadCampesina: fila.COD_COMUNIDAD_CAMPESINA,
+                                    codigoComunidadNativa: fila.COD_COMUNIDAD_NATIVA,
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                 }));
@@ -50,7 +53,10 @@ class UsuarioRepositorio {
                                     telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
-                                    idUbigeo: fila.ID_UBIGEO,
+                                    codigoDistrito: fila.COD_DISTRITO,
+                                    codigoCentroPoblado: fila.COD_CENTRO_POBLADO,
+                                    codigoComunidadCampesina: fila.COD_COMUNIDAD_CAMPESINA,
+                                    codigoComunidadNativa: fila.COD_COMUNIDAD_NATIVA,
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                   });
@@ -75,9 +81,12 @@ class UsuarioRepositorio {
                                                                        NUM_CONTRATO,
                                                                        TELEFONO,
                                                                        CLAVE,
-                                                                       ID_UBIGEO,
+                                                                       COD_DISTRITO,
+                                                                       COD_CENTRO_POBLADO,
+                                                                       COD_COMUNIDAD_CAMPESINA,
+                                                                       COD_COMUNIDAD_NATIVA,
                                                                        ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                                                      [usuario.nombres,
                                                       usuario.paterno,
                                                       usuario.materno,
@@ -86,7 +95,10 @@ class UsuarioRepositorio {
                                                       usuario.numContrato,
                                                       usuario.telefono,
                                                       usuario.clave,
-                                                      usuario.idUbigeo,
+                                                      usuario.codigoDistrito,
+                                                      usuario.codigoCentroPoblado,
+                                                      usuario.codigoComunidadCampesina,
+                                                      usuario.codigoComunidadNativa,
                                                       usuario.estado]);
       usuario.id = resultado.insertId.toString();
       return usuario;
@@ -109,7 +121,10 @@ class UsuarioRepositorio {
                                 DIRECCION = ?,
                                 NUM_CONTRATO = ?,
                                 TELEFONO = ?,
-                                ID_UBIGEO= ?,
+                                COD_DISTRITO = ?,
+                                COD_CENTRO_POBLADO = ?,
+                                COD_COMUNIDAD_CAMPESINA = ?,
+                                COD_COMUNIDAD_NATIVA = ?,
                                 ESTADO = ?
                             WHERE DNI = ?`,
                                 [usuario.nombres,
@@ -118,7 +133,10 @@ class UsuarioRepositorio {
                                  usuario.direccion,
                                  usuario.numContrato,
                                  usuario.telefono,
-                                 usuario.idUbigeo,
+                                 usuario.codigoDistrito,
+                                 usuario.codigoCentroPoblado,
+                                 usuario.codigoComunidadCampesina,
+                                 usuario.codigoComunidadNativa,
                                  usuario.estado,
                                  usuario.dni]);
       return usuario;
