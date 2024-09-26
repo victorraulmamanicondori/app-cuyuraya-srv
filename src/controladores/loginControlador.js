@@ -10,7 +10,7 @@ class LoginControlador {
       res.status(200).json(tokenes);
     } catch(error) {
       logger.error(error);
-      res.status(401).json({ mensaje: error.message });
+      res.status(400).json({ mensaje: error.message });
     }
   }
 

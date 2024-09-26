@@ -9,7 +9,7 @@ class CajaControlador {
       res.status(200).json(resultado);
     } catch(error) {
       logger.error(error);
-      res.status(401).json({ mensaje: error.message });
+      res.status(400).json({ mensaje: error.message });
     }
   }
 
