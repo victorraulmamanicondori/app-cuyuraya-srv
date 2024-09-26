@@ -28,7 +28,7 @@ class MedidorControlador {
       const resultado = await medidorServicio.detectarAnomaliasPorMedidor(codigoMedidor);
       res.status(200).json({
         codigo: 200,
-        mensaje: 'Anomalías detectadas correctamente',
+        mensaje: 'Resultado de anomalias de consumos',
         datos: resultado
       });
     } catch (error) {
