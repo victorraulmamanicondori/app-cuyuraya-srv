@@ -22,8 +22,6 @@ class UsuarioServicio {
       throw Error("No existe usuario con el dni indicado");
     }
     
-    console.log(usuario);
-
     // Cuando existe, registramos id del usuario y id del rol en la tabla TBL_USUARIO_ROL
     const { idUsuario } = usuario;
     const resultado = await usuarioRolRepositorio.asignarRolAlUsuario(idUsuario, idRol);

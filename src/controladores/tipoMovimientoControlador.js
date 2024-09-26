@@ -7,10 +7,18 @@ class TipoMovimientoControlador {
     try {
       const tipoRubro = req.params.tipoRubro;
       const resultado = await tipoMovimientoServicio.listarPorRubro(tipoRubro);
-      res.status(200).json(resultado);
+      res.status(200).json({
+        codigo: 200,
+        mensaje: 'Listado de tipos de movimientos',
+        datos: resultado
+      });
     } catch(error) {
       logger.error(error);
-      res.status(401).json({ mensaje: error.message });
+      res.status(400).json({
+        codigo: 400,
+        mensaje: error.message,
+        datos: null
+      });
     }
   }
 

@@ -14,7 +14,6 @@ import distritoRutas from './rutas/distritoRutas.js';
 import centroPobladoRutas from './rutas/centroPobladoRutas.js';
 import comunidadCampesinaRutas from './rutas/comunidadCampesinaRutas.js';
 import comunidadNativaRutas from './rutas/comunidadNativaRutas.js';
-import sectorRutas from './rutas/sectorRutas.js';
 import rolRutas from './rutas/rolRutas.js';
 import permisoRutas from './rutas/permisoRutas.js';
 import cors from 'cors';
@@ -53,7 +52,6 @@ app.use('/api/distritos', distritoRutas);
 app.use('/api/centros-poblados', centroPobladoRutas);
 app.use('/api/comunidades-campesinas', comunidadCampesinaRutas);
 app.use('/api/comunidades-nativas', comunidadNativaRutas);
-app.use('/api/sectores', sectorRutas);
 app.use('/api/roles', rolRutas);
 app.use('/api/permisos', permisoRutas);
 

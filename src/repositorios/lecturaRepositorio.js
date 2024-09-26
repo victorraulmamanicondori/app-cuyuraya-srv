@@ -95,11 +95,13 @@ class LecturaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT TL.M3_CONSUMIDO, TL.FEC_CREACION FROM TBL_LECTURA TL 
-                            INNER JOIN TBL_MEDIDOR TM ON TM.ID_MEDIDOR = TL.ID_MEDIDOR
-                            WHERE TM.COD_MEDIDOR = ?
-                            ORDER BY FEC_CREACION DESC LIMIT 10`, [codigoMedidor]);
-      return filas.map(fila => ({ "value": fila.M3_CONSUMIDO, "date": fila.FEC_CREACION.toISOString() }));
+      const filas = await conexion.query(`
+        SELECT TL.M3_CONSUMIDO, DATE_FORMAT(TL.FEC_CREACION, '%Y-%m-%d %H:%i:%s') AS FEC_CREACION
+        FROM TBL_LECTURA TL
+        INNER JOIN TBL_MEDIDOR TM ON TM.ID_MEDIDOR = TL.ID_MEDIDOR
+        WHERE TM.COD_MEDIDOR = ?
+        ORDER BY TL.FEC_CREACION DESC LIMIT 10`, [codigoMedidor]);
+      return filas.map(fila => ({ "value": fila.M3_CONSUMIDO, "date": fila.FEC_CREACION }));
     } catch(error) {
       logger.error(`Error al listar lecturas por codigoMedidor:${error}`);
       throw new Error('Error al listar lecturas por codigoMedidor');
