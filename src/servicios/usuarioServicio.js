@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import usuarioRolRepositorio from '../repositorios/usuarioRolRepositorio.js';
 import { UsuarioEstados } from '../constantes/estados.js';
+import logger from '../config/logger.js';
 
 class UsuarioServicio {
 
@@ -41,6 +42,21 @@ class UsuarioServicio {
 
   eliminarUsuarioPorDni(dni) {
     return usuarioRepositorio.eliminarUsuarioPorDni(dni);
+  }
+
+  async resetearContrasenaPorDni(dni) {
+    logger.info(`Reseteando contrasena para dni ${dni}`);
+
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    logger.info(`Usuario: ${usuario.nombres}`);
+
+    if (usuario == null) {
+      throw new Error("No se puede resetear contraseña del usuario");
+    }
+
+    const hashedClave = await bcrypt.hash(dni, 10);
+    usuarioRepositorio.resetearContrasenaPorDni({ dni, clave: hashedClave });
   }
 }
 

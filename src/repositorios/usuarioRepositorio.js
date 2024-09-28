@@ -159,6 +159,20 @@ class UsuarioRepositorio {
     }
   }
 
+  async resetearContrasenaPorDni({ dni, clave }) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      return await conexion.query(`UPDATE TBL_USUARIO 
+                            SET CLAVE = ?
+                            WHERE DNI = ?`,
+                            [clave, dni]);
+    } catch(error) {
+      logger.error(`Error al retesear contraseña:${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
 }
 
 export default new UsuarioRepositorio();
