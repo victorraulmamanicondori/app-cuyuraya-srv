@@ -16,5 +16,7 @@ router.put('/', verificarToken, usuarioControlador.actualizarUsuario);
 
 router.delete('/:dni', verificarToken, usuarioControlador.eliminarUsuarioPorDni);
 
+router.put('/resetear-contrasena', usuarioControlador.resetearContrasenaPorDni);
+
 export default router;
 

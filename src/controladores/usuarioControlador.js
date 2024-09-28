@@ -69,6 +69,25 @@ class UsuarioControlador {
       res.status(500).json({ mensaje: error.message });
     }
   }
+
+  async resetearContrasenaPorDni(req, res) {
+    try {
+      const { dni } = req.body;
+      await usuarioServicio.resetearContrasenaPorDni(dni);
+      res.status(200).json({
+        codigo: 200,
+        mensaje: 'Contraseña reseteado exitosamente',
+        datos: dni
+      });
+    } catch(error) {
+      logger.error(error);
+      res.status(400).json({
+        codigo: 400,
+        mensaje: error.message,
+        datos: null
+      });
+    }
+  }
 }
 
 export default new UsuarioControlador();
