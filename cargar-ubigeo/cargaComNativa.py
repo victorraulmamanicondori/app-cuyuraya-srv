@@ -11,7 +11,11 @@ headers = {
     "Content-Type": "application/json"
 }
 
+print(f"Cargando datos al {base_url}")
+
 def doPOST(excelName):
+	print(f"Cargando archivo {excelName}")
+
 	df = pd.read_excel(excelName, sheet_name='comunidadNativa', engine='xlrd', skiprows=3)
 	df = df.fillna('')
 

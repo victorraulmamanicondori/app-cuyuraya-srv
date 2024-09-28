@@ -11,7 +11,11 @@ headers = {
     "Content-Type": "application/json"
 }
 
+print(f"Cargando datos al {base_url}")
+
 def doPOST(excelName):
+	print(f"Cargando archivo {excelNmae}")
+
 	df = pd.read_excel(excelName, sheet_name='Sheet1', engine='xlrd', skiprows=6)
 	df = df.fillna('')
 
@@ -41,7 +45,8 @@ def doPOST(excelName):
 		response = requests.post(f"{base_url}/centros-poblados", headers=headers, json=payload)
 
 		if response.status_code == 200 or response.status_code == 201:
-		    print("Registro exitoso:", response.text)
+		    pass
+		    #print("Registro exitoso:", response.text)
 		else:
 		    print("Error:", response.status_code, response.text)
 

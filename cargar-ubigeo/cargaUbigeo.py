@@ -17,6 +17,8 @@ headers = {
 
 data = {}
 
+print(f"Cargando datos al {base_url}")
+
 for index, row in df.iterrows():
 	department = row['DEPARTAMENTO'].strip()
 	province = row['PROVINCIA'].strip()
@@ -86,7 +88,8 @@ for index, row in df.iterrows():
 		response = requests.post(f"{base_url}/distritos", headers=headers, json=payload)
 
 		if response.status_code == 200 or response.status_code == 201:
-		    print("Registro exitoso:", response.text)
+		    pass
+		    #print("Registro exitoso:", response.text)
 		else:
 		    print("Error:", response.status_code, response.text)
 
