@@ -7,14 +7,14 @@ import os
 base_url = "http://127.0.0.1:9000/api"
 
 headers = {
-    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiNDYzOTA1NTAiLCJpYXQiOjE3MjcwMTkyMDUsImV4cCI6MTcyNzAzNzIwNX0.riDqEAbOCqS57IaoL2ezWGzK47nNx_bKNpGYpyLC7mI",
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiMTIzNDU2NzgiLCJpYXQiOjE3Mjg3NDkzMjYsImV4cCI6MTcyODc2NzMyNn0.qavscMWZQSHtHv1Gl4UkC9HpTTrSvHsz6wRfQQQVwtQ",
     "Content-Type": "application/json"
 }
 
 print(f"Cargando datos al {base_url}")
 
 def doPOST(excelName):
-	print(f"Cargando archivo {excelNmae}")
+	print(f"Cargando archivo {excelName}")
 
 	df = pd.read_excel(excelName, sheet_name='Sheet1', engine='xlrd', skiprows=6)
 	df = df.fillna('')

@@ -7,7 +7,7 @@ import os
 base_url = "http://127.0.0.1:9000/api"
 
 headers = {
-    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiNDYzOTA1NTAiLCJpYXQiOjE3MjcwMjU5NzgsImV4cCI6MTcyNzA0Mzk3OH0.oJgnWs5P2Kr9TNE0Y4dSAhxQxd1Rw0cw4Xd4Q07yeYE",
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiMTIzNDU2NzgiLCJpYXQiOjE3Mjg3NDkzMjYsImV4cCI6MTcyODc2NzMyNn0.qavscMWZQSHtHv1Gl4UkC9HpTTrSvHsz6wRfQQQVwtQ",
     "Content-Type": "application/json"
 }
 
