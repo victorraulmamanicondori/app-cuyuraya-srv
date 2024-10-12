@@ -29,14 +29,24 @@ class UsuarioControlador {
       const dni = req.params.dni;
       const usuario = await usuarioServicio.obtenerUsuarioPorDni(dni);
       if (usuario) {
-        res.status(200).json(usuario);
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuario
+        });
       } else {
-        res.status(404).json({ mensaje: 'Usuario no encontrado' });
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'Usuario no encontrado'
+        });
       }
     } catch(error) {
       logger.error(error);
-      res.status(500).json({ mensaje: error.message });
-    } 
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
   }
 
   async crearUsuario(req, res) {

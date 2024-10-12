@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
+import logger from '../config/logger.js';
+import {UsuarioEstados} from '../constantes/estados.js';
+import departamentoRepositorio from '../repositorios/departamentoRepositorio.js';
+import distritoRepositorio from '../repositorios/distritoRepositorio.js';
+import provinciaRepositorio from '../repositorios/provinciaRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import usuarioRolRepositorio from '../repositorios/usuarioRolRepositorio.js';
-import { UsuarioEstados } from '../constantes/estados.js';
-import logger from '../config/logger.js';
 
 class UsuarioServicio {
 
@@ -10,8 +13,27 @@ class UsuarioServicio {
     return usuarioRepositorio.listarUsuarios();
   }
 
-  obtenerUsuarioPorDni(dni) {
-    return usuarioRepositorio.obtenerUsuarioPorDni(dni);
+  async obtenerUsuarioPorDni(dni) {
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (usuario) {
+      if (usuario.codigoDistrito) {
+        const codigoDepartamento = usuario.codigoDistrito.substring(0, 2);
+        const codigoProvincia = usuario.codigoDistrito.substring(0, 4);
+  
+        const departamento = await departamentoRepositorio.obtenerDepartamentoPorCodigo(codigoDepartamento);
+        const provincia = await provinciaRepositorio.obtenerProvinciaPorCodigo(codigoProvincia);
+        const distrito = await distritoRepositorio.obtenerDistritoPorCodigo(usuario.codigoDistrito);
+  
+        usuario.nombreDepartamento = departamento.nombre;
+        usuario.nombreProvincia = provincia.nombre;
+        usuario.nombreDistrito = distrito.nombre;
+      }
+      
+      usuario.clave = null;
+    }
+
+    return usuario;
   }
 
   async asignarRolAlUsuario(dni, idRol) {

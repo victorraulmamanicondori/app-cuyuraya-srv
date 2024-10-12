@@ -1,7 +1,7 @@
 import pool from '../config/db.js';
 import logger from '../config/logger.js';
+import {UsuarioEstados} from '../constantes/estados.js';
 import UsuarioModelo from '../modelos/UsuarioModelo.js';
-import { UsuarioEstados } from '../constantes/estados.js';
 
 class UsuarioRepositorio {
 
