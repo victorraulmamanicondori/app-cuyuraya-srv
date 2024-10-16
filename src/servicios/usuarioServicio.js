@@ -80,6 +80,11 @@ class UsuarioServicio {
     const hashedClave = await bcrypt.hash(dni, 10);
     usuarioRepositorio.resetearContrasenaPorDni({ dni, clave: hashedClave });
   }
+
+  async obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa) {
+    const usuarios = await usuarioRepositorio.obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa);
+    return usuarios;
+  }
 }
 
 export default new UsuarioServicio();

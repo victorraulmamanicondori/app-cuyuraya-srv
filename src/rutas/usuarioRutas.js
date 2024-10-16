@@ -1,6 +1,6 @@
 import express from 'express';
 import usuarioControlador from '../controladores/usuarioControlador.js';
-import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
+import {verificarToken} from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
@@ -17,6 +17,8 @@ router.put('/', verificarToken, usuarioControlador.actualizarUsuario);
 router.delete('/:dni', verificarToken, usuarioControlador.eliminarUsuarioPorDni);
 
 router.put('/resetear-contrasena', usuarioControlador.resetearContrasenaPorDni);
+
+router.get('/ubigeo/:codigoDistrito', verificarToken, usuarioControlador.listarUsuariosPorUbigeo);
 
 export default router;
 

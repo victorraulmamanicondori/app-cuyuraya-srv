@@ -69,9 +69,68 @@ class UsuarioRepositorio {
     }
   }
 
+  async obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa) {
+    let conexion;
+    try {
+      const codigos = [codigoDistrito]
+      let WHERE = " WHERE U.COD_DISTRITO = ? "
+
+      if (codigoCentroPoblado) {
+        codigos.push(codigoCentroPoblado)
+        WHERE += " AND U.COD_CENTRO_POBLADO = ? "
+      } else if (codigoComunidadCampesina) {
+        codigos.push(codigoComunidadCampesina)
+        WHERE += " AND U.COD_COMUNIDAD_CAMPESINA = ? "
+      } else if (codigoComunidadNativa) {
+        codigos.push(codigoComunidadNativa)
+        WHERE += " AND U.COD_COMUNIDAD_NATIVA = ? "
+      }
+
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT 
+                                            U.ID_USUARIO,
+                                            U.NOMBRES,
+                                            U.PATERNO,
+                                            U.MATERNO,
+                                            U.DNI, 
+                                            M.COD_MEDIDOR
+                                          FROM TBL_USUARIO AS U 
+                                          LEFT JOIN TBL_MEDIDOR AS M 
+                                          ON M.ID_USUARIO = U.ID_USUARIO 
+                                          ${WHERE}
+                                          GROUP BY U.ID_USUARIO,
+                                                   U.NOMBRES,
+                                                   U.PATERNO,
+                                                   U.MATERNO,
+                                                   U.DNI,
+                                                   M.COD_MEDIDOR
+                                          ORDER BY PATERNO ASC,
+                                                   MATERNO ASC,
+                                                   NOMBRES ASC`,
+                                        codigos);
+      return filas.map(fila => { 
+          const usuario = new UsuarioModelo({
+                                      idUsuario: fila.ID_USUARIO.toString(),
+                                      nombres: fila.NOMBRES,
+                                      paterno: fila.PATERNO,
+                                      materno: fila.MATERNO,
+                                      dni: fila.DNI
+                                  });
+          usuario.codigoMedidor = fila.COD_MEDIDOR;
+          return usuario;
+      });
+    } catch(error) {
+      logger.error(`Error al listar usuarios:${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async crearUsuario(usuario) {
     let conexion;
     try {
+      logger.info(`Registradon usuario: ${JSON.stringify(usuario)}`);
+
       conexion = await pool.getConnection();
       const resultado = await conexion.query(`INSERT INTO TBL_USUARIO (NOMBRES,
                                                                        PATERNO,

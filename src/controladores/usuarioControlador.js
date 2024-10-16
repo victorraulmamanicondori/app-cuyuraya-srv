@@ -98,6 +98,36 @@ class UsuarioControlador {
       });
     }
   }
+
+  async listarUsuariosPorUbigeo(req, res) {
+    try {
+      const codigoDistrito = req.params.codigoDistrito;
+      const codigoCentroPoblado = req.query.codigoCentroPoblado;
+      const codigoComunidadCampesina = req.query.codigoComunidadCampesina;
+      const codigoComunidadNativa = req.query.codigoComunidadNativa;
+
+      const usuarios = await usuarioServicio
+        .obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa);
+      if (usuarios) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuarios
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'No hay usuarios'
+        });
+      }
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
+  }
 }
 
 export default new UsuarioControlador();
