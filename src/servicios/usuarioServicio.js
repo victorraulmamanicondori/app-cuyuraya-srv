@@ -85,6 +85,10 @@ class UsuarioServicio {
     const usuarios = await usuarioRepositorio.obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa);
     return usuarios;
   }
+
+  async obtenerUsuarioPorId(idUsuario) {
+    return usuarioRepositorio.obtenerUsuarioPorId(idUsuario);
+  }
 }
 
 export default new UsuarioServicio();

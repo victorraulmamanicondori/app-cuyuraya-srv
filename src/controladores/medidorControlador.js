@@ -39,8 +39,61 @@ class MedidorControlador {
         datos: null
       });
     }
-  }  
+  }
 
+  async obtenerMedidorPorDni(req, res) {
+    try {
+      const { dni } = req.params;
+      const resultado = await medidorServicio.obtenerMedidorPorDni(dni);
+      if (resultado) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: '',
+          datos: resultado
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: `No existe medidor asignado al dni ${dni}`,
+          datos: null
+        });
+      }
+    } catch (error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message,
+        datos: null
+      });
+    }
+  }
+
+  async obtenerMedidorPorCodigo(req, res) {
+    try {
+      const { codigoMedidor } = req.params;
+      const resultado = await medidorServicio.obtenerMedidorPorCodigo(codigoMedidor);
+      if (resultado) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: '',
+          datos: resultado
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: `No existe medidor asignado con código ${codigoMedidor}`,
+          datos: null
+        });
+      }
+    } catch (error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message,
+        datos: null
+      });
+    }
+  }
 }
 
 export default new MedidorControlador();

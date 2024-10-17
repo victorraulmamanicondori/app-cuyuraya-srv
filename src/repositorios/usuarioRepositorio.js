@@ -232,6 +232,40 @@ class UsuarioRepositorio {
       if (conexion) conexion.release();
     }
   }
+
+  async obtenerUsuarioPorId(idUsuario) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query("SELECT * FROM TBL_USUARIO WHERE ID_USUARIO = ?", [idUsuario]);
+      if (filas.length > 0) {
+        const fila = filas[0];
+        return new UsuarioModelo({
+                                    idUsuario: fila.ID_USUARIO.toString(),
+                                    nombres: fila.NOMBRES,
+                                    paterno: fila.PATERNO,
+                                    materno: fila.MATERNO,
+                                    dni: fila.DNI,
+                                    direccion: fila.DIRECCION,
+                                    numeroContrato: fila.NUM_CONTRATO,
+                                    telefono: fila.TELEFONO,
+                                    clave: fila.CLAVE,
+                                    estado: fila.ESTADO,
+                                    codigoDistrito: fila.COD_DISTRITO,
+                                    codigoCentroPoblado: fila.COD_CENTRO_POBLADO,
+                                    codigoComunidadCampesina: fila.COD_COMUNIDAD_CAMPESINA,
+                                    codigoComunidadNativa: fila.COD_COMUNIDAD_NATIVA,
+                                    fecCreacion: fila.FEC_CREACION,
+                                    fecActualizacion: fila.FEC_ACTUALIZACION
+                                  });
+      }
+      return null;
+    } catch(error) {
+      logger.error(`Error al obtener usuario`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
 }
 
 export default new UsuarioRepositorio();

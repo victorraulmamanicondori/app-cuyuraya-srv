@@ -128,6 +128,31 @@ class UsuarioControlador {
       });
     }
   }
+
+  async obtenerUsuarioPorId(req, res) {
+    try {
+      const idUsuario = req.params.idUsuario;
+      const usuario = await usuarioServicio.obtenerUsuarioPorId(idUsuario);
+      if (usuario) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuario
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'No hay usuario'
+        });
+      }
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
+  }
 }
 
 export default new UsuarioControlador();

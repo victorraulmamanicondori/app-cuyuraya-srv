@@ -20,5 +20,7 @@ router.put('/resetear-contrasena', usuarioControlador.resetearContrasenaPorDni);
 
 router.get('/ubigeo/:codigoDistrito', verificarToken, usuarioControlador.listarUsuariosPorUbigeo);
 
+router.get('/id/:idUsuario', verificarToken, usuarioControlador.obtenerUsuarioPorId);
+
 export default router;
 

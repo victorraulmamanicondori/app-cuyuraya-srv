@@ -53,6 +53,20 @@ class MedidorServicio {
 
     return null;
   }
+
+  async obtenerMedidorPorDni(dni) {
+    const usuarioBenificiario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (!usuarioBenificiario) {
+      return null;
+    }
+
+    return medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);
+  }
+
+  async obtenerMedidorPorCodigo(codigoMedidor) {
+    return medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
+  }
 }
 
 export default new MedidorServicio();
