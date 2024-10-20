@@ -15,7 +15,8 @@ class MedidorServicio {
     let existeAsignacion = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
 
     if (existeAsignacion && usuarioBenificiario.idUsuario != existeAsignacion.idUsuario) {
-      throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado`);
+      const otroUsuario = await usuarioRepositorio.obtenerUsuarioPorId(existeAsignacion.idUsuario);
+      throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado a otro usuario con dni ${otroUsuario.dni}`);
     }
 
     existeAsignacion = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);

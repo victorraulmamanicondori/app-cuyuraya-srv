@@ -1,8 +1,12 @@
 import bcrypt from 'bcrypt';
 import logger from '../config/logger.js';
 import {UsuarioEstados} from '../constantes/estados.js';
+import centroPobladoRepositorio from '../repositorios/centroPobladoRepositorio.js';
+import comunidadCampesinaRepositorio from '../repositorios/comunidadCampesinaRepositorio.js';
+import comunidadNativaRepositorio from '../repositorios/comunidadNativaRepositorio.js';
 import departamentoRepositorio from '../repositorios/departamentoRepositorio.js';
 import distritoRepositorio from '../repositorios/distritoRepositorio.js';
+import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import provinciaRepositorio from '../repositorios/provinciaRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import usuarioRolRepositorio from '../repositorios/usuarioRolRepositorio.js';
@@ -24,10 +28,33 @@ class UsuarioServicio {
         const departamento = await departamentoRepositorio.obtenerDepartamentoPorCodigo(codigoDepartamento);
         const provincia = await provinciaRepositorio.obtenerProvinciaPorCodigo(codigoProvincia);
         const distrito = await distritoRepositorio.obtenerDistritoPorCodigo(usuario.codigoDistrito);
+        const centroPoblado = await centroPobladoRepositorio.obtenerCentroPobladoPorCodigo(usuario.codigoCentroPoblado);
+        const comunidadCampesina = await comunidadCampesinaRepositorio.obtenerComunidadCampesinaPorCodigo(usuario.codigoComunidadCampesina);
+        const comunidadNativa = await comunidadNativaRepositorio.obtenerComunidadNativaPorCodigo(usuario.codigoComunidadNativa);
   
         usuario.nombreDepartamento = departamento.nombre;
         usuario.nombreProvincia = provincia.nombre;
         usuario.nombreDistrito = distrito.nombre;
+
+        if (centroPoblado) {
+          usuario.codigoCentroPoblado = centroPoblado.codigo;
+          usuario.nombreCentroPoblado = centroPoblado.nombre;
+        }
+
+        if (comunidadCampesina) {
+          usuario.codigoComunidadCampesina = comunidadCampesina.codigo;
+          usuario.nombreComunidadCampesina = comunidadCampesina.nombre;
+        }
+
+        if (comunidadNativa) {
+          usuario.codigoComunidadNativa = comunidadNativa.codigo;
+          usuario.nombreComunidadNativa = comunidadNativa.nombre;
+        }
+
+        const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
+        if (medidor) {
+          usuario.codigoMedidor = medidor.codMedidor;
+        }
       }
       
       usuario.clave = null;
