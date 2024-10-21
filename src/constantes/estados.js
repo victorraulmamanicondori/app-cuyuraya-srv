@@ -40,13 +40,14 @@ const CajaEstados = {
   ANULADO: 'ANULADO'
 }; 
 
+const TarifaEstados = {
+  ACTIVO: 'ACTIVO',
+  INACTIVO: 'INACTIVO',
+  ELIMINADO: 'ELIMINADO'
+};
+
 export {
-  UsuarioEstados,
-  RolEstados,
-  RubroEstados,
-  TipoMovimientoEstados,
-  MedidorEstados,
-  LecturaEstados,
-  CajaEstados
+  CajaEstados,LecturaEstados,MedidorEstados,RolEstados,
+  RubroEstados,TarifaEstados,TipoMovimientoEstados,UsuarioEstados
 };
 

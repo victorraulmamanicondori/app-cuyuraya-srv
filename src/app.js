@@ -1,22 +1,23 @@
+import bodyParser from 'body-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import bodyParser from 'body-parser';
 import logger from './config/logger.js';
-import usuarioRutas from './rutas/usuarioRutas.js';
-import loginRutas from './rutas/loginRutas.js';
-import medidorRutas from './rutas/medidorRutas.js';
-import tipoMovimientoRutas from './rutas/tipoMovimientoRutas.js';
 import cajaRutas from './rutas/cajaRutas.js';
-import lecturaRutas from './rutas/lecturaRutas.js';
-import departamentoRutas from './rutas/departamentoRutas.js';
-import provinciaRutas from './rutas/provinciaRutas.js';
-import distritoRutas from './rutas/distritoRutas.js';
 import centroPobladoRutas from './rutas/centroPobladoRutas.js';
 import comunidadCampesinaRutas from './rutas/comunidadCampesinaRutas.js';
 import comunidadNativaRutas from './rutas/comunidadNativaRutas.js';
-import rolRutas from './rutas/rolRutas.js';
+import departamentoRutas from './rutas/departamentoRutas.js';
+import distritoRutas from './rutas/distritoRutas.js';
+import lecturaRutas from './rutas/lecturaRutas.js';
+import loginRutas from './rutas/loginRutas.js';
+import medidorRutas from './rutas/medidorRutas.js';
 import permisoRutas from './rutas/permisoRutas.js';
-import cors from 'cors';
+import provinciaRutas from './rutas/provinciaRutas.js';
+import rolRutas from './rutas/rolRutas.js';
+import tarifaRutas from './rutas/tarifaRutas.js';
+import tipoMovimientoRutas from './rutas/tipoMovimientoRutas.js';
+import usuarioRutas from './rutas/usuarioRutas.js';
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use('/api/comunidades-campesinas', comunidadCampesinaRutas);
 app.use('/api/comunidades-nativas', comunidadNativaRutas);
 app.use('/api/roles', rolRutas);
 app.use('/api/permisos', permisoRutas);
+app.use('/api/tarifas', tarifaRutas);
 
 app.listen(puerto, () => {
 	logger.info(`Ejecutando aplicacion backend de APIs en el puerto http://localhost:${puerto}`);
