@@ -55,7 +55,7 @@ class TarifaControlador {
       });
     } catch(error) {
       logger.error(error);
-      res.status(400).json({
+      res.status(500).json({
         codigo: 500,
         mensaje: error.message
       });

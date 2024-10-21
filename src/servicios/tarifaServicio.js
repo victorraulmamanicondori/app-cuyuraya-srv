@@ -11,10 +11,22 @@ class TarifaServicio {
   }
 
   async crearTarifa(tarifa) {
+    const existeTarifa = await tarifaRepositorio.obtenerTarifaPorCodigo(tarifa.codigoTarifa);
+
+    if (existeTarifa) {
+        throw new Error("Ya existe tarifa con codigo " + tarifa.codigoTarifa);
+    }
+
     return tarifaRepositorio.crearTarifa(tarifa);
   }
 
-  actualizarTarifa(tarifa) {
+  async actualizarTarifa(tarifa) {
+    const existeTarifa = await tarifaRepositorio.obtenerTarifaPorCodigo(tarifa.codigoTarifa);
+
+    if (!existeTarifa) {
+        throw new Error("No existe tarifa con codigo " + tarifa.codigoTarifa);
+    }
+
     return tarifaRepositorio.actualizarTarifa(tarifa);
   }
 
