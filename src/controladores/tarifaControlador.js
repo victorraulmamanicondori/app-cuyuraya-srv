@@ -50,7 +50,7 @@ class TarifaControlador {
       const nuevoTarifa = await tarifaService.crearTarifa(req.body);
       res.status(201).json({
         codigo: 201,
-        mensaje: '',
+        mensaje: 'Se registró exitosamente la tarifa',
         datos: nuevoTarifa
       });
     } catch(error) {
@@ -67,7 +67,7 @@ class TarifaControlador {
       const tarifaActualizado = await tarifaService.actualizarTarifa(req.body);
       res.status(200).json({
         codigo: 200,
-        mensaje: '',
+        mensaje: 'Se actualizó exitosamente la tarifa',
         datos: tarifaActualizado
       });
     } catch(error) {
