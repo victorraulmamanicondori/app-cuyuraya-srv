@@ -42,8 +42,7 @@ const CajaEstados = {
 
 const TarifaEstados = {
   ACTIVO: 'ACTIVO',
-  INACTIVO: 'INACTIVO',
-  ELIMINADO: 'ELIMINADO'
+  INACTIVO: 'INACTIVO'
 };
 
 export {

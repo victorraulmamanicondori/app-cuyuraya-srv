@@ -2,6 +2,7 @@ import logger from '../config/logger.js';
 import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
 import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import tarifaRepositorio from '../repositorios/tarifaRepositorio.js';
+import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import { LecturaEstados } from '../constantes/estados.js';
 import { TarifaCodigos } from '../constantes/tarifas.js';
 
@@ -14,8 +15,20 @@ class LecturaServicio {
     return lecturaActual;
   }
 
-  calcularMontoPagar(m3Consumido, montoTarifa) {
-    return 0;
+  calcularMontoPagar(m3Consumido, tarifa) {
+    const m3ConsumoBase = tarifa.m3Consumo;// consumo base
+    const montoTarifaBase = tarifa.montoTarifa; // tarifa base
+    const montoExtraPorM3 = tarifa.montoExtraPorM3; // monto extra a pagar por cada m3
+
+    if (m3Consumido <= m3ConsumoBase) {
+      return montoTarifaBase;
+    } else {
+      const m3ConsumoExtra = m3Consumido - m3ConsumoBase;
+      const montoExtraTotal = m3ConsumoExtra * montoExtraPorM3;
+      const montoTotal = montoTarifaBase + montoExtraTotal;
+
+      return montoTotal;
+    }
   }
 
   generarNumeroRecibo(idMedidor, idUsuario, ultimaLectura) {
@@ -29,7 +42,7 @@ class LecturaServicio {
     return fechaLimitePago;
   }
 
-  async registrarLectura({ codigoMedidor, lecturaActual }) {
+  async registrarLectura({ codigoMedidor, lecturaActual, dni }) {
     logger.info(`codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
     
     const medidor = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor); // Para idMedidor y numeroRecibo
@@ -39,6 +52,18 @@ class LecturaServicio {
     }
 
     logger.info(`idMedidor:${medidor.idMedidor}`);
+
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (!usuario) {
+      throw new Error(`Usuario con dni ${dni} no existe`);
+    }
+
+    logger.info(`idUsuario:${usuario.idUsuario}`);
+
+    if (medidor.idUsuario !== usuario.idUsuario) {
+      throw new Error(`Codigo del medidor ${codigoMedidor} no esta asignado al usuario con dni ${dni}`);
+    }
 
     const ultimaLectura = await lecturaRepositorio.obtenerLecturaAnterior({ idMedidor: medidor.idMedidor }); // Para lecturaAnterior y numeroRecibo
     const lecturaAnterior = ultimaLectura ? ultimaLectura.lecturaActual: 0;
@@ -53,7 +78,7 @@ class LecturaServicio {
       throw new Error('Tarifa para calcular monto a pagar no esta registrado');
     }
 
-    const montoPagar = this.calcularMontoPagar(m3Consumido, tarifa.montoTarifa);
+    const montoPagar = this.calcularMontoPagar(m3Consumido, tarifa);
 
     const numeroRecibo = this.generarNumeroRecibo(medidor.idMedidor, medidor.idUsuario, ultimaLectura);
 
