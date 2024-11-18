@@ -4,7 +4,7 @@ class TarifaModelo {
     this.codigoTarifa = codigoTarifa;
     this.descripcion = descripcion;
     this.montoTarifa = montoTarifa;
-    this.m3ConsumoBase = m3ConsumoBase;
+    this.m3Consumo = m3Consumo;
     this.montoExtraPorM3 = montoExtraPorM3;
     this.estado = estado;
     this.fecCreacion = fecCreacion;
