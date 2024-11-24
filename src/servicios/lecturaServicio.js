@@ -42,7 +42,7 @@ class LecturaServicio {
     return fechaLimitePago;
   }
 
-  async registrarLectura({ codigoMedidor, lecturaActual, dni }) {
+  async registrarLectura({ codigoMedidor, lecturaActual, dni, fechaLectura }) {
     logger.info(`codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
     
     const medidor = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor); // Para idMedidor y numeroRecibo
@@ -93,6 +93,7 @@ class LecturaServicio {
       montoPagar,
       numeroRecibo,
       fechaLimitePago,
+      fechaLectura,
       estado: LecturaEstados.REGISTRADO
     });
 
@@ -101,6 +102,15 @@ class LecturaServicio {
     }
 
     return { idLectura };
+  }
+
+  async obtenerLecturasPorMedidor(page, limit, idMedidor) {
+
+    if (!idMedidor) {
+      throw new Error('Id del medidor es requerido');
+    }
+
+    return lecturaRepositorio.obtenerLecturasPorMedidor(page, limit, idMedidor);
   }
 
 };

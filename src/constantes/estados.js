@@ -32,7 +32,9 @@ const MedidorEstados = {
 };
 
 const LecturaEstados = {
-  REGISTRADO: 'REGISTRADO'
+  REGISTRADO: 'REGISTRADO',
+  PAGADO: 'PAGAGO',
+  ANULADO: 'ANULADO'
 };
 
 const CajaEstados = {

@@ -23,11 +23,68 @@ class LecturaRepositorio {
                                     numRecibo: fila.NUM_RECIBO,
                                     fechaLimtPago: fila.FECHA_LIMT_PAGO,
                                     fechaCorte: fila.FECHA_CORTE,
+                                    fechaLectura: fila.FECHA_LECTURA,
                                     comentario: fila.COMENTARIO,
                                     estado: fila.ESTADO,
                                     fecCreacion: fila.FEC_CREACION,
                                     fecActualizacion: fila.FEC_ACTUALIZACION
                                   }));
+    } catch(error) {
+      logger.error(`Error al listar lecturas:${error}`);
+      throw new Error(error.message);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async obtenerLecturasPorMedidor(page = 1, limit = 1, idMedidor) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+
+      const offset = (page - 1) * limit;
+
+      const filas = await conexion.query(
+        `SELECT * FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FEC_CREACION DESC LIMIT ? OFFSET ?`,
+        [idMedidor, LecturaEstados.ANULADO, limit, offset]
+      );
+
+      const resultados = filas.map(fila => new LecturaModelo({
+        idLectura: fila.ID_LECTURA.toString(),
+        idMedidor: fila.ID_MEDIDOR.toString(),
+        lecturaActual: fila.LECTURA_ACTUAL.toString(),
+        lecturaAnterior: fila.LECTURA_ANTERIOR.toString(),
+        m3Consumido: fila.M3_CONSUMIDO,
+        idTarifa: fila.ID_TARIFA.toString(),
+        montoPagar: fila.MONTO_PAGAR,
+        porcDescuento: fila.PORC_DESCUENTO,
+        montoMulta: fila.MONTO_MULTA,
+        numRecibo: fila.NUM_RECIBO,
+        fechaLimtPago: fila.FECHA_LIMT_PAGO,
+        fechaCorte: fila.FECHA_CORTE,
+        fechaLectura: fila.FECHA_LECTURA,
+        comentario: fila.COMENTARIO,
+        estado: fila.ESTADO,
+        fecCreacion: fila.FEC_CREACION,
+        fecActualizacion: fila.FEC_ACTUALIZACION
+      }));
+
+      // Consulta para contar el total de registros
+      const [{ total }] = await conexion.query(`SELECT COUNT(*) AS total FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND  ESTADO <> ?`, [idMedidor, LecturaEstados.ANULADO]);
+
+      console.log({
+        resultados,
+        total: Number(total),
+        page,
+        limit,
+      });
+
+      return {
+        resultados,
+        total: Number(total),
+        page,
+        limit,
+      };
     } catch(error) {
       logger.error(`Error al listar lecturas:${error}`);
     } finally {
@@ -59,7 +116,7 @@ class LecturaRepositorio {
 
   async registrarLectura({ idMedidor, lecturaActual, lecturaAnterior, 
                            m3Consumido, idTarifa, montoPagar, 
-                           numeroRecibo, fechaLimitePago, estado }) {
+                           numeroRecibo, fechaLimitePago, fechaLectura, estado }) {
     let conexion;
     try {
       conexion = await pool.getConnection();
@@ -71,8 +128,9 @@ class LecturaRepositorio {
                                                                        MONTO_PAGAR,
                                                                        NUM_RECIBO,
                                                                        FECHA_LIMT_PAGO,
+                                                                       FECHA_LECTURA,
                                                                        ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                                                      [idMedidor,
                                                       lecturaActual,
                                                       lecturaAnterior,
@@ -81,6 +139,7 @@ class LecturaRepositorio {
                                                       montoPagar,
                                                       numeroRecibo,
                                                       fechaLimitePago,
+                                                      fechaLectura,
                                                       estado]);
       const idLectura = resultado.insertId.toString();
       return idLectura;

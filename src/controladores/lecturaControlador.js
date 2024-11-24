@@ -21,6 +21,27 @@ class LecturaControlador {
     }
   }
 
+  async obtenerLecturasPorMedidor(req, res) {
+    try {
+      const { idMedidor } = req.params;
+      const { page = 1, limit = 1 } = req.query;
+
+      const resultado = await lecturaServicio.obtenerLecturasPorMedidor(page, limit, idMedidor);
+      res.status(200).json({
+        codigo: 200,
+        mensaje: `Datos de la pagina ${page}`,
+        datos: resultado
+      });
+    } catch(error) {
+      logger.error(error);
+      res.status(400).json({
+        codigo: 400,
+        mensaje: error.mensaje,
+        datos: null
+      });
+    }
+  }
+
 }
 
 export default new LecturaControlador();
