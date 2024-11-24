@@ -45,7 +45,7 @@ class LecturaRepositorio {
       const offset = (page - 1) * limit;
 
       const filas = await conexion.query(
-        `SELECT * FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FEC_CREACION DESC LIMIT ? OFFSET ?`,
+        `SELECT * FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FECHA_LECTURA DESC LIMIT ? OFFSET ?`,
         [idMedidor, LecturaEstados.ANULADO, limit, offset]
       );
 
@@ -72,13 +72,6 @@ class LecturaRepositorio {
       // Consulta para contar el total de registros
       const [{ total }] = await conexion.query(`SELECT COUNT(*) AS total FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND  ESTADO <> ?`, [idMedidor, LecturaEstados.ANULADO]);
 
-      console.log({
-        resultados,
-        total: Number(total),
-        page,
-        limit,
-      });
-
       return {
         resultados,
         total: Number(total),
@@ -98,7 +91,7 @@ class LecturaRepositorio {
       logger.info(`LecturaRepositorio:obtenerLecturaAnterior: idMedidor=${idMedidor}`);
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT ID_LECTURA, LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? ORDER BY FEC_CREACION DESC LIMIT 1", [idMedidor]);
+      const filas = await conexion.query("SELECT ID_LECTURA, LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FECHA_LECTURA DESC LIMIT 1", [idMedidor, LecturaEstados.ANULADO]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new LecturaModelo({

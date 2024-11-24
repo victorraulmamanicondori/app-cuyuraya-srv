@@ -24,7 +24,8 @@ class LecturaControlador {
   async obtenerLecturasPorMedidor(req, res) {
     try {
       const { idMedidor } = req.params;
-      const { page = 1, limit = 1 } = req.query;
+      const page = parseInt(req.query.page, 10) || 1; // Convertir a número
+      const limit = parseInt(req.query.limit, 10) || 1; // Convertir a número
 
       const resultado = await lecturaServicio.obtenerLecturasPorMedidor(page, limit, idMedidor);
       res.status(200).json({
