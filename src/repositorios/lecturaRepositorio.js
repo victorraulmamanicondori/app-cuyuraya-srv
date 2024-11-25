@@ -9,7 +9,25 @@ class LecturaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_LECTURA ORDER BY FEC_CREACION DESC");
+      const filas = await conexion.query(`SELECT 
+        ID_LECTURA,
+        ID_MEDIDOR,
+        LECTURA_ACTUAL,
+        LECTURA_ANTERIOR,
+        M3_CONSUMIDO,
+        ID_TARIFA,
+        MONTO_PAGAR,
+        PORC_DESCUENTO,
+        MONTO_MULTA,
+        NUM_RECIBO,
+        DATE_FORMAT(L.FECHA_LIMT_PAGO, '%Y-%m-%d') as FECHA_LIMT_PAGO,
+        DATE_FORMAT(L.FECHA_CORTE, '%Y-%m-%d') as FECHA_CORTE,
+        DATE_FORMAT(L.FECHA_LECTURA, '%Y-%m-%d') as FECHA_LECTURA,
+        COMENTARIO,
+        ESTADO,
+        FEC_CREACION,
+        FEC_ACTUALIZACION
+      FROM TBL_LECTURA L ORDER BY FEC_CREACION DESC`);
       return filas.map(fila => new LecturaModelo({
                                     idLectura: fila.ID_LECTURA.toString(),
                                     idMedidor: fila.ID_MEDIDOR.toString(),
@@ -20,8 +38,8 @@ class LecturaRepositorio {
                                     montoPagar: fila.MONTO_PAGAR,
                                     porcDescuento: fila.PORC_DESCUENTO,
                                     montoMulta: fila.MONTO_MULTA,
-                                    numRecibo: fila.NUM_RECIBO,
-                                    fechaLimtPago: fila.FECHA_LIMT_PAGO,
+                                    numeroRecibo: fila.NUM_RECIBO,
+                                    fechaLimitePago: fila.FECHA_LIMT_PAGO,
                                     fechaCorte: fila.FECHA_CORTE,
                                     fechaLectura: fila.FECHA_LECTURA,
                                     comentario: fila.COMENTARIO,
@@ -37,7 +55,62 @@ class LecturaRepositorio {
     }
   }
 
-  async obtenerLecturasPorMedidor(page = 1, limit = 1, idMedidor) {
+  async obtenerLecturaPorIdLectura(idLectura) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const fila = await conexion.query(`SELECT 
+        ID_LECTURA,
+        ID_MEDIDOR,
+        LECTURA_ACTUAL,
+        LECTURA_ANTERIOR,
+        M3_CONSUMIDO,
+        ID_TARIFA,
+        MONTO_PAGAR,
+        PORC_DESCUENTO,
+        MONTO_MULTA,
+        NUM_RECIBO,
+        DATE_FORMAT(L.FECHA_LIMT_PAGO, '%Y-%m-%d') as FECHA_LIMT_PAGO,
+        DATE_FORMAT(L.FECHA_CORTE, '%Y-%m-%d') as FECHA_CORTE,
+        DATE_FORMAT(L.FECHA_LECTURA, '%Y-%m-%d') as FECHA_LECTURA,
+        COMENTARIO,
+        ESTADO,
+        FEC_CREACION,
+        FEC_ACTUALIZACION
+      FROM TBL_LECTURA L WHERE ID_LECTURA = ? AND ESTADO <> ?`, [idLectura, LecturaEstados.ANULADO]);
+
+      if (fila && fila.length > 0) {
+        return new LecturaModelo({
+          idLectura: fila[0].ID_LECTURA.toString(),
+          idMedidor: fila[0].ID_MEDIDOR.toString(),
+          lecturaActual: fila[0].LECTURA_ACTUAL.toString(),
+          lecturaAnterior: fila[0].LECTURA_ANTERIOR.toString(),
+          m3Consumido: fila[0].M3_CONSUMIDO,
+          idTarifa: fila[0].ID_TARIFA.toString(),
+          montoPagar: fila[0].MONTO_PAGAR,
+          porcDescuento: fila[0].PORC_DESCUENTO,
+          montoMulta: fila[0].MONTO_MULTA,
+          numeroRecibo: fila[0].NUM_RECIBO,
+          fechaLimitePago: fila[0].FECHA_LIMT_PAGO,
+          fechaCorte: fila[0].FECHA_CORTE,
+          fechaLectura: fila[0].FECHA_LECTURA,
+          comentario: fila[0].COMENTARIO,
+          estado: fila[0].ESTADO,
+          fecCreacion: fila[0].FEC_CREACION,
+          fecActualizacion: fila[0].FEC_ACTUALIZACION
+        });
+      } else {
+        return null;
+      }
+    } catch(error) {
+      logger.error(`Error al obtener lectura para id=${idLectura}:${error}`);
+      throw new Error(error.message);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async obtenerLecturasPorMedidor({idMedidor, page = 1, limit = 1}) {
     let conexion;
     try {
       conexion = await pool.getConnection();
@@ -45,7 +118,25 @@ class LecturaRepositorio {
       const offset = (page - 1) * limit;
 
       const filas = await conexion.query(
-        `SELECT * FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FECHA_LECTURA DESC LIMIT ? OFFSET ?`,
+        `SELECT 
+          ID_LECTURA,
+          ID_MEDIDOR,
+          LECTURA_ACTUAL,
+          LECTURA_ANTERIOR,
+          M3_CONSUMIDO,
+          ID_TARIFA,
+          MONTO_PAGAR,
+          PORC_DESCUENTO,
+          MONTO_MULTA,
+          NUM_RECIBO,
+          DATE_FORMAT(L.FECHA_LIMT_PAGO, '%Y-%m-%d') as FECHA_LIMT_PAGO,
+          DATE_FORMAT(L.FECHA_CORTE, '%Y-%m-%d') as FECHA_CORTE,
+          DATE_FORMAT(L.FECHA_LECTURA, '%Y-%m-%d') as FECHA_LECTURA,
+          COMENTARIO,
+          ESTADO,
+          FEC_CREACION,
+          FEC_ACTUALIZACION 
+        FROM TBL_LECTURA L WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FECHA_LECTURA DESC LIMIT ? OFFSET ?`,
         [idMedidor, LecturaEstados.ANULADO, limit, offset]
       );
 
@@ -59,10 +150,10 @@ class LecturaRepositorio {
         montoPagar: fila.MONTO_PAGAR,
         porcDescuento: fila.PORC_DESCUENTO,
         montoMulta: fila.MONTO_MULTA,
-        numRecibo: fila.NUM_RECIBO,
-        fechaLimtPago: fila.FECHA_LIMT_PAGO,
-        fechaCorte: fila.FECHA_CORTE,
-        fechaLectura: fila.FECHA_LECTURA,
+        numeroRecibo: fila.NUM_RECIBO,
+        fechaLimitePago: fila[0].FECHA_LIMT_PAGO,
+        fechaCorte: fila[0].FECHA_CORTE,
+        fechaLectura: fila[0].FECHA_LECTURA,
         comentario: fila.COMENTARIO,
         estado: fila.ESTADO,
         fecCreacion: fila.FEC_CREACION,
@@ -85,13 +176,13 @@ class LecturaRepositorio {
     }
   }
 
-  async obtenerLecturaAnterior({ idMedidor }) {
+  async obtenerLecturaAnterior({ idMedidor, fechaLectura }) {
     let conexion;
     try {
-      logger.info(`LecturaRepositorio:obtenerLecturaAnterior: idMedidor=${idMedidor}`);
+      logger.info(`obtenerLecturaAnterior: idMedidor=${idMedidor}, fechaLectura=${fechaLectura}`);
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT ID_LECTURA, LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? ORDER BY FECHA_LECTURA DESC LIMIT 1", [idMedidor, LecturaEstados.ANULADO]);
+      const filas = await conexion.query(`SELECT ID_LECTURA, LECTURA_ACTUAL FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND ESTADO <> ? AND FECHA_LECTURA < ? ORDER BY FECHA_LECTURA DESC LIMIT 1`, [idMedidor, LecturaEstados.ANULADO, fechaLectura]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new LecturaModelo({
@@ -143,6 +234,80 @@ class LecturaRepositorio {
     }
   }
 
+  async registrarLectura({ idMedidor, lecturaActual, lecturaAnterior, 
+                           m3Consumido, idTarifa, montoPagar, 
+                           numeroRecibo, fechaLimitePago, fechaLectura, estado }) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const resultado = await conexion.query(`INSERT INTO TBL_LECTURA(ID_MEDIDOR,
+                                                                       LECTURA_ACTUAL,
+                                                                       LECTURA_ANTERIOR,
+                                                                       M3_CONSUMIDO,
+                                                                       ID_TARIFA,
+                                                                       MONTO_PAGAR,
+                                                                       NUM_RECIBO,
+                                                                       FECHA_LIMT_PAGO,
+                                                                       FECHA_LECTURA,
+                                                                       ESTADO)
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                                     [idMedidor,
+                                                      lecturaActual,
+                                                      lecturaAnterior,
+                                                      m3Consumido,
+                                                      idTarifa,
+                                                      montoPagar,
+                                                      numeroRecibo,
+                                                      fechaLimitePago,
+                                                      fechaLectura,
+                                                      estado]);
+      const idLectura = resultado.insertId.toString();
+      return idLectura;
+    } catch(error) {
+      logger.error(`Error al registrar lectura:${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async actualizarLectura({ idLectura, idMedidor, lecturaActual, lecturaAnterior, 
+                           m3Consumido, idTarifa, montoPagar, 
+                           numeroRecibo, fechaLimitePago, fechaLectura, estado }) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      await conexion.query(`UPDATE TBL_LECTURA SET
+                                                ID_MEDIDOR = ?,
+                                                LECTURA_ACTUAL = ?,
+                                                LECTURA_ANTERIOR = ?,
+                                                M3_CONSUMIDO = ?,
+                                                ID_TARIFA = ?,
+                                                MONTO_PAGAR = ?,
+                                                NUM_RECIBO = ?,
+                                                FECHA_LIMT_PAGO = ?,
+                                                FECHA_LECTURA = ?,
+                                                ESTADO = ?
+                                              WHERE ID_LECTURA = ?`,
+                                  [ idMedidor,
+                                    lecturaActual,
+                                    lecturaAnterior,
+                                    m3Consumido,
+                                    idTarifa,
+                                    montoPagar,
+                                    numeroRecibo,
+                                    fechaLimitePago,
+                                    fechaLectura,
+                                    estado,
+                                    idLectura
+                                  ]);
+      return idLectura;
+    } catch(error) {
+      logger.error(`Error al actualizar lectura:${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async obtenerLecturasPorCodigoMedidor(codigoMedidor) {
     let conexion;
     try {
@@ -157,6 +322,20 @@ class LecturaRepositorio {
     } catch(error) {
       logger.error(`Error al listar lecturas por codigoMedidor:${error}`);
       throw new Error('Error al listar lecturas por codigoMedidor');
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async anularLectura(idLectura) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      await conexion.query(`UPDATE TBL_LECTURA SET ESTADO = ? WHERE ID_LECTURA = ?`, [LecturaEstados.ANULADO, idLectura]);
+      return { "idLectura": idLectura, "estado": LecturaEstados.ANULADO };
+    } catch(error) {
+      logger.error(`Error al actualizar lectura por idLectura:${error}`);
+      throw new Error('Error al actualizar lectura por idLectura');
     } finally {
       if (conexion) conexion.release();
     }
