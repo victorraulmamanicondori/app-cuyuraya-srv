@@ -41,11 +41,11 @@ class LecturaControlador {
 
   async obtenerLecturasPorMedidor(req, res) {
     try {
-      const { idMedidor } = req.params;
+      const { codigoMedidor } = req.params;
       const page = parseInt(req.query.page, 10) || 1; // Convertir a número
       const limit = parseInt(req.query.limit, 10) || 1; // Convertir a número
 
-      const resultado = await lecturaServicio.obtenerLecturasPorMedidor(page, limit, idMedidor);
+      const resultado = await lecturaServicio.obtenerLecturasPorMedidor(page, limit, codigoMedidor);
       res.status(200).json({
         codigo: 200,
         mensaje: `Datos de la pagina ${page}`,

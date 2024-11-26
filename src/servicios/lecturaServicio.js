@@ -201,11 +201,19 @@ class LecturaServicio {
     return { idLectura: idLecturaActualizado };
   }
 
-  async obtenerLecturasPorMedidor(page, limit, idMedidor) {
+  async obtenerLecturasPorMedidor(page, limit, codigoMedidor) {
 
-    if (!idMedidor) {
-      throw new Error('Id del medidor es requerido');
+    if (!codigoMedidor) {
+      throw new Error('Codigo del medidor es requerido');
     }
+
+    const medidor = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
+
+    if (!medidor) {
+      throw new Error(`No existe medidor con codigo ${medidor.idMedidor}`);
+    }
+
+    const idMedidor = medidor.idMedidor;
 
     return lecturaRepositorio.obtenerLecturasPorMedidor({page, limit, idMedidor});
   }
