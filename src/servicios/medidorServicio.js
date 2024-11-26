@@ -1,7 +1,7 @@
+import DetectorApi from '../api/Detector.api.js';
+import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
 import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
-import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
-import DetectorApi from '../api/Detector.api.js';
 
 class MedidorServicio {
 
@@ -12,13 +12,22 @@ class MedidorServicio {
       throw new Error(`Usuario con dni ${dni} no esta registrado, registre y luego asigne medidor`);
     }
 
-    const existeAsignacion = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
+    let existeAsignacion = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
 
-    if (existeAsignacion) {
-      throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado`);
+    if (existeAsignacion && usuarioBenificiario.idUsuario != existeAsignacion.idUsuario) {
+      const otroUsuario = await usuarioRepositorio.obtenerUsuarioPorId(existeAsignacion.idUsuario);
+      throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado a otro usuario con dni ${otroUsuario.dni}`);
     }
 
-    const codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.idUsuario);
+    existeAsignacion = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);
+
+    let codigoAsignacion = null;
+
+    if (!existeAsignacion) {
+      codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.idUsuario);
+    } else {
+      codigoAsignacion = await medidorRepositorio.actualizarAsignacionMedidor(existeAsignacion.idMedidor, codigoMedidor, usuarioBenificiario.idUsuario);
+    }
 
     if (!codigoAsignacion) {
       // Si no logra asignar, lanzar error
@@ -44,6 +53,20 @@ class MedidorServicio {
     }
 
     return null;
+  }
+
+  async obtenerMedidorPorDni(dni) {
+    const usuarioBenificiario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (!usuarioBenificiario) {
+      return null;
+    }
+
+    return medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);
+  }
+
+  async obtenerMedidorPorCodigo(codigoMedidor) {
+    return medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor);
   }
 }
 

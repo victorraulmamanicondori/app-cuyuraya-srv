@@ -1,8 +1,15 @@
 import bcrypt from 'bcrypt';
+import logger from '../config/logger.js';
+import {UsuarioEstados} from '../constantes/estados.js';
+import centroPobladoRepositorio from '../repositorios/centroPobladoRepositorio.js';
+import comunidadCampesinaRepositorio from '../repositorios/comunidadCampesinaRepositorio.js';
+import comunidadNativaRepositorio from '../repositorios/comunidadNativaRepositorio.js';
+import departamentoRepositorio from '../repositorios/departamentoRepositorio.js';
+import distritoRepositorio from '../repositorios/distritoRepositorio.js';
+import medidorRepositorio from '../repositorios/medidorRepositorio.js';
+import provinciaRepositorio from '../repositorios/provinciaRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import usuarioRolRepositorio from '../repositorios/usuarioRolRepositorio.js';
-import { UsuarioEstados } from '../constantes/estados.js';
-import logger from '../config/logger.js';
 
 class UsuarioServicio {
 
@@ -10,8 +17,50 @@ class UsuarioServicio {
     return usuarioRepositorio.listarUsuarios();
   }
 
-  obtenerUsuarioPorDni(dni) {
-    return usuarioRepositorio.obtenerUsuarioPorDni(dni);
+  async obtenerUsuarioPorDni(dni) {
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (usuario) {
+      if (usuario.codigoDistrito) {
+        const codigoDepartamento = usuario.codigoDistrito.substring(0, 2);
+        const codigoProvincia = usuario.codigoDistrito.substring(0, 4);
+  
+        const departamento = await departamentoRepositorio.obtenerDepartamentoPorCodigo(codigoDepartamento);
+        const provincia = await provinciaRepositorio.obtenerProvinciaPorCodigo(codigoProvincia);
+        const distrito = await distritoRepositorio.obtenerDistritoPorCodigo(usuario.codigoDistrito);
+        const centroPoblado = await centroPobladoRepositorio.obtenerCentroPobladoPorCodigo(usuario.codigoCentroPoblado);
+        const comunidadCampesina = await comunidadCampesinaRepositorio.obtenerComunidadCampesinaPorCodigo(usuario.codigoComunidadCampesina);
+        const comunidadNativa = await comunidadNativaRepositorio.obtenerComunidadNativaPorCodigo(usuario.codigoComunidadNativa);
+  
+        usuario.nombreDepartamento = departamento.nombre;
+        usuario.nombreProvincia = provincia.nombre;
+        usuario.nombreDistrito = distrito.nombre;
+
+        if (centroPoblado) {
+          usuario.codigoCentroPoblado = centroPoblado.codigo;
+          usuario.nombreCentroPoblado = centroPoblado.nombre;
+        }
+
+        if (comunidadCampesina) {
+          usuario.codigoComunidadCampesina = comunidadCampesina.codigo;
+          usuario.nombreComunidadCampesina = comunidadCampesina.nombre;
+        }
+
+        if (comunidadNativa) {
+          usuario.codigoComunidadNativa = comunidadNativa.codigo;
+          usuario.nombreComunidadNativa = comunidadNativa.nombre;
+        }
+
+        const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
+        if (medidor) {
+          usuario.codigoMedidor = medidor.codMedidor;
+        }
+      }
+      
+      usuario.clave = null;
+    }
+
+    return usuario;
   }
 
   async asignarRolAlUsuario(dni, idRol) {
@@ -57,6 +106,15 @@ class UsuarioServicio {
 
     const hashedClave = await bcrypt.hash(dni, 10);
     usuarioRepositorio.resetearContrasenaPorDni({ dni, clave: hashedClave });
+  }
+
+  async obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa) {
+    const usuarios = await usuarioRepositorio.obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa);
+    return usuarios;
+  }
+
+  async obtenerUsuarioPorId(idUsuario) {
+    return usuarioRepositorio.obtenerUsuarioPorId(idUsuario);
   }
 }
 

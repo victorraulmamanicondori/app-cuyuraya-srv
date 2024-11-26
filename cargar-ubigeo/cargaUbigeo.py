@@ -11,7 +11,7 @@ print(df.head())
 base_url = "http://127.0.0.1:9000/api"
 
 headers = {
-    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiNDYzOTA1NTAiLCJpYXQiOjE3MjcwMTIwNzQsImV4cCI6MTcyNzAzMDA3NH0.7aQl16FnTHk9QUZV6QT9C_Z91rAAXKmUHE20De8590M",
+    "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiMTIzNDU2NzgiLCJpYXQiOjE3Mjg3NDkzMjYsImV4cCI6MTcyODc2NzMyNn0.qavscMWZQSHtHv1Gl4UkC9HpTTrSvHsz6wRfQQQVwtQ",
     "Content-Type": "application/json"
 }
 

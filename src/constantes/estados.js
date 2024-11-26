@@ -32,7 +32,9 @@ const MedidorEstados = {
 };
 
 const LecturaEstados = {
-  REGISTRADO: 'REGISTRADO'
+  REGISTRADO: 'REGISTRADO',
+  PAGADO: 'PAGAGO',
+  ANULADO: 'ANULADO'
 };
 
 const CajaEstados = {
@@ -40,13 +42,13 @@ const CajaEstados = {
   ANULADO: 'ANULADO'
 }; 
 
+const TarifaEstados = {
+  ACTIVO: 'ACTIVO',
+  INACTIVO: 'INACTIVO'
+};
+
 export {
-  UsuarioEstados,
-  RolEstados,
-  RubroEstados,
-  TipoMovimientoEstados,
-  MedidorEstados,
-  LecturaEstados,
-  CajaEstados
+  CajaEstados,LecturaEstados,MedidorEstados,RolEstados,
+  RubroEstados,TarifaEstados,TipoMovimientoEstados,UsuarioEstados
 };
 

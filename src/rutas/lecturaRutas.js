@@ -4,8 +4,9 @@ import { verificarToken } from '../middlewares/autenticacionMiddleware.js';
 
 const router = express.Router();
 
-// La ruta '/' se asocia al middleware y metodo del controlador
+router.get('/medidor/:codigoMedidor', verificarToken, lecturaControlador.obtenerLecturasPorMedidor);
 router.post('/', verificarToken, lecturaControlador.registrarLectura);
+router.put('/', verificarToken, lecturaControlador.actualizarLectura);
 
 export default router;
 

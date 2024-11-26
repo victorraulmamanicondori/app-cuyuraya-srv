@@ -29,14 +29,24 @@ class UsuarioControlador {
       const dni = req.params.dni;
       const usuario = await usuarioServicio.obtenerUsuarioPorDni(dni);
       if (usuario) {
-        res.status(200).json(usuario);
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuario
+        });
       } else {
-        res.status(404).json({ mensaje: 'Usuario no encontrado' });
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'Usuario no encontrado'
+        });
       }
     } catch(error) {
       logger.error(error);
-      res.status(500).json({ mensaje: error.message });
-    } 
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
   }
 
   async crearUsuario(req, res) {
@@ -85,6 +95,61 @@ class UsuarioControlador {
         codigo: 400,
         mensaje: error.message,
         datos: null
+      });
+    }
+  }
+
+  async listarUsuariosPorUbigeo(req, res) {
+    try {
+      const codigoDistrito = req.params.codigoDistrito;
+      const codigoCentroPoblado = req.query.codigoCentroPoblado;
+      const codigoComunidadCampesina = req.query.codigoComunidadCampesina;
+      const codigoComunidadNativa = req.query.codigoComunidadNativa;
+
+      const usuarios = await usuarioServicio
+        .obtenerUsuariosPorUbigeo(codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa);
+      if (usuarios) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuarios
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'No hay usuarios'
+        });
+      }
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
+  }
+
+  async obtenerUsuarioPorId(req, res) {
+    try {
+      const idUsuario = req.params.idUsuario;
+      const usuario = await usuarioServicio.obtenerUsuarioPorId(idUsuario);
+      if (usuario) {
+        res.status(200).json({
+          codigo: 200,
+          mensaje: "",
+          datos: usuario
+        });
+      } else {
+        res.status(404).json({
+          codigo: 404,
+          mensaje: 'No hay usuario'
+        });
+      }
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
       });
     }
   }
