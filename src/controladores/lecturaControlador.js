@@ -1,3 +1,5 @@
+import PDFDocument from 'pdfkit';
+import fs from 'fs';
 import logger from '../config/logger.js';
 import lecturaServicio from '../servicios/lecturaServicio.js';
 
@@ -59,6 +61,33 @@ class LecturaControlador {
         datos: null
       });
     }
+  }
+
+  imprimirRecibo(req, res) {
+    // Crear un nuevo documento PDF
+    const doc = new PDFDocument();
+
+    // Configurar la respuesta HTTP para la descarga
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
+
+    // Crear el contenido del PDF
+    doc.fontSize(16).text('Recibo de Agua', { align: 'center' });
+    doc.moveDown();
+    doc.fontSize(12).text('Fecha: ' + new Date().toLocaleDateString());
+    doc.moveDown();
+    doc.text('Nombre del usuario: Juan Pérez');
+    doc.text('Dirección: Calle Falsa 123, Lima, Perú');
+    doc.moveDown();
+    doc.text('Detalle del consumo:');
+    doc.text(' - Consumo de agua: 25 m³');
+    doc.text(' - Tarifa aplicada: S/ 2.50 por m³');
+    doc.moveDown();
+    doc.fontSize(14).text('Total a pagar: S/ 62.50', { align: 'right' });
+
+    // Finalizar el documento y enviarlo como respuesta
+    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.end();
   }
 
 }

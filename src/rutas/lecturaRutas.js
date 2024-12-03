@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/medidor/:codigoMedidor', verificarToken, lecturaControlador.obtenerLecturasPorMedidor);
 router.post('/', verificarToken, lecturaControlador.registrarLectura);
 router.put('/', verificarToken, lecturaControlador.actualizarLectura);
+router.get('/recibo/:idLectura', lecturaControlador.imprimirRecibo);
 
 export default router;
 
