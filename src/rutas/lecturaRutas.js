@@ -8,6 +8,7 @@ router.get('/medidor/:codigoMedidor', verificarToken, lecturaControlador.obtener
 router.post('/', verificarToken, lecturaControlador.registrarLectura);
 router.put('/', verificarToken, lecturaControlador.actualizarLectura);
 router.get('/recibo/:idLectura', lecturaControlador.imprimirRecibo);
+router.post('/borrador', verificarToken, lecturaControlador.borradorLectura);
 
 export default router;
 
