@@ -55,6 +55,56 @@ class LecturaRepositorio {
     }
   }
 
+  async obtenerUltimoLecturaRegistrado() {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT 
+        ID_LECTURA,
+        ID_MEDIDOR,
+        LECTURA_ACTUAL,
+        LECTURA_ANTERIOR,
+        M3_CONSUMIDO,
+        ID_TARIFA,
+        MONTO_PAGAR,
+        PORC_DESCUENTO,
+        MONTO_MULTA,
+        NUM_RECIBO,
+        DATE_FORMAT(L.FECHA_LIMT_PAGO, '%Y-%m-%d') as FECHA_LIMT_PAGO,
+        DATE_FORMAT(L.FECHA_CORTE, '%Y-%m-%d') as FECHA_CORTE,
+        DATE_FORMAT(L.FECHA_LECTURA, '%Y-%m-%d') as FECHA_LECTURA,
+        COMENTARIO,
+        ESTADO,
+        FEC_CREACION,
+        FEC_ACTUALIZACION
+      FROM TBL_LECTURA L ORDER BY FEC_CREACION DESC LIMIT 1`);
+      return filas.map(fila => new LecturaModelo({
+                                    idLectura: fila.ID_LECTURA.toString(),
+                                    idMedidor: fila.ID_MEDIDOR.toString(),
+                                    lecturaActual: fila.LECTURA_ACTUAL.toString(),
+                                    lecturaAnterior: fila.LECTURA_ANTERIOR.toString(),
+                                    m3Consumido: fila.M3_CONSUMIDO,
+                                    idTarifa: fila.ID_TARIFA.toString(),
+                                    montoPagar: fila.MONTO_PAGAR,
+                                    porcDescuento: fila.PORC_DESCUENTO,
+                                    montoMulta: fila.MONTO_MULTA,
+                                    numeroRecibo: fila.NUM_RECIBO,
+                                    fechaLimitePago: fila.FECHA_LIMT_PAGO,
+                                    fechaCorte: fila.FECHA_CORTE,
+                                    fechaLectura: fila.FECHA_LECTURA,
+                                    comentario: fila.COMENTARIO,
+                                    estado: fila.ESTADO,
+                                    fecCreacion: fila.FEC_CREACION,
+                                    fecActualizacion: fila.FEC_ACTUALIZACION
+                                  }));
+    } catch(error) {
+      logger.error(`Error al listar lecturas:${error}`);
+      throw new Error(error.message);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async obtenerLecturaPorIdLectura(idLectura) {
     let conexion;
     try {

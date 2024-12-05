@@ -5,6 +5,7 @@ import tarifaRepositorio from '../repositorios/tarifaRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import { LecturaEstados } from '../constantes/estados.js';
 import { TarifaCodigos } from '../constantes/tarifas.js';
+import LecturaModelo from '../modelos/LecturaModelo.js';
 
 class LecturaServicio {
 
@@ -42,9 +43,18 @@ class LecturaServicio {
     return fechaLimitePago;
   }
 
-  async registrarLectura({ codigoMedidor, lecturaActual, dni, fechaLectura }) {
-    logger.info(`codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
+  async registrarLectura({ idLectura, codigoMedidor, lecturaActual, dni, fechaLectura }) {
+    logger.info(`idLectura: ${idLectura}, codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
     
+    if (idLectura) {
+      const lecturaPorId = lecturaRepositorio.obtenerLecturaPorIdLectura(idLectura);
+      if (lecturaPorId) {
+        return this.actualizarLectura({idLectura, codigoMedidor, lecturaActual, dni, fechaLectura});
+      }
+    }
+
+    logger.info("INSERTAR NUEVA LECTURA");
+
     const medidor = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor); // Para idMedidor y numeroRecibo
 
     if (!medidor) {
@@ -80,19 +90,21 @@ class LecturaServicio {
 
     const montoPagar = this.calcularMontoPagar(m3Consumido, tarifa);
 
-    const resultadoPaginado = await lecturaRepositorio.obtenerLecturasPorMedidor({ idMedidor: medidor.idMedidor });
+    const ultimoResultado = await lecturaRepositorio.obtenerUltimoLecturaRegistrado();
 
-    if (resultadoPaginado && resultadoPaginado.resultados && resultadoPaginado.resultados.length > 0) {
-      ultimaLectura = resultadoPaginado.resultados[0];
+    if (ultimoResultado && ultimoResultado.length > 0) {
+      ultimaLectura = ultimoResultado[0];
     } else {
       ultimaLectura = null;
     }
 
     const numeroRecibo = this.generarNumeroRecibo(medidor.idMedidor, medidor.idUsuario, ultimaLectura);
 
+    logger.info(`Generacion numeroRecibo = ${numeroRecibo}`);
+
     const fechaLimitePago = this.calcularFechaLimitePago();
 
-    const idLectura = await lecturaRepositorio.registrarLectura({
+    const resultado = await lecturaRepositorio.registrarLectura({
       idMedidor: medidor.idMedidor,
       lecturaActual,
       lecturaAnterior,
@@ -104,16 +116,17 @@ class LecturaServicio {
       fechaLectura,
       estado: LecturaEstados.REGISTRADO
     });
-
-    if (!idLectura) {
+    
+    if (!resultado) {
       throw new Error('No se pudo registrar lectura, intente nuevamente');
     }
 
-    return { idLectura };
+    return { idLectura: resultado };
   }
 
   async actualizarLectura({idLectura, codigoMedidor, lecturaActual, dni, fechaLectura, estado}) {
-    logger.info(`codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
+
+    logger.info(`ACTUALIZAR LECTURA: idLectura:${idLectura}, codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
 
     if (!idLectura) {
       throw new Error("Id de lectura es requerido para actualizar");
@@ -216,6 +229,79 @@ class LecturaServicio {
     const idMedidor = medidor.idMedidor;
 
     return lecturaRepositorio.obtenerLecturasPorMedidor({page, limit, idMedidor});
+  }
+
+  formateoFechaYMD(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Agregar cero si es necesario
+    const day = String(date.getDate()).padStart(2, '0'); // Agregar cero si es necesario
+
+    return `${year}-${month}-${day}`;
+  }
+
+  async borradorLectura({ codigoMedidor, lecturaActual, dni, fechaLectura }) {
+    logger.info(`codigoMedidor:${codigoMedidor}, lectura:${lecturaActual}`);
+    
+    const medidor = await medidorRepositorio.obtenerMedidorPorCodigo(codigoMedidor); // Para idMedidor y numeroRecibo
+
+    if (!medidor) {
+      throw new Error('Codigo del medidor no existe, ingrese codigo valido');
+    }
+
+    logger.info(`idMedidor:${medidor.idMedidor}`);
+
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+
+    if (!usuario) {
+      throw new Error(`Usuario con dni ${dni} no existe`);
+    }
+
+    logger.info(`idUsuario:${usuario.idUsuario}`);
+
+    if (medidor.idUsuario !== usuario.idUsuario) {
+      throw new Error(`Codigo del medidor ${codigoMedidor} no esta asignado al usuario con dni ${dni}`);
+    }
+
+    let ultimaLectura = await lecturaRepositorio.obtenerLecturaAnterior({ idMedidor: medidor.idMedidor, fechaLectura }); // Para lecturaAnterior y numeroRecibo
+    const lecturaAnterior = ultimaLectura ? ultimaLectura.lecturaActual: 0;
+
+    logger.info(`lecturaAnterior:${lecturaAnterior}`);
+
+    const m3Consumido = this.calcularM3Consumido(lecturaActual, lecturaAnterior);
+
+    const tarifa = await tarifaRepositorio.obtenerTarifaPorCodigo(TarifaCodigos.BASE); // Para idTarifa y montoPagar
+
+    if (!tarifa) {
+      throw new Error('Tarifa para calcular monto a pagar no esta registrado');
+    }
+
+    const montoPagar = this.calcularMontoPagar(m3Consumido, tarifa);
+
+    const ultimoResultado = await lecturaRepositorio.obtenerUltimoLecturaRegistrado();
+
+    if (ultimoResultado && ultimoResultado.length > 0) {
+      ultimaLectura = ultimoResultado[0];
+    } else {
+      ultimaLectura = null;
+    }
+
+    const numeroRecibo = this.generarNumeroRecibo(medidor.idMedidor, medidor.idUsuario, ultimaLectura);
+
+    const fechaLimitePago = this.calcularFechaLimitePago();
+
+    const lectura = new LecturaModelo({
+      idMedidor: medidor.idMedidor,
+      lecturaActual,
+      lecturaAnterior,
+      m3Consumido,
+      idTarifa: tarifa.idTarifa,
+      montoPagar,
+      numeroRecibo,
+      fechaLimitePago: this.formateoFechaYMD(fechaLimitePago),
+      fechaLectura
+    });
+
+    return lectura;
   }
 
 };

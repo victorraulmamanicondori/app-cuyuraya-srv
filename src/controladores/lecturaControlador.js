@@ -5,6 +5,24 @@ import lecturaServicio from '../servicios/lecturaServicio.js';
 
 class LecturaControlador {
 
+  async borradorLectura(req, res) {
+    try {
+      const resultado = await lecturaServicio.borradorLectura(req.body);
+      res.status(200).json({
+        codigo: 200,
+        mensaje: 'Se ha calculado lectura exitosamente',
+        datos: resultado
+      });
+    } catch(error) {
+      logger.error(error);
+      res.status(400).json({
+        codigo: 400,
+        mensaje: error.message,
+        datos: null
+      });
+    }
+  }
+
   async registrarLectura(req, res) {
     try {
       const resultado = await lecturaServicio.registrarLectura(req.body);
@@ -63,7 +81,23 @@ class LecturaControlador {
     }
   }
 
-  imprimirRecibo(req, res) {
+  async imprimirRecibo(req, res) {
+    try {
+      const { idLectura } = req.params;
+      const recibo = await lecturaServicio.obtenerRecibo(idLectura);
+
+      if (recibo) {
+        crearReciboPdf(req, res, recibo);
+      } else {
+        crearPdfNoExisteRecibo(req, res);
+      }
+    } catch(error) {
+      logger.error(error);
+      crearPdfErrorRecibo(req, res);
+    }
+  }
+
+  crearReciboPdf(req, res) {
     // Crear un nuevo documento PDF
     const doc = new PDFDocument();
 
@@ -88,6 +122,14 @@ class LecturaControlador {
     // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res); // Escribir directamente en la respuesta
     doc.end();
+  }
+
+  crearPdfNoExisteRecibo() {
+
+  }
+
+  crearPdfErrorRecibo() {
+    
   }
 
 }
