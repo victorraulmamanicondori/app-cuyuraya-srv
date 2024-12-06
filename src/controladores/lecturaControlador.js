@@ -112,9 +112,27 @@ class LecturaControlador {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=recibo_agua_${recibo.numeroRecibo}.pdf`);
 
-    // Crear el contenido del PDF
-    doc.fontSize(16).text('Recibo de Agua', { align: 'center' });
-    doc.fontSize(14).text(`Recibo: ${recibo.numeroRecibo}, Mes: ${recibo.obtenerMes()}`, { align: 'center' });
+    // Crear la cabecera con fondo gris
+    const headerHeight = 50; // Altura del rectángulo
+    const pageWidth = doc.page.width; // Ancho de la página
+
+    doc.rect(0, 0, pageWidth, headerHeight) // Dibujar el rectángulo
+       .fill('#d3d3d3'); // Color de fondo gris
+
+    // Escribir el título en negrita
+    doc.font('Helvetica-Bold') // Establecer la fuente en negrita
+       .fontSize(16)
+       .fillColor('#000') // Color de texto negro
+       .text('Recibo de Agua', { align: 'center', valign: 'center' });
+
+    // Mover la posición para evitar solapamientos
+    doc.moveDown(1);
+
+    // Detalles adicionales del recibo
+    doc.font('Helvetica') // Cambiar a fuente regular
+       .fontSize(14)
+       .text(`Recibo: ${recibo.numeroRecibo}, Mes: ${recibo.obtenerMes()}`, { align: 'center' });
+
     doc.moveDown();
     doc.fontSize(12).text(`Periodo: ${recibo.obtenerPeriodo()}`);
     doc.fontSize(12).text(`Fecha Límite de Pago: ${recibo.fechaLimitePago}`);
