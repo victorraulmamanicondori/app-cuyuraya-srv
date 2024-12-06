@@ -307,8 +307,19 @@ class LecturaServicio {
 
   async obtenerRecibo(idLectura) {
     const lectura = await lecturaRepositorio.obtenerLecturaPorIdLectura(idLectura);
+    
+    if (!lectura) {
+      return null;
+    }
+
     const medidor = await medidorRepositorio.obtenerMedidorPorIdMedidor(lectura.idMedidor);
+
+    if (!medidor) {
+      return null;
+    }
+
     const usuario = await usuarioRepositorio.obtenerUsuarioPorId(medidor.idUsuario);
+
     const tarifa = await tarifaRepositorio.obtenerTarifaPorCodigo(TarifaCodigos.BASE);
 
     const recibo = new ReciboModelo({
