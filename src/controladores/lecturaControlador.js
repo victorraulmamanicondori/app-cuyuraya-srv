@@ -5,6 +5,13 @@ import lecturaServicio from '../servicios/lecturaServicio.js';
 
 class LecturaControlador {
 
+  constructor() {
+    this.imprimirRecibo = this.imprimirRecibo.bind(this);
+    this.crearReciboPdf = this.crearReciboPdf.bind(this);
+    this.crearPdfNoExisteRecibo = this.crearPdfNoExisteRecibo.bind(this);
+    this.crearPdfErrorRecibo = this.crearPdfErrorRecibo.bind(this);
+  }
+
   async borradorLectura(req, res) {
     try {
       const resultado = await lecturaServicio.borradorLectura(req.body);
@@ -87,17 +94,69 @@ class LecturaControlador {
       const recibo = await lecturaServicio.obtenerRecibo(idLectura);
 
       if (recibo) {
-        crearReciboPdf(req, res, recibo);
+        this.crearReciboPdf(req, res, recibo);
       } else {
-        crearPdfNoExisteRecibo(req, res);
+        this.crearPdfNoExisteRecibo(req, res);
       }
     } catch(error) {
       logger.error(error);
-      crearPdfErrorRecibo(req, res);
+      this.crearPdfErrorRecibo(req, res);
     }
   }
+  
+  crearReciboPdf(req, res, recibo) {
+    // Crear un nuevo documento PDF
+    const doc = new PDFDocument();
 
-  crearReciboPdf(req, res) {
+    // Configurar la respuesta HTTP para la descarga
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=recibo_agua_${recibo.numeroRecibo}.pdf`);
+
+    // Crear la cabecera con fondo gris
+    const headerHeight = 50; // Altura del rectángulo
+    const pageWidth = doc.page.width; // Ancho de la página
+
+    doc.rect(0, 0, pageWidth, headerHeight) // Dibujar el rectángulo
+       .fill('#d3d3d3'); // Color de fondo gris
+
+    // Escribir el título en negrita
+    doc.font('Helvetica-Bold') // Establecer la fuente en negrita
+       .fontSize(16)
+       .fillColor('#000') // Color de texto negro
+       .text('Recibo de Agua', { align: 'center', valign: 'center' });
+
+    // Mover la posición para evitar solapamientos
+    doc.moveDown(1);
+
+    // Detalles adicionales del recibo
+    doc.font('Helvetica') // Cambiar a fuente regular
+       .fontSize(14)
+       .text(`Recibo: ${recibo.numeroRecibo}, Mes: ${recibo.obtenerMes()}`, { align: 'center' });
+
+    doc.moveDown();
+    doc.fontSize(12).text(`Periodo: ${recibo.obtenerPeriodo()}`);
+    doc.fontSize(12).text(`Fecha Límite de Pago: ${recibo.fechaLimitePago}`);
+    doc.moveDown();
+    doc.text(`Nombre del usuario: ${recibo.usuario}`);
+    doc.text(`Dirección: ${recibo.direccion}`);
+    doc.text(`Medidor Nro: ${recibo.codigoMedidor}`);
+    doc.moveDown();
+    doc.text('Detalle del consumo:');
+    doc.text(` - Consumo de agua: ${recibo.m3Consumido} m³`);
+    doc.text(` - Tarifa aplicada: S/ ${recibo.tarifa} por ${recibo.m3Tarifa} m³`);
+    doc.text(` - Lectura Actual: ${recibo.lecturaActual}`);
+    doc.text(` - Lectura Anterior: ${recibo.lecturaAnterior}`);
+    doc.text(` - Deuda Anterior: S/ ${recibo.deudaAnterior}`);
+    doc.text(` - Deuda Actual: S/ ${recibo.deudaActual}`);
+    doc.moveDown();
+    doc.fontSize(14).text(`Total a pagar: S/ ${recibo.montoPagar}`, { align: 'right' });
+
+    // Finalizar el documento y enviarlo como respuesta
+    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.end();
+  }
+
+  crearPdfNoExisteRecibo(req, res) {
     // Crear un nuevo documento PDF
     const doc = new PDFDocument();
 
@@ -106,32 +165,28 @@ class LecturaControlador {
     res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
 
     // Crear el contenido del PDF
-    doc.fontSize(16).text('Recibo de Agua', { align: 'center' });
-    doc.moveDown();
-    doc.fontSize(12).text('Fecha: ' + new Date().toLocaleDateString());
-    doc.moveDown();
-    doc.text('Nombre del usuario: Juan Pérez');
-    doc.text('Dirección: Calle Falsa 123, Lima, Perú');
-    doc.moveDown();
-    doc.text('Detalle del consumo:');
-    doc.text(' - Consumo de agua: 25 m³');
-    doc.text(' - Tarifa aplicada: S/ 2.50 por m³');
-    doc.moveDown();
-    doc.fontSize(14).text('Total a pagar: S/ 62.50', { align: 'right' });
+    doc.fontSize(16).text('Recibo No Existe', { align: 'center' });
 
     // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res); // Escribir directamente en la respuesta
     doc.end();
   }
 
-  crearPdfNoExisteRecibo() {
+  crearPdfErrorRecibo(req, res) {
+    // Crear un nuevo documento PDF
+    const doc = new PDFDocument();
 
+    // Configurar la respuesta HTTP para la descarga
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
+
+    // Crear el contenido del PDF
+    doc.fontSize(16).text('Error al generar Recibo de Agua', { align: 'center' });
+
+    // Finalizar el documento y enviarlo como respuesta
+    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.end();
   }
-
-  crearPdfErrorRecibo() {
-    
-  }
-
 }
 
 export default new LecturaControlador();

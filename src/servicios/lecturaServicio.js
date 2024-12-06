@@ -6,6 +6,7 @@ import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 import { LecturaEstados } from '../constantes/estados.js';
 import { TarifaCodigos } from '../constantes/tarifas.js';
 import LecturaModelo from '../modelos/LecturaModelo.js';
+import ReciboModelo from '../modelos/ReciboModelo.js';
 
 class LecturaServicio {
 
@@ -302,6 +303,47 @@ class LecturaServicio {
     });
 
     return lectura;
+  }
+
+  async obtenerRecibo(idLectura) {
+    const lectura = await lecturaRepositorio.obtenerLecturaPorIdLectura(idLectura);
+    
+    if (!lectura) {
+      return null;
+    }
+
+    const medidor = await medidorRepositorio.obtenerMedidorPorIdMedidor(lectura.idMedidor);
+
+    if (!medidor) {
+      return null;
+    }
+
+    const usuario = await usuarioRepositorio.obtenerUsuarioPorId(medidor.idUsuario);
+
+    const tarifa = await tarifaRepositorio.obtenerTarifaPorCodigo(TarifaCodigos.BASE);
+
+    const recibo = new ReciboModelo({
+      idLectura: lectura.idLectura, 
+      idMedidor: medidor.idMedidor,
+      codigoMedidor: medidor.codigoMedidor,
+      lecturaActual: lectura.lecturaActual,
+      lecturaAnterior: lectura.lecturaAnterior,            
+      m3Consumido: lectura.m3Consumido,
+      montoPagar: lectura.montoPagar,
+      numeroRecibo: lectura.numeroRecibo,
+      fechaLimitePago: lectura.fechaLimitePago,
+      fechaLectura: lectura.fechaLectura,
+      comentario: lectura.comentario,
+      estado: lectura.estado,
+      usuario: `${usuario.nombres} ${usuario.paterno} ${usuario.materno}`,
+      direccion: usuario.direccion,
+      deudaAnterior: 0,
+      deudaActual: lectura.montoPagar,
+      tarifa: tarifa.montoTarifa,
+      m3Tarifa: tarifa.m3Consumo
+    });
+
+    return recibo;
   }
 
 };

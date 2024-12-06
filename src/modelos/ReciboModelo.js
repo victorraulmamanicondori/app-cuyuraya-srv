@@ -1,16 +1,18 @@
 class ReciboModelo {
 
-    constructor({ idLectura, idMedidor, lecturaActual, lecturaAnterior, 
+    constructor({ idLectura, idMedidor, codigoMedidor, lecturaActual, lecturaAnterior, 
                   m3Consumido, montoPagar, 
                   numeroRecibo, fechaLimitePago, fechaLectura,
                   comentario, estado,
-                  usuario,
-                  deudaAnterior, deudaActual
+                  usuario, direccion,
+                  deudaAnterior, deudaActual,
+                  tarifa, m3Tarifa
                 }) {
       this.idLectura = idLectura;
       this.idMedidor = idMedidor;
       this.codigoMedidor = codigoMedidor;
       this.usuario = usuario;
+      this.direccion = direccion;
       this.lecturaActual = lecturaActual;
       this.lecturaAnterior = lecturaAnterior;
       this.m3Consumido = m3Consumido;
@@ -22,6 +24,8 @@ class ReciboModelo {
       this.estado = estado;
       this.deudaAnterior = deudaAnterior;
       this.deudaActual = deudaActual;
+      this.tarifa = tarifa;
+      this.m3Tarifa = m3Tarifa;
     }
 
     obtenerMes() {
@@ -30,12 +34,12 @@ class ReciboModelo {
             "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
         ];
     
-        const [dia, mes, anio] = this.fechaLectura.split("/");
+        const [anio, mes, dia] = this.fechaLectura.split("-");
         return meses[parseInt(mes, 10) - 1];
     }
 
     obtenerPeriodo() {
-        const [dia, mes, anio] = this.fechaLectura.split("/");
+        const [anio, mes, dia] = this.fechaLectura.split("-");
         return `${dia}/${mes}/${anio}`;
     }
   

@@ -14,7 +14,7 @@ class MedidorRepositorio {
         const fila = filas[0];
         return new MedidorModelo({ 
                           idMedidor: fila.ID_MEDIDOR.toString(),
-                          codMedidor: fila.COD_MEDIDOR,
+                          codigoMedidor: fila.COD_MEDIDOR,
                           idUsuario: fila.ID_USUARIO.toString(),
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
@@ -29,6 +29,30 @@ class MedidorRepositorio {
     }
   }
 
+  async obtenerMedidorPorIdMedidor(idMedidor) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query("SELECT * FROM TBL_MEDIDOR WHERE ID_MEDIDOR = ?", [idMedidor]);
+      if (filas.length > 0) {
+        const fila = filas[0];
+        return new MedidorModelo({ 
+                          idMedidor: fila.ID_MEDIDOR.toString(),
+                          codigoMedidor: fila.COD_MEDIDOR,
+                          idUsuario: fila.ID_USUARIO.toString(),
+                          estado: fila.ESTADO,
+                          fecCreacion: fila.FEC_CREACION,
+                          fecActualizacion: fila.FEC_ACTUALIZACION
+                        });
+      }
+      return null;
+    } catch(error) {
+      logger.error(`Error al obtener medidor por id ${idMedidor}: ${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
   async obtenerMedidorPorIdUsuario(idUsuario) {
     let conexion;
     try {
@@ -38,7 +62,7 @@ class MedidorRepositorio {
         const fila = filas[0];
         return new MedidorModelo({ 
                           idMedidor: fila.ID_MEDIDOR.toString(),
-                          codMedidor: fila.COD_MEDIDOR,
+                          codigoMedidor: fila.COD_MEDIDOR,
                           idUsuario: fila.ID_USUARIO.toString(),
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
