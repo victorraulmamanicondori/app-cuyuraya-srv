@@ -53,7 +53,7 @@ class UsuarioServicio {
 
         const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
         if (medidor) {
-          usuario.codigoMedidor = medidor.codMedidor;
+          usuario.codigoMedidor = medidor.codigoMedidor;
         }
       }
       
