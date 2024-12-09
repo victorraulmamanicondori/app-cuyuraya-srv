@@ -213,7 +213,7 @@ class UsuarioControlador {
       if (usuarios && usuarios.length > 0) {
         this.crearPadronUsuarioPdf(req, res, usuarios, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa);
       } else {
-        this.crearPdfNoExistePadronUsuario(req, res);
+        this.crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa);
       }
     } catch(error) {
       logger.error(error);
@@ -292,19 +292,44 @@ class UsuarioControlador {
     doc.end();
   }
 
-  crearPdfNoExistePadronUsuario(req, res) {
-    // Crear un nuevo documento PDF
-    const doc = new PDFDocument();
+  crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
+    // Crear un nuevo documento PDF en orientación horizontal
+    const doc = new PDFDocument({ margin: 50, layout: 'landscape' });
 
     // Configurar la respuesta HTTP para la descarga
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=padron_usuarios.pdf');
 
-    // Crear el contenido del PDF
-    doc.fontSize(16).text('No hay usuarios para imprimir', { align: 'center' });
+    // Título del documento
+    doc.font('Helvetica-Bold')
+       .fontSize(18)
+       .text('Padrón de Usuarios', { align: 'center' })
+       .moveDown(1);
+
+    // Mostrar información del ubigeo
+    doc.font('Helvetica')
+       .fontSize(12)
+       .text(`Departamento: ${departamento?.nombre || 'No especificado'} (Código: ${departamento?.codigo || 'N/A'})`)
+       .text(`Provincia: ${provincia?.nombre || 'No especificado'} (Código: ${provincia?.codigo || 'N/A'})`)
+       .text(`Distrito: ${distrito?.nombre || 'No especificado'} (Código: ${distrito?.codigo || 'N/A'})`)
+       .text(`Centro Poblado: ${centroPoblado?.nombre || 'No especificado'} (Código: ${centroPoblado?.codigo || 'N/A'})`)
+       .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || 'No especificado'} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
+       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || 'No especificado'} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
+       .moveDown(2);
+
+    // Mensaje de que no hay usuarios
+    doc.font('Helvetica-Bold')
+       .fontSize(14)
+       .text('No se encontraron usuarios en el padrón.', { align: 'center', underline: true })
+       .moveDown(1);
+
+    doc.font('Helvetica')
+       .fontSize(12)
+       .text('Por favor, revise los filtros aplicados o actualice los datos para obtener información.', { align: 'center' })
+       .moveDown(2);
 
     // Finalizar el documento y enviarlo como respuesta
-    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.pipe(res); // Escribir directamente en la respuesta HTTP
     doc.end();
   }
 
