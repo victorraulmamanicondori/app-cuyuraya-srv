@@ -22,5 +22,7 @@ router.get('/ubigeo/:codigoDistrito', verificarToken, usuarioControlador.listarU
 
 router.get('/id/:idUsuario', verificarToken, usuarioControlador.obtenerUsuarioPorId);
 
+router.get('/padron/:codigoDistrito', usuarioControlador.imprimirPadronUsuarios);
+
 export default router;
 

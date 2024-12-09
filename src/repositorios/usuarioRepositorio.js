@@ -75,13 +75,13 @@ class UsuarioRepositorio {
       const codigos = [codigoDistrito]
       let WHERE = " WHERE U.COD_DISTRITO = ? "
 
-      if (codigoCentroPoblado) {
+      if (codigoCentroPoblado && codigoCentroPoblado.length > 0) {
         codigos.push(codigoCentroPoblado)
         WHERE += " AND U.COD_CENTRO_POBLADO = ? "
-      } else if (codigoComunidadCampesina) {
+      } else if (codigoComunidadCampesina && codigoComunidadCampesina.length > 0) {
         codigos.push(codigoComunidadCampesina)
         WHERE += " AND U.COD_COMUNIDAD_CAMPESINA = ? "
-      } else if (codigoComunidadNativa) {
+      } else if (codigoComunidadNativa && codigoComunidadNativa.length > 0) {
         codigos.push(codigoComunidadNativa)
         WHERE += " AND U.COD_COMUNIDAD_NATIVA = ? "
       }
@@ -93,7 +93,11 @@ class UsuarioRepositorio {
                                             U.PATERNO,
                                             U.MATERNO,
                                             U.DNI, 
-                                            M.COD_MEDIDOR
+                                            M.COD_MEDIDOR,
+                                            U.NUM_CONTRATO,
+                                            U.DIRECCION,
+                                            U.TELEFONO,
+                                            U.ESTADO
                                           FROM TBL_USUARIO AS U 
                                           LEFT JOIN TBL_MEDIDOR AS M 
                                           ON M.ID_USUARIO = U.ID_USUARIO 
@@ -114,7 +118,11 @@ class UsuarioRepositorio {
                                       nombres: fila.NOMBRES,
                                       paterno: fila.PATERNO,
                                       materno: fila.MATERNO,
-                                      dni: fila.DNI
+                                      dni: fila.DNI,
+                                      numeroContrato: fila.NUM_CONTRATO,
+                                      direccion: fila.DIRECCION,
+                                      telefono: fila.TELEFONO,
+                                      estado: fila.ESTADO
                                   });
           usuario.codigoMedidor = fila.COD_MEDIDOR;
           return usuario;
