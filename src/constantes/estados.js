@@ -33,7 +33,7 @@ const MedidorEstados = {
 
 const LecturaEstados = {
   REGISTRADO: 'REGISTRADO',
-  PAGADO: 'PAGAGO',
+  PAGADO: 'PAGADO',
   ANULADO: 'ANULADO'
 };
 
