@@ -66,6 +66,25 @@ class LecturaControlador {
     }
   }
 
+  async registrarPagoRecibo(req, res) {
+    try {
+      const { idLectura } = req.params;
+      const resultado = await lecturaServicio.registrarPagoRecibo(idLectura);
+      res.status(200).json({
+        codigo: 200,
+        mensaje: 'Se ha regitrado pago de recibo',
+        datos: resultado
+      });
+    } catch(error) {
+      logger.error(error);
+      res.status(400).json({
+        codigo: 400,
+        mensaje: error.message,
+        datos: null
+      });
+    }
+  }
+
   async obtenerLecturasPorMedidor(req, res) {
     try {
       const { codigoMedidor } = req.params;
@@ -136,6 +155,7 @@ class LecturaControlador {
     doc.moveDown();
     doc.fontSize(12).text(`Periodo: ${recibo.obtenerPeriodo()}`);
     doc.fontSize(12).text(`Fecha Límite de Pago: ${recibo.fechaLimitePago}`);
+    doc.fontSize(12).text(`Estado: ${recibo.estado}`);
     doc.moveDown();
     doc.text(`Nombre del usuario: ${recibo.usuario}`);
     doc.text(`Dirección: ${recibo.direccion}`);
