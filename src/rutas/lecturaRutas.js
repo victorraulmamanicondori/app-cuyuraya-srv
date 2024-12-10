@@ -9,6 +9,7 @@ router.post('/', verificarToken, lecturaControlador.registrarLectura);
 router.put('/', verificarToken, lecturaControlador.actualizarLectura);
 router.get('/recibo/:idLectura', lecturaControlador.imprimirRecibo);
 router.post('/borrador', verificarToken, lecturaControlador.borradorLectura);
+router.get('/pagar/:idLectura', verificarToken, lecturaControlador.registrarPagoRecibo);
 
 export default router;
 

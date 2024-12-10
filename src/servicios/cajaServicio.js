@@ -22,6 +22,12 @@ class CajaServicio {
     return { idCaja };
   }
 
+  async listarCajaPorRubro(tipoRubro) {
+    const resultadoCaja = await cajaRepositorio.listarCajaPorRubro(tipoRubro);
+
+    return resultadoCaja;
+  }
+
 };
 
 export default new CajaServicio();

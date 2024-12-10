@@ -25,12 +25,51 @@ class CajaRepositorio {
                                                       estado]);
       return resultado.insertId.toString();
     } catch(error) {
-      logger.error(`Error al crear usuario:${error}`);
+      logger.error(`Error al registrar en caja:${error}`);
+      throw new Error('Error al registrar en caja');
     } finally {
       if (conexion) conexion.release();
     }
   }
 
+  async listarCajaPorRubro(tipoRubro) {
+    let conexion;
+    try {
+      conexion = await pool.getConnection();
+      const filas = await conexion.query(`SELECT C.ID_CAJA, 
+                                            C.NUM_COMPROBANTE,
+                                            C.ID_TIPO_MOV,
+                                            DATE_FORMAT(C.FECHA_MOVIMIENTO, '%d/%m/%Y') AS FECHA_MOVIMIENTO,
+                                            C.DESCRIPCION,
+                                            C.MONTO,
+                                            C.ID_PAGO_RECIBO,
+                                            C.ESTADO,
+                                            M.CONCEPTO 
+                                          FROM TBL_CAJA C 
+                                          INNER JOIN 
+                                          TBL_TIPO_MOVIMIENTO M 
+                                          ON M.ID_TIPO_MOV = C.ID_TIPO_MOV
+                                          INNER JOIN
+                                          TBL_RUBRO R
+                                          ON R.ID_RUBRO = M.ID_RUBRO
+                                          WHERE R.TIPO_RUBRO = ?`, [tipoRubro]);
+      return filas.map(fila => new CajaModelo({ idCaja: fila.ID_CAJA, 
+                                                numeroComprobante: fila.NUM_COMPROBANTE,
+                                                idTipoMovimiento: fila.ID_TIPO_MOV,
+                                                fechaMovimiento: fila.FECHA_MOVIMIENTO,
+                                                descripcion: fila.DESCRIPCION,
+                                                monto: fila.MONTO,
+                                                idPagoRecibo: fila.ID_PAGO_RECIBO,
+                                                estado: fila.ESTADO,
+                                                concepto: fila.CONCEPTO
+                                              }));
+    } catch(error) {
+      logger.error(`Error al listar en caja:${error}`);
+      throw new Error('Error al listar en caja');
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
 }
 
 export default new CajaRepositorio();

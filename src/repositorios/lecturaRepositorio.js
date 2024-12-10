@@ -284,42 +284,6 @@ class LecturaRepositorio {
     }
   }
 
-  async registrarLectura({ idMedidor, lecturaActual, lecturaAnterior, 
-                           m3Consumido, idTarifa, montoPagar, 
-                           numeroRecibo, fechaLimitePago, fechaLectura, estado }) {
-    let conexion;
-    try {
-      conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_LECTURA(ID_MEDIDOR,
-                                                                       LECTURA_ACTUAL,
-                                                                       LECTURA_ANTERIOR,
-                                                                       M3_CONSUMIDO,
-                                                                       ID_TARIFA,
-                                                                       MONTO_PAGAR,
-                                                                       NUM_RECIBO,
-                                                                       FECHA_LIMT_PAGO,
-                                                                       FECHA_LECTURA,
-                                                                       ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                                                     [idMedidor,
-                                                      lecturaActual,
-                                                      lecturaAnterior,
-                                                      m3Consumido,
-                                                      idTarifa,
-                                                      montoPagar,
-                                                      numeroRecibo,
-                                                      fechaLimitePago,
-                                                      fechaLectura,
-                                                      estado]);
-      const idLectura = resultado.insertId.toString();
-      return idLectura;
-    } catch(error) {
-      logger.error(`Error al registrar lectura:${error}`);
-    } finally {
-      if (conexion) conexion.release();
-    }
-  }
-
   async actualizarLectura({ idLectura, idMedidor, lecturaActual, lecturaAnterior, 
                            m3Consumido, idTarifa, montoPagar, 
                            numeroRecibo, fechaLimitePago, fechaLectura, estado }) {

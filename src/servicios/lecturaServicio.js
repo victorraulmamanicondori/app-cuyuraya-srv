@@ -3,8 +3,10 @@ import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
 import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import tarifaRepositorio from '../repositorios/tarifaRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
-import { LecturaEstados } from '../constantes/estados.js';
-import { TarifaCodigos } from '../constantes/tarifas.js';
+import pagoReciboRepositorio from '../repositorios/pagoReciboRepositorio.js';
+import cajaRepositorio from '../repositorios/cajaRepositorio.js';
+import { CajaEstados, LecturaEstados } from '../constantes/estados.js';
+import { TarifaCodigos, TipoMovimientoCodigos } from '../constantes/tarifas.js';
 import LecturaModelo from '../modelos/LecturaModelo.js';
 import ReciboModelo from '../modelos/ReciboModelo.js';
 
@@ -213,6 +215,44 @@ class LecturaServicio {
     }
 
     return { idLectura: idLecturaActualizado };
+  }
+
+  async registrarPagoRecibo(idLectura) {
+    const lectura = await lecturaRepositorio.obtenerLecturaPorIdLectura(idLectura);
+
+    if (!lectura) {
+      throw new Error("No existe recibo para realizar el pago");
+    }
+
+    if (lectura.estado === LecturaEstados.PAGADO) {
+      throw new Error("El recibo ya esta pagado.");
+    }
+
+    const pagoReciboResultado = await pagoReciboRepositorio.registrarPagoRecibo({
+      fechaPago: new Date(), 
+      montoPago: lectura.montoPagar, 
+      idLectura: idLectura, 
+      numeroComprobante: lectura.numeroRecibo, 
+      comentario: null, 
+      estado: LecturaEstados.PAGADO
+    });
+
+    const cajaResultado = await cajaRepositorio.registrarCaja({
+      numeroComprobante: lectura.numeroRecibo, 
+      idTipoMovimiento: TipoMovimientoCodigos.PAGO_RECIBO, 
+      fechaMovimiento: new Date(),
+      descripcion: null, 
+      monto: lectura.montoPagar, 
+      idPagoRecibo: pagoReciboResultado, 
+      estado: CajaEstados.REGISTRADO
+    });
+
+    const resultadoLecturaActualizado = await lecturaRepositorio.actualizarLectura({
+      ...lectura,
+      estado: LecturaEstados.PAGADO
+    });
+
+    return pagoReciboResultado;
   }
 
   async obtenerLecturasPorMedidor(page, limit, codigoMedidor) {

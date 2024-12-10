@@ -16,6 +16,7 @@ class UsuarioControlador {
     this.crearPadronUsuarioPdf = this.crearPadronUsuarioPdf.bind(this);
     this.crearPdfNoExistePadronUsuario = this.crearPdfNoExistePadronUsuario.bind(this);
     this.crearPdfErrorPadronUsuario = this.crearPdfErrorPadronUsuario.bind(this);
+    this.maskData = this.maskData.bind(this);
   }
 
   async listarUsuarios(req, res) {
@@ -213,7 +214,7 @@ class UsuarioControlador {
       if (usuarios && usuarios.length > 0) {
         this.crearPadronUsuarioPdf(req, res, usuarios, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa);
       } else {
-        this.crearPdfNoExistePadronUsuario(req, res);
+        this.crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa);
       }
     } catch(error) {
       logger.error(error);
@@ -228,26 +229,42 @@ class UsuarioControlador {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=padron_usuarios.pdf');
 
+    // Obtener la fecha y hora actual
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('es-PE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+    const formattedTime = now.toLocaleTimeString('es-PE', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+
     // Título del documento
     doc.font('Helvetica-Bold')
        .fontSize(18)
        .text('Padrón de Usuarios', { align: 'center' })
+       .font('Helvetica')
+       .fontSize(12)
+       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
        .moveDown(1);
 
     // Mostrar información del ubigeo
     doc.font('Helvetica')
        .fontSize(12)
-       .text(`Departamento: ${departamento?.nombre || 'No especificado'} (Código: ${departamento?.codigo || 'N/A'})`)
-       .text(`Provincia: ${provincia?.nombre || 'No especificado'} (Código: ${provincia?.codigo || 'N/A'})`)
-       .text(`Distrito: ${distrito?.nombre || 'No especificado'} (Código: ${distrito?.codigo || 'N/A'})`)
-       .text(`Centro Poblado: ${centroPoblado?.nombre || 'No especificado'} (Código: ${centroPoblado?.codigo || 'N/A'})`)
-       .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || 'No especificado'} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
-       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || 'No especificado'} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
+       .text(`Departamento: ${departamento?.nombre || ' '} (Código: ${departamento?.codigo || 'N/A'})`)
+       .text(`Provincia: ${provincia?.nombre || ' '} (Código: ${provincia?.codigo || 'N/A'})`)
+       .text(`Distrito: ${distrito?.nombre || ' '} (Código: ${distrito?.codigo || 'N/A'})`)
+       .text(`Centro Poblado: ${centroPoblado?.nombre || ' '} (Código: ${centroPoblado?.codigo || 'N/A'})`)
+       .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || ' '} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
+       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
        .moveDown(2);
 
     // Crear encabezado de la tabla
     const tableTop = doc.y;
-    const columnPositions = [50, 80, 160, 240, 320, 400, 480, 560, 640]; // Posiciones de inicio para las columnas
+    const columnPositions = [50, 80, 160, 240, 300, 360, 440, 490, 640, 700]; // Posiciones de inicio para las columnas
 
     doc.font('Helvetica-Bold')
        .fontSize(10)
@@ -256,10 +273,11 @@ class UsuarioControlador {
        .text('Paterno', columnPositions[2], tableTop)
        .text('Materno', columnPositions[3], tableTop)
        .text('DNI', columnPositions[4], tableTop)
-       .text('Nro. Contrato', columnPositions[5], tableTop)
-       .text('Dirección', columnPositions[6], tableTop)
-       .text('Teléfono', columnPositions[7], tableTop)
-       .text('Estado', columnPositions[8], tableTop);
+       .text('N° Contrato', columnPositions[5], tableTop)
+       .text('Medidor', columnPositions[6], tableTop)
+       .text('Dirección', columnPositions[7], tableTop)
+       .text('Teléfono', columnPositions[8], tableTop)
+       .text('Estado', columnPositions[9], tableTop);
 
     // Línea separadora
     doc.moveTo(50, tableTop + 15).lineTo(740, tableTop + 15).stroke();
@@ -272,17 +290,22 @@ class UsuarioControlador {
             y = 50;
         }
 
+        const maskedDni = this.maskData(usuario.dni);
+        const maskedTelefono = this.maskData(usuario.telefono);
+        const maskedDireccion = this.maskData(usuario.direccion, 4);
+
         doc.font('Helvetica')
            .fontSize(10)
            .text(index + 1, columnPositions[0], y) // Número
-           .text(usuario.nombres || 'No especificado', columnPositions[1], y) // Nombre
-           .text(usuario.paterno || 'No especificado', columnPositions[2], y) // Paterno
-           .text(usuario.materno || 'No especificado', columnPositions[3], y) // Materno
-           .text(usuario.dni || 'No especificado', columnPositions[4], y) // DNI
-           .text(usuario.numeroContrato || 'No especificado', columnPositions[5], y) // Numero contrato
-           .text(usuario.direccion || 'No especificado', columnPositions[6], y) // Dirección
-           .text(usuario.telefono || 'No especificado', columnPositions[7], y) // Teléfono
-           .text(usuario.estado || 'No especificado', columnPositions[8], y); // Estado
+           .text(usuario.nombres || ' ', columnPositions[1], y) // Nombre
+           .text(usuario.paterno || ' ', columnPositions[2], y) // Paterno
+           .text(usuario.materno || ' ', columnPositions[3], y) // Materno
+           .text(maskedDni || ' ', columnPositions[4], y) // DNI
+           .text(usuario.numeroContrato || ' ', columnPositions[5], y) // Numero contrato
+           .text(usuario.codigoMedidor || ' ', columnPositions[6], y) // Codigo medidor
+           .text(maskedDireccion || ' ', columnPositions[7], y) // Dirección
+           .text(maskedTelefono || ' ', columnPositions[8], y) // Teléfono
+           .text(usuario.estado || ' ', columnPositions[9], y); // Estado
 
         y += 20; // Espaciado entre filas
     });
@@ -292,19 +315,68 @@ class UsuarioControlador {
     doc.end();
   }
 
-  crearPdfNoExistePadronUsuario(req, res) {
-    // Crear un nuevo documento PDF
-    const doc = new PDFDocument();
+  maskData(value, visibleDigits = 3) {
+    if (!value) return ' '; // Manejo para datos nulos o indefinidos
+    const strValue = value.toString(); // Convertir a cadena si es un número
+    if (strValue.length <= visibleDigits) return '*'.repeat(strValue.length); // Si la longitud es menor o igual al visibleDigits
+    return strValue.slice(0, -visibleDigits) + '*'.repeat(visibleDigits);
+  }
+
+  crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
+    // Crear un nuevo documento PDF en orientación horizontal
+    const doc = new PDFDocument({ margin: 50, layout: 'landscape' });
 
     // Configurar la respuesta HTTP para la descarga
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=padron_usuarios.pdf');
 
-    // Crear el contenido del PDF
-    doc.fontSize(16).text('No hay usuarios para imprimir', { align: 'center' });
+    // Obtener la fecha y hora actual
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('es-PE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+
+    const formattedTime = now.toLocaleTimeString('es-PE', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
+
+    // Título del documento
+    doc.font('Helvetica-Bold')
+       .fontSize(18)
+       .text('Padrón de Usuarios', { align: 'center' })
+       .font('Helvetica')
+       .fontSize(12)
+       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
+       .moveDown(1);
+
+    // Mostrar información del ubigeo
+    doc.font('Helvetica')
+       .fontSize(12)
+       .text(`Departamento: ${departamento?.nombre || ' '} (Código: ${departamento?.codigo || 'N/A'})`)
+       .text(`Provincia: ${provincia?.nombre || ' '} (Código: ${provincia?.codigo || 'N/A'})`)
+       .text(`Distrito: ${distrito?.nombre || ' '} (Código: ${distrito?.codigo || 'N/A'})`)
+       .text(`Centro Poblado: ${centroPoblado?.nombre || ' '} (Código: ${centroPoblado?.codigo || 'N/A'})`)
+       .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || ' '} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
+       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
+       .moveDown(2);
+
+    // Mensaje de que no hay usuarios
+    doc.font('Helvetica-Bold')
+       .fontSize(14)
+       .text('No se encontraron usuarios en el padrón.', { align: 'center', underline: true })
+       .moveDown(1);
+
+    doc.font('Helvetica')
+       .fontSize(12)
+       .text('Por favor, revise los filtros aplicados o actualice los datos para obtener información.', { align: 'center' })
+       .moveDown(2);
 
     // Finalizar el documento y enviarlo como respuesta
-    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.pipe(res); // Escribir directamente en la respuesta HTTP
     doc.end();
   }
 
