@@ -16,6 +16,7 @@ class UsuarioControlador {
     this.crearPadronUsuarioPdf = this.crearPadronUsuarioPdf.bind(this);
     this.crearPdfNoExistePadronUsuario = this.crearPdfNoExistePadronUsuario.bind(this);
     this.crearPdfErrorPadronUsuario = this.crearPdfErrorPadronUsuario.bind(this);
+    this.maskData = this.maskData.bind(this);
   }
 
   async listarUsuarios(req, res) {
@@ -289,17 +290,21 @@ class UsuarioControlador {
             y = 50;
         }
 
+        const maskedDni = this.maskData(usuario.dni);
+        const maskedTelefono = this.maskData(usuario.telefono);
+        const maskedDireccion = this.maskData(usuario.direccion, 4);
+
         doc.font('Helvetica')
            .fontSize(10)
            .text(index + 1, columnPositions[0], y) // Número
            .text(usuario.nombres || ' ', columnPositions[1], y) // Nombre
            .text(usuario.paterno || ' ', columnPositions[2], y) // Paterno
            .text(usuario.materno || ' ', columnPositions[3], y) // Materno
-           .text(usuario.dni || ' ', columnPositions[4], y) // DNI
+           .text(maskedDni || ' ', columnPositions[4], y) // DNI
            .text(usuario.numeroContrato || ' ', columnPositions[5], y) // Numero contrato
            .text(usuario.codigoMedidor || ' ', columnPositions[6], y) // Codigo medidor
-           .text(usuario.direccion || ' ', columnPositions[7], y) // Dirección
-           .text(usuario.telefono || ' ', columnPositions[8], y) // Teléfono
+           .text(maskedDireccion || ' ', columnPositions[7], y) // Dirección
+           .text(maskedTelefono || ' ', columnPositions[8], y) // Teléfono
            .text(usuario.estado || ' ', columnPositions[9], y); // Estado
 
         y += 20; // Espaciado entre filas
@@ -308,6 +313,13 @@ class UsuarioControlador {
     // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res);
     doc.end();
+  }
+
+  maskData(value, visibleDigits = 3) {
+    if (!value) return ' '; // Manejo para datos nulos o indefinidos
+    const strValue = value.toString(); // Convertir a cadena si es un número
+    if (strValue.length <= visibleDigits) return '*'.repeat(strValue.length); // Si la longitud es menor o igual al visibleDigits
+    return strValue.slice(0, -visibleDigits) + '*'.repeat(visibleDigits);
   }
 
   crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
