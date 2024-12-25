@@ -122,91 +122,92 @@ class LecturaControlador {
       this.crearPdfErrorRecibo(req, res);
     }
   }
-  
-  crearReciboPdf(req, res, recibo) {
-    // Crear un nuevo documento PDF
-    const doc = new PDFDocument();
 
-    // Configurar la respuesta HTTP para la descarga
+  crearReciboPdf(req, res, recibo) {
+    const doc = new PDFDocument({
+      size: [227, 841.89], // 58mm x longitud dinámica (1 punto = 1/72 pulgadas)
+      margins: { top: 10, left: 10, right: 10, bottom: 10 },
+    });
+
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=recibo_agua_${recibo.numeroRecibo}.pdf`);
 
-    // Crear la cabecera con fondo gris
-    const headerHeight = 50; // Altura del rectángulo
-    const pageWidth = doc.page.width; // Ancho de la página
+    // Cabecera
+    doc.font('Helvetica-Bold')
+      .fontSize(10)
+      .text('Recibo de Agua', { align: 'center' })
+      .moveDown(0.5);
 
-    doc.rect(0, 0, pageWidth, headerHeight) // Dibujar el rectángulo
-       .fill('#d3d3d3'); // Color de fondo gris
+    // Información del recibo
+    doc.font('Helvetica')
+      .fontSize(8)
+      .text(`Recibo: ${recibo.numeroRecibo}`, { align: 'left' })
+      .text(`Mes: ${recibo.obtenerMes()}`)
+      .text(`Periodo: ${recibo.obtenerPeriodo()}`)
+      .text(`Fecha Límite: ${recibo.fechaLimitePago}`)
+      .text(`Estado: ${recibo.estado}`)
+      .moveDown(0.5);
 
-    // Escribir el título en negrita
-    doc.font('Helvetica-Bold') // Establecer la fuente en negrita
-       .fontSize(16)
-       .fillColor('#000') // Color de texto negro
-       .text('Recibo de Agua', { align: 'center', valign: 'center' });
+    // Información del usuario
+    doc.text(`Usuario: ${recibo.usuario}`)
+      .text(`Dirección: ${recibo.direccion}`)
+      .text(`Medidor: ${recibo.codigoMedidor}`)
+      .moveDown(0.5);
 
-    // Mover la posición para evitar solapamientos
-    doc.moveDown(1);
+    // Detalle del consumo
+    doc.font('Helvetica-Bold')
+      .text('Detalle del Consumo:', { underline: true })
+      .font('Helvetica')
+      .text(`Consumo: ${recibo.m3Consumido} m³`)
+      .text(`Tarifa: S/ ${recibo.tarifa} por ${recibo.m3Tarifa} m³`)
+      .text(`Lectura Actual: ${recibo.lecturaActual}`)
+      .text(`Lectura Anterior: ${recibo.lecturaAnterior}`)
+      .text(`Deuda Anterior: S/ ${recibo.deudaAnterior}`)
+      .text(`Deuda Actual: S/ ${recibo.deudaActual}`)
+      .moveDown(0.5);
 
-    // Detalles adicionales del recibo
-    doc.font('Helvetica') // Cambiar a fuente regular
-       .fontSize(14)
-       .text(`Recibo: ${recibo.numeroRecibo}, Mes: ${recibo.obtenerMes()}`, { align: 'center' });
+    // Total a pagar
+    doc.font('Helvetica-Bold')
+      .fontSize(10)
+      .text(`Total a Pagar: S/ ${recibo.montoPagar}`, { align: 'right' });
 
-    doc.moveDown();
-    doc.fontSize(12).text(`Periodo: ${recibo.obtenerPeriodo()}`);
-    doc.fontSize(12).text(`Fecha Límite de Pago: ${recibo.fechaLimitePago}`);
-    doc.fontSize(12).text(`Estado: ${recibo.estado}`);
-    doc.moveDown();
-    doc.text(`Nombre del usuario: ${recibo.usuario}`);
-    doc.text(`Dirección: ${recibo.direccion}`);
-    doc.text(`Medidor Nro: ${recibo.codigoMedidor}`);
-    doc.moveDown();
-    doc.text('Detalle del consumo:');
-    doc.text(` - Consumo de agua: ${recibo.m3Consumido} m³`);
-    doc.text(` - Tarifa aplicada: S/ ${recibo.tarifa} por ${recibo.m3Tarifa} m³`);
-    doc.text(` - Lectura Actual: ${recibo.lecturaActual}`);
-    doc.text(` - Lectura Anterior: ${recibo.lecturaAnterior}`);
-    doc.text(` - Deuda Anterior: S/ ${recibo.deudaAnterior}`);
-    doc.text(` - Deuda Actual: S/ ${recibo.deudaActual}`);
-    doc.moveDown();
-    doc.fontSize(14).text(`Total a pagar: S/ ${recibo.montoPagar}`, { align: 'right' });
-
-    // Finalizar el documento y enviarlo como respuesta
-    doc.pipe(res); // Escribir directamente en la respuesta
+    doc.pipe(res);
     doc.end();
   }
 
   crearPdfNoExisteRecibo(req, res) {
-    // Crear un nuevo documento PDF
-    const doc = new PDFDocument();
-
-    // Configurar la respuesta HTTP para la descarga
+    const doc = new PDFDocument({
+      size: [227, 100], // 58mm x altura mínima
+      margins: { top: 10, left: 10, right: 10, bottom: 10 },
+    });
+  
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
-
-    // Crear el contenido del PDF
-    doc.fontSize(16).text('Recibo No Existe', { align: 'center' });
-
-    // Finalizar el documento y enviarlo como respuesta
-    doc.pipe(res); // Escribir directamente en la respuesta
+  
+    doc.font('Helvetica-Bold')
+      .fontSize(12)
+      .text('Recibo No Existe', { align: 'center' });
+  
+    doc.pipe(res);
     doc.end();
-  }
+  }  
 
   crearPdfErrorRecibo(req, res) {
-    // Crear un nuevo documento PDF
-    const doc = new PDFDocument();
-
-    // Configurar la respuesta HTTP para la descarga
+    const doc = new PDFDocument({
+      size: [227, 100], // 58mm x altura mínima
+      margins: { top: 10, left: 10, right: 10, bottom: 10 },
+    });
+  
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
-
-    // Crear el contenido del PDF
-    doc.fontSize(16).text('Error al generar Recibo de Agua', { align: 'center' });
-
-    // Finalizar el documento y enviarlo como respuesta
-    doc.pipe(res); // Escribir directamente en la respuesta
+  
+    doc.font('Helvetica-Bold')
+      .fontSize(12)
+      .text('Error al Generar Recibo', { align: 'center' });
+  
+    doc.pipe(res);
     doc.end();
-  }
+  }  
 }
 
 export default new LecturaControlador();
