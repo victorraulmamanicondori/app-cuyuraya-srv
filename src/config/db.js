@@ -2,7 +2,7 @@ import mariadb from 'mariadb';
 
 const pool = mariadb.createPool({
 	host: '127.0.0.1',
-	database: 'CUYURAYA',
+	database: 'SISTEMAGESTIONAGUA',
 	user: 'root',
 	password: 'admin',
 	port: 3306,
