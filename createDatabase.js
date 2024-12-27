@@ -2,10 +2,10 @@ import knex from 'knex';
 import config from './knexfile.js';
 
 const createDatabase = async () => {
+  const dbName = config.development.connection.database;
+
   const dev = {...config.development};
   dev.connection.database = 'mysql';
-
-  const dbName = config.development.connection.database;
 
   const knexInstance = knex(dev);
 
