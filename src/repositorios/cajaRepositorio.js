@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import logger from '../config/logger.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 import CajaModelo from '../modelos/CajaModelo.js';
 
 class CajaRepositorio {
@@ -8,7 +9,7 @@ class CajaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_CAJA (NUM_COMPROBANTE,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_CAJA (NUM_COMPROBANTE,
                                                                     ID_TIPO_MOV,
                                                                     FECHA_MOVIMIENTO,
                                                                     DESCRIPCION,
@@ -16,14 +17,14 @@ class CajaRepositorio {
                                                                     ID_PAGO_RECIBO,
                                                                     ESTADO)
                                               VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                                                     [numeroComprobante,
+                                                     [toNullIfUndefined(numeroComprobante),
                                                       idTipoMovimiento,
                                                       fechaMovimiento,
-                                                      descripcion,
+                                                      toNullIfUndefined(descripcion),
                                                       monto,
                                                       idPagoRecibo,
                                                       estado]);
-      return resultado.insertId.toString();
+      return resultado.insertId;
     } catch(error) {
       logger.error(`Error al registrar en caja:${error}`);
       throw new Error('Error al registrar en caja');
@@ -36,7 +37,7 @@ class CajaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT C.ID_CAJA, 
+      const [filas] = await conexion.execute(`SELECT C.ID_CAJA, 
                                             C.NUM_COMPROBANTE,
                                             C.ID_TIPO_MOV,
                                             DATE_FORMAT(C.FECHA_MOVIMIENTO, '%d/%m/%Y') AS FECHA_MOVIMIENTO,

@@ -7,7 +7,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PERMISO ORDER BY NOMBRE ASC");
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PERMISO ORDER BY NOMBRE ASC");
       return filas.map(fila => new PermisoModelo({
                                       idPermiso: fila.ID_PERMISO,
                                       nombre: fila.NOMBRE,
@@ -26,7 +26,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT P.* FROM TBL_PERMISO P 
+      const [filas] = await conexion.execute(`SELECT P.* FROM TBL_PERMISO P 
                                           INNER JOIN TBL_ROL_PERMISO RP ON RP.ID_PERMISO = P.ID_PERMISO
                                           WHERE RP.ID_ROL = ? 
                                           ORDER BY NOMBRE ASC`, [idRol]);
@@ -49,7 +49,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT P.* FROM TBL_PERMISO P 
+      const [filas] = await conexion.execute(`SELECT P.* FROM TBL_PERMISO P 
                                           INNER JOIN TBL_ROL_PERMISO RP ON RP.ID_PERMISO = P.ID_PERMISO
                                           WHERE RP.ID_ROL IN (
                                             SELECT UR.ID_ROL 
@@ -78,7 +78,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new PermisoModelo({
@@ -101,12 +101,12 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_PERMISO (NOMBRE,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_PERMISO (NOMBRE,
                                                                    DESCRIPCION)
                                               VALUES (?, ?)`,
                                                      [permiso.nombre,
                                                       permiso.descripcion]);
-      permiso.idPermiso = resultado.insertId.toString();
+      permiso.idPermiso = resultado.insertId;
       return permiso;
     } catch(error) {
       console.log(error);
@@ -119,7 +119,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_PERMISO
+      await conexion.execute(`UPDATE TBL_PERMISO
                             SET NOMBRE = ?,
                                 DESCRIPCION = ?
                             WHERE ID_PERMISO = ?`,
@@ -138,7 +138,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
+      await conexion.execute("DELETE FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
     } catch(error) {
       console.log(error);
     } finally {

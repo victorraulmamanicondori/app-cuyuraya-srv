@@ -2,6 +2,7 @@ import pool from '../config/db.js';
 import logger from '../config/logger.js';
 import {TarifaEstados} from '../constantes/estados.js';
 import TarifaModelo from '../modelos/TarifaModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class TarifaRepositorio {
 
@@ -9,8 +10,8 @@ class TarifaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_TARIFA WHERE ESTADO = ? ORDER BY COD_TARIFA ASC", [TarifaEstados.ACTIVO]);
-      return filas.map(fila => new TarifaModelo({ idTarifa: fila.ID_TARIFA.toString(),
+      const [filas] = await conexion.execute("SELECT * FROM TBL_TARIFA WHERE ESTADO = ? ORDER BY COD_TARIFA ASC", [TarifaEstados.ACTIVO]);
+      return filas.map(fila => new TarifaModelo({ idTarifa: fila.ID_TARIFA,
                                                   codigoTarifa: fila.COD_TARIFA, 
                                                   descripcion: fila.DESCRIPCION,
                                                   montoTarifa: fila.MONTO_TARIFA,
@@ -32,11 +33,11 @@ class TarifaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_TARIFA WHERE COD_TARIFA = ? AND ESTADO = ?", [codigoTarifa, TarifaEstados.ACTIVO]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_TARIFA WHERE COD_TARIFA = ? AND ESTADO = ?", [codigoTarifa, TarifaEstados.ACTIVO]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new TarifaModelo({
-                          idTarifa: fila.ID_TARIFA.toString(),
+                          idTarifa: fila.ID_TARIFA,
                           codigoTarifa: fila.COD_TARIFA,
                           descripcion: fila.DESCRIPCION,
                           montoTarifa: fila.MONTO_TARIFA,
@@ -60,7 +61,7 @@ class TarifaRepositorio {
     try {
       const { codigoTarifa, descripcion, montoTarifa, m3Consumo, montoExtraPorM3 } = tarifa;
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_TARIFA (COD_TARIFA, DESCRIPCION, MONTO_TARIFA, M3_CONSUMO, MONTO_EXTRA_POR_M3, ESTADO) VALUES (?, ?, ?, ?, ?, ?)`, [codigoTarifa, descripcion, montoTarifa, m3Consumo, montoExtraPorM3, TarifaEstados.ACTIVO]);
+      await conexion.execute(`INSERT INTO TBL_TARIFA (COD_TARIFA, DESCRIPCION, MONTO_TARIFA, M3_CONSUMO, MONTO_EXTRA_POR_M3, ESTADO) VALUES (?, ?, ?, ?, ?, ?)`, [codigoTarifa, descripcion, montoTarifa, m3Consumo, montoExtraPorM3, TarifaEstados.ACTIVO]);
       return tarifa;
     } catch(error) {
       console.log(error);
@@ -75,14 +76,12 @@ class TarifaRepositorio {
     try {
       const { codigoTarifa, descripcion, montoTarifa, estado } = tarifa;
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_TARIFA
+      await conexion.execute(`UPDATE TBL_TARIFA
                               SET DESCRIPCION = ?,
                               MONTO_TARIFA = ?,
-                              M3_CONSUMO = ?,
-                              MONTO_EXTRA_POR_M3 = ?,
                               ESTADO = ?
                             WHERE COD_TARIFA = ?`,
-                                [descripcion, montoTarifa, codigoTarifa, estado]);
+                                [descripcion, montoTarifa, estado, codigoTarifa]);
       return tarifa;
     } catch(error) {
       console.log(error);
@@ -96,7 +95,7 @@ class TarifaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_TARIFA WHERE COD_TARIFA = ?", [codigoTarifa]);
+      await conexion.execute("DELETE FROM TBL_TARIFA WHERE COD_TARIFA = ?", [codigoTarifa]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar tarifa');

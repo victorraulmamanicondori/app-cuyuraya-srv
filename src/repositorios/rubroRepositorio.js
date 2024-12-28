@@ -8,7 +8,7 @@ class RubroRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_RUBRO WHERE TIPO_RUBRO = ? AND ESTADO = ?", [tipoRubro, estado]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_RUBRO WHERE TIPO_RUBRO = ? AND ESTADO = ?", [tipoRubro, estado]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new RubroModelo({

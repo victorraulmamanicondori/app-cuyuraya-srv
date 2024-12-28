@@ -6,7 +6,7 @@ class UsuarioRolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_USUARIO_ROL (ID_USUARIO, ID_ROL)
+      await conexion.execute(`INSERT INTO TBL_USUARIO_ROL (ID_USUARIO, ID_ROL)
                                               VALUES (?, ?)`, [dni, idRol]);
       return { "insertado" : true };
     } catch(error) {

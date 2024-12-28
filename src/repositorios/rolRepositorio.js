@@ -1,13 +1,12 @@
 import pool from '../config/db.js';
 import RolModelo from '../modelos/RolModelo.js';
-import { RolEstados } from '../constantes/estados.js';
 
 class RolRepositorio {
   async listarRoles() {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_ROL ORDER BY NOMBRE ASC");
+      const [filas] = await conexion.execute("SELECT * FROM TBL_ROL ORDER BY NOMBRE ASC");
       return filas.map(fila => new RolModelo({
                                       idRol: fila.ID_ROL,
                                       nombre: fila.NOMBRE,
@@ -26,7 +25,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT R.* FROM TBL_ROL R 
+      const [filas] = await conexion.execute(`SELECT R.* FROM TBL_ROL R 
                                           INNER JOIN TBL_USUARIO_ROL UR ON UR.ID_ROL = R.ID_ROL
                                           INNER JOIN TBL_USUARIO U ON U.ID_USUARIO = UR.ID_USUARIO
                                           WHERE U.DNI = ?
@@ -49,7 +48,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_ROL WHERE ID_ROL = ?", [id]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_ROL WHERE ID_ROL = ?", [id]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new RolModelo({
@@ -72,12 +71,12 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_ROL (NOMBRE,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_ROL (NOMBRE,
                                                                    ESTADO)
                                               VALUES (?, ?)`,
                                                      [rol.nombre,
                                                       rol.estado]);
-      rol.id = resultado.insertId.toString();
+      rol.id = resultado.insertId;
       return rol;
     } catch(error) {
       console.log(error);
@@ -90,7 +89,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_ROL
+      await conexion.execute(`UPDATE TBL_ROL
                             SET NOMBRE = ?,
                                 ESTADO = ?
                             WHERE ID_ROL = ?`,
@@ -109,7 +108,7 @@ class RolRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_ROL WHERE ID_ROL = ?", [id]);
+      await conexion.execute("DELETE FROM TBL_ROL WHERE ID_ROL = ?", [id]);
     } catch(error) {
       console.log(error);
     } finally {

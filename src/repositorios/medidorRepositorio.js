@@ -9,13 +9,13 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ?", [codigoMedidor]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ?", [codigoMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new MedidorModelo({ 
-                          idMedidor: fila.ID_MEDIDOR.toString(),
+                          idMedidor: fila.ID_MEDIDOR,
                           codigoMedidor: fila.COD_MEDIDOR,
-                          idUsuario: fila.ID_USUARIO.toString(),
+                          idUsuario: fila.ID_USUARIO,
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
                           fecActualizacion: fila.FEC_ACTUALIZACION
@@ -33,13 +33,13 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_MEDIDOR WHERE ID_MEDIDOR = ?", [idMedidor]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_MEDIDOR = ?", [idMedidor]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new MedidorModelo({ 
-                          idMedidor: fila.ID_MEDIDOR.toString(),
+                          idMedidor: fila.ID_MEDIDOR,
                           codigoMedidor: fila.COD_MEDIDOR,
-                          idUsuario: fila.ID_USUARIO.toString(),
+                          idUsuario: fila.ID_USUARIO,
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
                           fecActualizacion: fila.FEC_ACTUALIZACION
@@ -57,13 +57,13 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_MEDIDOR WHERE ID_USUARIO = ?", [idUsuario]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_USUARIO = ?", [idUsuario]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new MedidorModelo({ 
-                          idMedidor: fila.ID_MEDIDOR.toString(),
+                          idMedidor: fila.ID_MEDIDOR,
                           codigoMedidor: fila.COD_MEDIDOR,
-                          idUsuario: fila.ID_USUARIO.toString(),
+                          idUsuario: fila.ID_USUARIO,
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
                           fecActualizacion: fila.FEC_ACTUALIZACION
@@ -81,14 +81,14 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_MEDIDOR(COD_MEDIDOR,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_MEDIDOR(COD_MEDIDOR,
                                                                       ID_USUARIO,
                                                                       ESTADO)
                                               VALUES (?, ?, ?)`,
                                                      [codigoMedidor,
                                                       idUsuario,
                                                       MedidorEstados.ASIGNADO]);
-      const codigoAsignacion = resultado.insertId.toString();
+      const codigoAsignacion = resultado.insertId;
       return codigoAsignacion;
     } catch(error) {
       logger.error(`Error al asignar medidor:${error}`);
@@ -101,7 +101,7 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`UPDATE TBL_MEDIDOR SET COD_MEDIDOR = ?, ID_USUARIO = ?
+      const [resultado] = await conexion.execute(`UPDATE TBL_MEDIDOR SET COD_MEDIDOR = ?, ID_USUARIO = ?
                                               WHERE ID_MEDIDOR = ?`,
                                                      [codigoMedidor,
                                                       idUsuario,

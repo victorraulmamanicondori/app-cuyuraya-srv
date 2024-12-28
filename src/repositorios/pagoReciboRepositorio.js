@@ -7,7 +7,7 @@ class PagoReciboRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_PAGO_RECIBO (FECHA_PAGO,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_PAGO_RECIBO (FECHA_PAGO,
                                                                     MONTO_PAGO,
                                                                     ID_LECTURA,
                                                                     NUM_COMPROBANTE,
@@ -20,7 +20,7 @@ class PagoReciboRepositorio {
                                                       numeroComprobante,
                                                       comentario,
                                                       estado]);
-      return resultado.insertId.toString();
+      return resultado.insertId;
     } catch(error) {
       logger.error(`Error al registrar pago de recibo:${error}`);
       throw new Error(`Error al registrar pago de recibo`);
