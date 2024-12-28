@@ -152,7 +152,7 @@ export const seed = async function (knex) {
             MATERNO: 'Administrador',
             DNI: '12345678',
             DIRECCION: 'EAS',
-            CLAVE: 'asfa$adsf$',
+            CLAVE: '$2b$10$PCF/a.1EzD8jksdxfiPFnORV3I8.KlrhRAqHHkNN11FBblR65hZf.',
             ESTADO: 'ACTIVO',
         },
     ]);

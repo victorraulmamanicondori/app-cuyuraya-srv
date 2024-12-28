@@ -18,7 +18,7 @@ class CentroPobladoServicio {
     return centroPobladoRepositorio.actualizarCentroPoblado(centroPoblado);
   }
 
-  eliminarCentroPobladoPorCentroPoblado(codigoCentroPoblado) {
+  eliminarCentroPobladoPorCodigo(codigoCentroPoblado) {
     return centroPobladoRepositorio.eliminarCentroPobladoPorCodigo(codigoCentroPoblado);
   }
 

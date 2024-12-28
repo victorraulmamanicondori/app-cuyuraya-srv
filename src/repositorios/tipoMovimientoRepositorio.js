@@ -8,7 +8,7 @@ class TipoMovimientoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_TIPO_MOVIMIENTO WHERE ID_RUBRO = ? AND ESTADO = ?", [idRubro, estado]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_TIPO_MOVIMIENTO WHERE ID_RUBRO = ? AND ESTADO = ?", [idRubro, estado]);
       return filas.map(fila => new TipoMovimientoModelo({ idTipoMovimiento: fila.ID_TIPO_MOV,
                                                           concepto: fila.CONCEPTO,
                                                           idRubro: fila.ID_RUBRO,

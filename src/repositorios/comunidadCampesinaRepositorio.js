@@ -7,7 +7,7 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
         [`${codigoDistrito}%`]);
       return filas.map(fila => new ComunidadCampesinaModelo({ codigo: fila.CODIGO, 
                                                               nombre: fila.NOMBRE }));
@@ -23,7 +23,7 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ComunidadCampesinaModelo({ codigo: fila.CODIGO, 
@@ -43,7 +43,7 @@ class ComunidadCampesinaRepositorio {
     try {
       const { codigo, nombre } = comunidadCampesina;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_COMUNIDAD_CAMPESINA (CODIGO, NOMBRE) VALUES (?, ?)`, 
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_COMUNIDAD_CAMPESINA (CODIGO, NOMBRE) VALUES (?, ?)`, 
         [codigo, nombre]);
       return comunidadCampesina;
     } catch(error) {
@@ -59,7 +59,7 @@ class ComunidadCampesinaRepositorio {
     try {
       const { codigo, nombre } = comunidadCampesina;
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_COMUNIDAD_CAMPESINA
+      await conexion.execute(`UPDATE TBL_COMUNIDAD_CAMPESINA
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
                                 [nombre, codigo]);
@@ -76,7 +76,7 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
+      await conexion.execute("DELETE FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar Comunidad Campesina');

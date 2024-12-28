@@ -7,7 +7,7 @@ class DepartamentoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO ORDER BY NOMBRE ASC");
+      const [filas] = await conexion.execute("SELECT * FROM TBL_DEPARTAMENTO ORDER BY NOMBRE ASC");
       return filas.map(fila => new DepartamentoModelo({ codigo: fila.CODIGO, 
                                                   nombre: fila.NOMBRE }));
     } catch(error) {
@@ -22,7 +22,7 @@ class DepartamentoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new DepartamentoModelo({ codigo: fila.CODIGO, 
@@ -42,7 +42,7 @@ class DepartamentoRepositorio {
     try {
       const { codigo, nombre } = departamento;
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_DEPARTAMENTO (CODIGO, NOMBRE) VALUES (?, ?)`, [codigo, nombre]);
+      await conexion.execute(`INSERT INTO TBL_DEPARTAMENTO (CODIGO, NOMBRE) VALUES (?, ?)`, [codigo, nombre]);
       return departamento;
     } catch(error) {
       console.log(error);
@@ -57,7 +57,7 @@ class DepartamentoRepositorio {
     try {
       const { codigo, nombre } = departamento;
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_DEPARTAMENTO
+      await conexion.execute(`UPDATE TBL_DEPARTAMENTO
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
                                 [nombre, codigo]);
@@ -74,7 +74,7 @@ class DepartamentoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
+      await conexion.execute("DELETE FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar departamento');

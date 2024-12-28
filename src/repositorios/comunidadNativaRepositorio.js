@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import ComunidadNativaModelo from '../modelos/ComunidadNativaModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class ComunidadNativaRepositorio {
 
@@ -7,7 +8,7 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
         [`${codigoDistrito}%`]);
       return filas.map(fila => new ComunidadNativaModelo({ codigo: fila.CODIGO, 
                                                             nombre: fila.NOMBRE,
@@ -25,7 +26,7 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ComunidadNativaModelo({ codigo: fila.CODIGO, 
@@ -47,8 +48,8 @@ class ComunidadNativaRepositorio {
     try {
       const { codigo, nombre, familiaLinguistica, etnia } = comunidadNativa;
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_COMUNIDAD_NATIVA (CODIGO, NOMBRE, FAM_LINGUISTICA, ETNIA) VALUES (?, ?, ?, ?)`, 
-        [codigo, nombre, familiaLinguistica, etnia]);
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_COMUNIDAD_NATIVA (CODIGO, NOMBRE, FAM_LINGUISTICA, ETNIA) VALUES (?, ?, ?, ?)`, 
+        [codigo, nombre, toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia)]);
       return comunidadNativa;
     } catch(error) {
       console.log(error);
@@ -63,14 +64,14 @@ class ComunidadNativaRepositorio {
     try {
       const { codigo, nombre, familiaLinguistica, etnia } = comunidadNativa;
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_COMUNIDAD_NATIVA
+      await conexion.execute(`UPDATE TBL_COMUNIDAD_NATIVA
                             SET NOMBRE = ?, FAM_LINGUISTICA = ?, ETNIA = ?
                             WHERE CODIGO = ?`,
-                                [nombre, familiaLinguistica, etnia, codigo]);
+                                [nombre, toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia), codigo]);
       return comunidadNativa;
     } catch(error) {
       console.log(error);
-      throw new Error('Error al tratar de actualizar Comunidad Campesina');
+      throw new Error('Error al tratar de actualizar Comunidad Nativa');
     } finally {
       if (conexion) conexion.release();
     }
@@ -80,10 +81,10 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
+      await conexion.execute("DELETE FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
     } catch(error) {
       console.log(error);
-      throw new Error('Error al tratar de eliminar Comunidad Campesina');
+      throw new Error('Error al tratar de eliminar Comunidad Nativa');
     } finally {
       if (conexion) conexion.release();
     }

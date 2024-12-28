@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.get('/distrito/:codigoDistrito', comunidadNativaControlador.listarComunidadesNativasPorDistrito);
 
-router.get('/:codigoDistrito', comunidadNativaControlador.obtenerComunidadNativaPorCodigo);
+router.get('/:codigoComunidadNativa', comunidadNativaControlador.obtenerComunidadNativaPorCodigo);
 
 router.post('/', verificarToken, comunidadNativaControlador.crearComunidadNativa);
 
 router.put('/', verificarToken, comunidadNativaControlador.actualizarComunidadNativa);
 
-router.delete('/:codigoDistrito', verificarToken, comunidadNativaControlador.eliminarComunidadNativaPorCodigo);
+router.delete('/:codigoComunidadNativa', verificarToken, comunidadNativaControlador.eliminarComunidadNativaPorCodigo);
 
 export default router;

@@ -2,6 +2,7 @@ import pool from '../config/db.js';
 import logger from '../config/logger.js';
 import {UsuarioEstados} from '../constantes/estados.js';
 import UsuarioModelo from '../modelos/UsuarioModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class UsuarioRepositorio {
 
@@ -9,9 +10,9 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_USUARIO ORDER BY PATERNO ASC");
+      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO ORDER BY PATERNO ASC");
       return filas.map(fila => new UsuarioModelo({
-                                    idUsuario: fila.ID_USUARIO.toString(),
+                                    idUsuario: fila.ID_USUARIO,
                                     nombres: fila.NOMBRES,
                                     paterno: fila.PATERNO,
                                     materno: fila.MATERNO,
@@ -39,11 +40,11 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_USUARIO WHERE DNI = ?", [dni]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE DNI = ?", [dni]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new UsuarioModelo({
-                                    idUsuario: fila.ID_USUARIO.toString(),
+                                    idUsuario: fila.ID_USUARIO,
                                     nombres: fila.NOMBRES,
                                     paterno: fila.PATERNO,
                                     materno: fila.MATERNO,
@@ -64,6 +65,7 @@ class UsuarioRepositorio {
       return null;
     } catch(error) {
       logger.error(`Error al obtener usuario por dni:${dni}`);
+      console.log(error);
     } finally {
       if (conexion) conexion.release();
     }
@@ -87,7 +89,7 @@ class UsuarioRepositorio {
       }
 
       conexion = await pool.getConnection();
-      const filas = await conexion.query(`SELECT 
+      const [filas] = await conexion.execute(`SELECT 
                                             U.ID_USUARIO,
                                             U.NOMBRES,
                                             U.PATERNO,
@@ -114,7 +116,7 @@ class UsuarioRepositorio {
                                         codigos);
       return filas.map(fila => { 
           const usuario = new UsuarioModelo({
-                                      idUsuario: fila.ID_USUARIO.toString(),
+                                      idUsuario: fila.ID_USUARIO,
                                       nombres: fila.NOMBRES,
                                       paterno: fila.PATERNO,
                                       materno: fila.MATERNO,
@@ -140,7 +142,7 @@ class UsuarioRepositorio {
       logger.info(`Registradon usuario: ${JSON.stringify(usuario)}`);
 
       conexion = await pool.getConnection();
-      const resultado = await conexion.query(`INSERT INTO TBL_USUARIO (NOMBRES,
+      const [resultado] = await conexion.execute(`INSERT INTO TBL_USUARIO (NOMBRES,
                                                                        PATERNO,
                                                                        MATERNO,
                                                                        DNI,
@@ -154,20 +156,20 @@ class UsuarioRepositorio {
                                                                        COD_COMUNIDAD_NATIVA,
                                                                        ESTADO)
                                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                                                     [usuario.nombres,
-                                                      usuario.paterno,
-                                                      usuario.materno,
-                                                      usuario.dni,
-                                                      usuario.direccion,
-                                                      usuario.numeroContrato,
-                                                      usuario.telefono,
-                                                      usuario.clave,
-                                                      usuario.codigoDistrito,
-                                                      usuario.codigoCentroPoblado,
-                                                      usuario.codigoComunidadCampesina,
-                                                      usuario.codigoComunidadNativa,
-                                                      usuario.estado]);
-      usuario.id = resultado.insertId.toString();
+                                                     [toNullIfUndefined(usuario.nombres),
+                                                      toNullIfUndefined(usuario.paterno),
+                                                      toNullIfUndefined(usuario.materno),
+                                                      toNullIfUndefined(usuario.dni),
+                                                      toNullIfUndefined(usuario.direccion),
+                                                      toNullIfUndefined(usuario.numeroContrato),
+                                                      toNullIfUndefined(usuario.telefono),
+                                                      toNullIfUndefined(usuario.clave),
+                                                      toNullIfUndefined(usuario.codigoDistrito),
+                                                      toNullIfUndefined(usuario.codigoCentroPoblado),
+                                                      toNullIfUndefined(usuario.codigoComunidadCampesina),
+                                                      toNullIfUndefined(usuario.codigoComunidadNativa),
+                                                      toNullIfUndefined(usuario.estado)]);
+      usuario.id = resultado.insertId;
       return usuario;
     } catch(error) {
       logger.error(`Error al crear usuario:${error}`);
@@ -181,7 +183,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_USUARIO 
+      await conexion.execute(`UPDATE TBL_USUARIO 
                             SET NOMBRES = ?,
                                 PATERNO = ?,
                                 MATERNO = ?,
@@ -194,18 +196,18 @@ class UsuarioRepositorio {
                                 COD_COMUNIDAD_NATIVA = ?,
                                 ESTADO = ?
                             WHERE DNI = ?`,
-                                [usuario.nombres,
-                                 usuario.paterno,
-                                 usuario.materno,
-                                 usuario.direccion,
-                                 usuario.numeroContrato,
-                                 usuario.telefono,
-                                 usuario.codigoDistrito,
-                                 usuario.codigoCentroPoblado,
-                                 usuario.codigoComunidadCampesina,
-                                 usuario.codigoComunidadNativa,
-                                 usuario.estado,
-                                 usuario.dni]);
+                                [toNullIfUndefined(usuario.nombres),
+                                 toNullIfUndefined(usuario.paterno),
+                                 toNullIfUndefined(usuario.materno),
+                                 toNullIfUndefined(usuario.direccion),
+                                 toNullIfUndefined(usuario.numeroContrato),
+                                 toNullIfUndefined(usuario.telefono),
+                                 toNullIfUndefined(usuario.codigoDistrito),
+                                 toNullIfUndefined(usuario.codigoCentroPoblado),
+                                 toNullIfUndefined(usuario.codigoComunidadCampesina),
+                                 toNullIfUndefined(usuario.codigoComunidadNativa),
+                                 toNullIfUndefined(usuario.estado),
+                                 toNullIfUndefined(usuario.dni)]);
       return usuario;
     } catch(error) {
       logger.error(`Error al actualizar usuario:${error}`);
@@ -218,7 +220,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("UPDATE TBL_USUARIO SET ESTADO = ? WHERE DNI = ?", [UsuarioEstados.ELIMINADO, dni]);
+      await conexion.execute("UPDATE TBL_USUARIO SET ESTADO = ? WHERE DNI = ?", [UsuarioEstados.ELIMINADO, dni]);
     } catch(error) {
       logger.error(`Error al eliminar usuario por dni:${error}`);
     } finally {
@@ -230,7 +232,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      return await conexion.query(`UPDATE TBL_USUARIO 
+      return await conexion.execute(`UPDATE TBL_USUARIO 
                             SET CLAVE = ?
                             WHERE DNI = ?`,
                             [clave, dni]);
@@ -245,11 +247,11 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_USUARIO WHERE ID_USUARIO = ?", [idUsuario]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE ID_USUARIO = ?", [idUsuario]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new UsuarioModelo({
-                                    idUsuario: fila.ID_USUARIO.toString(),
+                                    idUsuario: fila.ID_USUARIO,
                                     nombres: fila.NOMBRES,
                                     paterno: fila.PATERNO,
                                     materno: fila.MATERNO,

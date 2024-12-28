@@ -7,7 +7,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${codigoDepartamento}%`]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${codigoDepartamento}%`]);
       return filas.map(fila => new ProvinciaModelo({
                                         codigo: fila.CODIGO,
                                         nombre: fila.NOMBRE
@@ -23,7 +23,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const filas = await conexion.query("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ProvinciaModelo({
@@ -44,7 +44,7 @@ class ProvinciaRepositorio {
     try {
       const { codigo, nombre } = provincia;
       conexion = await pool.getConnection();
-      await conexion.query(`INSERT INTO TBL_PROVINCIA (CODIGO, NOMBRE) VALUES (?, ?)`, 
+      await conexion.execute(`INSERT INTO TBL_PROVINCIA (CODIGO, NOMBRE) VALUES (?, ?)`, 
                                             [codigo, nombre]);
       return provincia;
     } catch(error) {
@@ -59,7 +59,7 @@ class ProvinciaRepositorio {
     try {
       const { codigo, nombre } = provincia;
       conexion = await pool.getConnection();
-      await conexion.query(`UPDATE TBL_PROVINCIA
+      await conexion.execute(`UPDATE TBL_PROVINCIA
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
                                 [nombre, codigo]);
@@ -75,7 +75,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.query("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
+      await conexion.execute("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar provincia');
