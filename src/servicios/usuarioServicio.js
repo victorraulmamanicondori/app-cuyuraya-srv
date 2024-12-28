@@ -50,11 +50,11 @@ class UsuarioServicio {
           usuario.codigoComunidadNativa = comunidadNativa.codigo;
           usuario.nombreComunidadNativa = comunidadNativa.nombre;
         }
+      }
 
-        const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
-        if (medidor) {
-          usuario.codigoMedidor = medidor.codigoMedidor;
-        }
+      const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
+      if (medidor) {
+        usuario.codigoMedidor = medidor.codigoMedidor;
       }
       
       usuario.clave = null;
