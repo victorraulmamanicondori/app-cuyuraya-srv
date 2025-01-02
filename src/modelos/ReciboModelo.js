@@ -42,6 +42,11 @@ class ReciboModelo {
         const [anio, mes, dia] = this.fechaLectura.split("-");
         return `${dia}/${mes}/${anio}`;
     }
+
+    obtenerFechaLimite() {
+        const [anio, mes, dia] = this.fechaLimitePago.split("-");
+        return `${dia}/${mes}/${anio}`;
+    }
   
   }
   

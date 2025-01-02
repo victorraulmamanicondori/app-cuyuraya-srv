@@ -125,51 +125,115 @@ class LecturaControlador {
 
   crearReciboPdf(req, res, recibo) {
     const doc = new PDFDocument({
-      size: [227, 841.89], // 58mm x longitud dinámica (1 punto = 1/72 pulgadas)
-      margins: { top: 10, left: 10, right: 10, bottom: 10 },
+        size: [150, 350], // 58mm x longitud dinámica
+        margins: { top: 10, left: 5, right: 5, bottom: 10 },
+        layout: 'portrait',
+        dpi: 400 // Aumentado a 300 DPI
     });
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=recibo_agua_${recibo.numeroRecibo}.pdf`);
+    res.setHeader(
+        'Content-Disposition',
+        `attachment; filename=recibo_agua_${recibo.numeroRecibo}.pdf`
+    );
+
+    // Función para dividir texto en líneas de un máximo de n caracteres
+    const splitText = (text, maxLength) => {
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+
+        words.forEach(word => {
+            if ((currentLine + word).length > maxLength) {
+                lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+
+        if (currentLine.trim().length > 0) {
+            lines.push(currentLine.trim());
+        }
+
+        return lines;
+    };
 
     // Cabecera
     doc.font('Helvetica-Bold')
-      .fontSize(10)
-      .text('Recibo de Agua', { align: 'center' })
-      .moveDown(0.5);
+        .fontSize(10)
+        .text('---------------------------------------')
+        .moveDown(0.5)
+        .text('Recibo de Agua', { align: 'center' })
+        .moveDown(0.5);
 
     // Información del recibo
-    doc.font('Helvetica')
-      .fontSize(8)
-      .text(`Recibo: ${recibo.numeroRecibo}`, { align: 'left' })
-      .text(`Mes: ${recibo.obtenerMes()}`)
-      .text(`Periodo: ${recibo.obtenerPeriodo()}`)
-      .text(`Fecha Límite: ${recibo.fechaLimitePago}`)
-      .text(`Estado: ${recibo.estado}`)
-      .moveDown(0.5);
+    const reciboInfo = [
+        `Recibo: ${recibo.numeroRecibo}`,
+        `Mes: ${recibo.obtenerMes()}`,
+        `Periodo: ${recibo.obtenerPeriodo()}`,
+        `Fecha Límite: ${recibo.obtenerFechaLimite()}`,
+        `Estado: ${recibo.estado}`
+    ];
+
+    doc.font('Helvetica').fontSize(10); // Cambiado a Courier
+    reciboInfo.forEach(info => {
+        splitText(info, 37).forEach(line => {
+            doc.text(line, { align: 'left' });
+        });
+    });
+    doc.moveDown(0.5);
 
     // Información del usuario
-    doc.text(`Usuario: ${recibo.usuario}`)
-      .text(`Dirección: ${recibo.direccion}`)
-      .text(`Medidor: ${recibo.codigoMedidor}`)
-      .moveDown(0.5);
+    const usuarioInfo = [
+        `Usuario: ${recibo.usuario}`,
+        `Dirección: ${recibo.direccion}`,
+        `Medidor: ${recibo.codigoMedidor}`
+    ];
+
+    usuarioInfo.forEach(info => {
+        splitText(info, 37).forEach(line => {
+            doc.text(line, { align: 'left'});
+        });
+    });
+    doc.moveDown(0.5);
 
     // Detalle del consumo
-    doc.font('Helvetica-Bold')
-      .text('Detalle del Consumo:', { underline: true })
-      .font('Helvetica')
-      .text(`Consumo: ${recibo.m3Consumido} m³`)
-      .text(`Tarifa: S/ ${recibo.tarifa} por ${recibo.m3Tarifa} m³`)
-      .text(`Lectura Actual: ${recibo.lecturaActual}`)
-      .text(`Lectura Anterior: ${recibo.lecturaAnterior}`)
-      .text(`Deuda Anterior: S/ ${recibo.deudaAnterior}`)
-      .text(`Deuda Actual: S/ ${recibo.deudaActual}`)
-      .moveDown(0.5);
+    doc.font('Helvetica')
+        .fontSize(10)
+        .text('Detalle del Consumo:')
+        .moveDown(0.5)
+        .text('---------------------------------------')
+        .font('Helvetica'); // Detalle en Courier
+
+    const consumoInfo = [
+        `Consumo: ${recibo.m3Consumido} m³`,
+        `Tarifa: S/ ${recibo.tarifa} por ${recibo.m3Tarifa} m³`,
+        `Lectura Actual: ${recibo.lecturaActual}`,
+        `Lectura Anterior: ${recibo.lecturaAnterior}`,
+        `Deuda Anterior: S/ ${recibo.deudaAnterior}`,
+        `Deuda Actual: S/ ${recibo.deudaActual}`
+    ];
+
+    consumoInfo.forEach(info => {
+        splitText(info, 37).forEach(line => {
+            doc.text(line, { align: 'left' });
+        });
+    });
+    doc.moveDown(0.5);
 
     // Total a pagar
-    doc.font('Helvetica-Bold')
-      .fontSize(10)
-      .text(`Total a Pagar: S/ ${recibo.montoPagar}`, { align: 'right' });
+    doc.font('Helvetica')
+        .fontSize(10)
+        .moveDown(0.5)
+        .text('---------------------------------------')
+        .moveDown(0.5)
+        .font('Helvetica-Bold') // Courier en negrita
+        .text(`Total a Pagar: S/ ${recibo.montoPagar}`, { align: 'center' })
+        .moveDown(0.5)
+        .font('Helvetica')
+        .text('---------------------------------------')
+        .moveDown(0.5);
 
     doc.pipe(res);
     doc.end();
@@ -177,7 +241,7 @@ class LecturaControlador {
 
   crearPdfNoExisteRecibo(req, res) {
     const doc = new PDFDocument({
-      size: [227, 100], // 58mm x altura mínima
+      size: [150, 100], // 58mm x altura mínima
       margins: { top: 10, left: 10, right: 10, bottom: 10 },
     });
   
@@ -185,7 +249,7 @@ class LecturaControlador {
     res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
   
     doc.font('Helvetica-Bold')
-      .fontSize(12)
+      .fontSize(10)
       .text('Recibo No Existe', { align: 'center' });
   
     doc.pipe(res);
@@ -194,7 +258,7 @@ class LecturaControlador {
 
   crearPdfErrorRecibo(req, res) {
     const doc = new PDFDocument({
-      size: [227, 100], // 58mm x altura mínima
+      size: [150, 100], // 58mm x altura mínima
       margins: { top: 10, left: 10, right: 10, bottom: 10 },
     });
   
@@ -202,7 +266,7 @@ class LecturaControlador {
     res.setHeader('Content-Disposition', 'attachment; filename=recibo_agua.pdf');
   
     doc.font('Helvetica-Bold')
-      .fontSize(12)
+      .fontSize(10)
       .text('Error al Generar Recibo', { align: 'center' });
   
     doc.pipe(res);
