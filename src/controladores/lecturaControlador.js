@@ -160,10 +160,10 @@ class LecturaControlador {
     };
 
     // Cabecera
-    doc.font('Helvetica-Bold')
+    doc.font('Helvetica')
         .fontSize(10)
         .text('---------------------------------------')
-        .moveDown(0.5)
+        .font('Helvetica-Bold')
         .text('Recibo de Agua', { align: 'center' })
         .moveDown(0.5);
 
@@ -202,7 +202,6 @@ class LecturaControlador {
     doc.font('Helvetica')
         .fontSize(10)
         .text('Detalle del Consumo:')
-        .moveDown(0.5)
         .text('---------------------------------------')
         .font('Helvetica'); // Detalle en Courier
 
@@ -225,12 +224,9 @@ class LecturaControlador {
     // Total a pagar
     doc.font('Helvetica')
         .fontSize(10)
-        .moveDown(0.5)
         .text('---------------------------------------')
-        .moveDown(0.5)
         .font('Helvetica-Bold') // Courier en negrita
         .text(`Total a Pagar: S/ ${recibo.montoPagar}`, { align: 'center' })
-        .moveDown(0.5)
         .font('Helvetica')
         .text('---------------------------------------')
         .moveDown(0.5);
