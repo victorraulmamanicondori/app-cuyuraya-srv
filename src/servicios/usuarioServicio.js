@@ -52,9 +52,12 @@ class UsuarioServicio {
         }
       }
 
-      const medidor = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
-      if (medidor) {
-        usuario.codigoMedidor = medidor.codigoMedidor;
+      const medidores = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuario.idUsuario);
+      if (medidores && medidores.length > 0) {
+        const codigosMedidores = medidores.map(medidor => medidor.codigoMedidor);
+        const listaUnidaCodMedidores = codigosMedidores.join(', ');
+
+        usuario.codigoMedidor = listaUnidaCodMedidores;
       }
       
       usuario.clave = null;

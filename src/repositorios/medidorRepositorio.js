@@ -59,15 +59,14 @@ class MedidorRepositorio {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_USUARIO = ?", [idUsuario]);
       if (filas.length > 0) {
-        const fila = filas[0];
-        return new MedidorModelo({ 
+        return filas.map(fila => new MedidorModelo({ 
                           idMedidor: fila.ID_MEDIDOR,
                           codigoMedidor: fila.COD_MEDIDOR,
                           idUsuario: fila.ID_USUARIO,
                           estado: fila.ESTADO,
                           fecCreacion: fila.FEC_CREACION,
                           fecActualizacion: fila.FEC_ACTUALIZACION
-                        });
+                        }));
       }
       return null;
     } catch(error) {
@@ -110,6 +109,21 @@ class MedidorRepositorio {
       return codigoAsignacion;
     } catch(error) {
       logger.error(`Error al asignar medidor:${error}`);
+    } finally {
+      if (conexion) conexion.release();
+    }
+  }
+
+  async eliminarAsignacionMedidor(codigoMedidor, idUsuario) {
+    let conexion;
+
+    try {
+      conexion = await pool.getConnection();
+      const [resultado] = await conexion.execute(`DELETE FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ? AND ID_USUARIO = ?`,
+               [codigoMedidor, idUsuario]);
+      return resultado;
+    } catch(error) {
+      logger.error(`Error al desasignar medidor:${error}`);
     } finally {
       if (conexion) conexion.release();
     }

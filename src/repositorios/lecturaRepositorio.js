@@ -212,7 +212,9 @@ class LecturaRepositorio {
       }));
 
       // Consulta para contar el total de registros
-      const [{ total }] = await conexion.execute(`SELECT COUNT(*) AS total FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND  ESTADO <> ?`, [idMedidor, LecturaEstados.ANULADO]);
+      const [rows] = await conexion.execute(`SELECT COUNT(*) AS total FROM TBL_LECTURA WHERE ID_MEDIDOR = ? AND  ESTADO <> ?`, [idMedidor, LecturaEstados.ANULADO]);
+
+      const total = rows[0]?.total || 0; 
 
       return {
         resultados,
