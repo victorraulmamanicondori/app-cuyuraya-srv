@@ -21,14 +21,14 @@ class MedidorControlador {
       });
     }
   }
-  
-  async detectarAnomaliasPorMedidor(req, res) {
+
+  async eliminarAsignacionMedidor(req, res) {
     try {
-      const codigoMedidor = req.params.codigoMedidor;
-      const resultado = await medidorServicio.detectarAnomaliasPorMedidor(codigoMedidor);
+      const { codigoMedidor, dni } = req.body;
+      const resultado = await medidorServicio.eliminarAsignacionMedidor(codigoMedidor, dni);
       res.status(200).json({
         codigo: 200,
-        mensaje: 'Resultado de anomalias de consumos',
+        mensaje: 'Medidor desasignado exitosamente',
         datos: resultado
       });
     } catch (error) {

@@ -92,6 +92,7 @@ class LecturaControlador {
       const limit = parseInt(req.query.limit, 10) || 1; // Convertir a número
 
       const resultado = await lecturaServicio.obtenerLecturasPorMedidor(page, limit, codigoMedidor);
+      
       res.status(200).json({
         codigo: 200,
         mensaje: `Datos de la pagina ${page}`,

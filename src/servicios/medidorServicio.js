@@ -19,15 +19,19 @@ class MedidorServicio {
       throw new Error(`No se puede asignar medidor con codigo ${codigoMedidor} porque ya esta asignado a otro usuario con dni ${otroUsuario.dni}`);
     }
 
-    existeAsignacion = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);
+    const medidoresAsignados = await medidorRepositorio.obtenerMedidorPorIdUsuario(usuarioBenificiario.idUsuario);
 
     let codigoAsignacion = null;
 
-    if (!existeAsignacion) {
-      codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.idUsuario);
-    } else {
-      codigoAsignacion = await medidorRepositorio.actualizarAsignacionMedidor(existeAsignacion.idMedidor, codigoMedidor, usuarioBenificiario.idUsuario);
+    if (medidoresAsignados && medidoresAsignados.length > 0) {
+      existeAsignacion = medidoresAsignados.find(medidor => medidor.codigoMedidor === codigoMedidor);
+
+      if (existeAsignacion && existeAsignacion.codigoMedidor) {
+        throw new Error(`El medidor con codigo ${codigoMedidor} ya esta asignado al usuario con dni ${dni}`);
+      }
     }
+    
+    codigoAsignacion = await medidorRepositorio.asignarMedidor(codigoMedidor, usuarioBenificiario.idUsuario);
 
     if (!codigoAsignacion) {
       // Si no logra asignar, lanzar error
@@ -38,21 +42,15 @@ class MedidorServicio {
     return { codigoAsignacion };
   }
 
-  async detectarAnomaliasPorMedidor(codigoMedidor) {
-    console.log('codigoMedidor:', codigoMedidor);
+  async eliminarAsignacionMedidor(codigoMedidor, dni) {
+    const usuarioAsignado = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
 
-    const lecturas = await lecturaRepositorio.obtenerLecturasPorCodigoMedidor(codigoMedidor);
-
-    console.log('Lecturas:', JSON.stringify(lecturas));
-
-    if (lecturas && lecturas.length > 0) {
-      const detectorApi = new DetectorApi();
-      const resultado = await detectorApi.peticionPOST(lecturas);
-      console.log('Resultado:', resultado);
-      return resultado;
+    if (!usuarioAsignado) {
+      throw new Error(`Usuario con dni ${dni} no esta registrado`);
     }
 
-    return null;
+    await medidorRepositorio.eliminarAsignacionMedidor(codigoMedidor, usuarioAsignado.idUsuario);
+    return codigoMedidor;
   }
 
   async obtenerMedidorPorDni(dni) {
