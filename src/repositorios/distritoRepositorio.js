@@ -8,7 +8,7 @@ class DistritoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_DISTRITO WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${codigoProvincia}%`]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_DISTRITO WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${toNullIfUndefined(codigoProvincia)}%`]);
       return filas.map(fila => new DistritoModelo({ codigo: fila.CODIGO, 
                                               nombre: fila.NOMBRE }));
     } catch(error) {

@@ -9,7 +9,7 @@ class CentroPobladoRepositorio {
     try {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
-        [toNullIfUndefined(codigoDistrito)]);
+        [`${toNullIfUndefined(codigoDistrito)}%`]);
       return filas.map(fila => new CentroPobladoModelo({ codigo: fila.CODIGO, 
                                                          nombre: fila.NOMBRE,
                                                          area: fila.AREA }));

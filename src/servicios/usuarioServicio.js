@@ -223,8 +223,11 @@ class UsuarioServicio {
           usuario.dni = dni; // dni validato
           usuario.codigoMedidor = codigoMedidor; // codigo medidor validado
         } catch(error) {
+          logger.error(`Error en la fila ${usuario.fila}, datos validos pero no se pudo guardar, intente nuevamente.`);
           usuario.errores.push(`Error en la fila ${usuario.fila}, datos validos pero no se pudo guardar, intente nuevamente.`);
         }
+      } else {
+        logger.error(usuario.errores);
       }
     });
 

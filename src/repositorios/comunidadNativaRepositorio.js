@@ -9,7 +9,7 @@ class ComunidadNativaRepositorio {
     try {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
-        [toNullIfUndefined(codigoDistrito)]);
+        [`${toNullIfUndefined(codigoDistrito)}%`]);
       return filas.map(fila => new ComunidadNativaModelo({ codigo: fila.CODIGO, 
                                                             nombre: fila.NOMBRE,
                                                             familiaLinguistica: fila.FAM_LINGUISTICA,

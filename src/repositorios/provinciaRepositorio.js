@@ -8,7 +8,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [toNullIfUndefined(codigoDepartamento)]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${toNullIfUndefined(codigoDepartamento)}%`]);
       return filas.map(fila => new ProvinciaModelo({
                                         codigo: fila.CODIGO,
                                         nombre: fila.NOMBRE

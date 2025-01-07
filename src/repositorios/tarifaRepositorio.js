@@ -89,7 +89,7 @@ class TarifaRepositorio {
                             WHERE COD_TARIFA = ?`,
                                 [toNullIfUndefined(descripcion), 
                                   toNullIfUndefined(montoTarifa), 
-                                  toNullIfUndefined(estado), 
+                                  toNullIfUndefined(estado) ? toNullIfUndefined(estado) : TarifaEstados.ACTIVO, 
                                   toNullIfUndefined(codigoTarifa)]);
       return tarifa;
     } catch(error) {

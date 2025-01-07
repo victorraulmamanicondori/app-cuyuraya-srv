@@ -232,6 +232,7 @@ class UsuarioControlador {
             const resultadoAsignacionMedidor = await medidorServicio.asignarMedidor(usuario.codigoMedidor, usuario.dni);
           }
         } catch(error) {
+          logger.error(`Error en fila ${usuario.fila}: ${error.message}`);
           usuario.errores.push(`Error en fila ${usuario.fila}: ${error.message}`);
         }
       });
@@ -259,30 +260,55 @@ class UsuarioControlador {
 
     // Obtener la fecha y hora actual
     const now = new Date();
-    const formattedDate = now.toLocaleDateString('es-PE', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    const formattedTime = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const formattedDate = now.toLocaleDateString('es-PE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+    const formattedTime = now.toLocaleTimeString('es-PE', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
 
     // Título del documento
-    doc.font('Helvetica-Bold').fontSize(18).text('Padrón de Usuarios', { align: 'center' })
-       .font('Helvetica').fontSize(12).text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' }).moveDown(1);
+    doc.font('Helvetica-Bold')
+       .fontSize(18)
+       .text('Padrón de Usuarios', { align: 'center' })
+       .font('Helvetica')
+       .fontSize(12)
+       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
+       .moveDown(1);
 
     // Mostrar información del ubigeo
-    doc.font('Helvetica').fontSize(12)
+    doc.font('Helvetica')
+       .fontSize(12)
        .text(`Departamento: ${departamento?.nombre || ' '} (Código: ${departamento?.codigo || 'N/A'})`)
        .text(`Provincia: ${provincia?.nombre || ' '} (Código: ${provincia?.codigo || 'N/A'})`)
        .text(`Distrito: ${distrito?.nombre || ' '} (Código: ${distrito?.codigo || 'N/A'})`)
        .text(`Centro Poblado: ${centroPoblado?.nombre || ' '} (Código: ${centroPoblado?.codigo || 'N/A'})`)
        .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || ' '} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
-       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`).moveDown(2);
+       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
+       .moveDown(2);
 
+    // Crear encabezado de la tabla
     const tableTop = doc.y;
-    const columnPositions = [50, 100, 200, 300, 400, 460, 540, 700]; // Ajuste según diseño
-    const maxYPosition = 500; // Límite razonable para evitar desbordamiento (ajustar según orientación)
+    const columnPositions = [50, 80, 200, 300, 400, 460, 540, 700];
+    const columnWidths = {
+        numero: 30,
+        nombre: 100,
+        paterno: 80,
+        materno: 80,
+        dni: 60,
+        medidor: 70,
+        direccion: 150,
+        estado: 70
+    };
 
-    // Encabezado
-    doc.font('Helvetica-Bold').fontSize(10)
+    doc.font('Helvetica-Bold')
+       .fontSize(10)
        .text('N°', columnPositions[0], tableTop)
-       .text('Nombre', columnPositions[1], tableTop)
+       .text('Nombre', columnPositions[1], tableTop, { width: columnWidths.nombre, continued: false })
        .text('Paterno', columnPositions[2], tableTop)
        .text('Materno', columnPositions[3], tableTop)
        .text('DNI', columnPositions[4], tableTop)
@@ -292,15 +318,17 @@ class UsuarioControlador {
 
     doc.moveTo(50, tableTop + 15).lineTo(740, tableTop + 15).stroke();
 
+    // Rellenar filas de la tabla
     let y = tableTop + 20;
+    const maxYPosition = 500;
+
     usuarios.forEach((usuario, index) => {
         if (y > maxYPosition) {
             doc.addPage();
             y = 50;
-            // Repetir encabezado en cada nueva página
             doc.font('Helvetica-Bold').fontSize(10)
                .text('N°', columnPositions[0], y)
-               .text('Nombre', columnPositions[1], y)
+               .text('Nombre', columnPositions[1], y, { width: columnWidths.nombre, continued: false })
                .text('Paterno', columnPositions[2], y)
                .text('Materno', columnPositions[3], y)
                .text('DNI', columnPositions[4], y)
@@ -308,18 +336,19 @@ class UsuarioControlador {
                .text('Dirección', columnPositions[6], y)
                .text('Estado', columnPositions[7], y);
             doc.moveTo(50, y + 15).lineTo(740, y + 15).stroke();
-            y += 20; // Ajuste después del encabezado
+            y += 20;
         }
 
-        doc.font('Helvetica').fontSize(10)
+        doc.font('Helvetica')
+           .fontSize(10)
            .text(index + 1, columnPositions[0], y)
-           .text(usuario.nombres || ' ', columnPositions[1], y)
-           .text(usuario.paterno || ' ', columnPositions[2], y)
-           .text(usuario.materno || ' ', columnPositions[3], y)
-           .text(usuario.dni || ' ', columnPositions[4], y)
-           .text(usuario.codigoMedidor || ' ', columnPositions[5], y)
-           .text(usuario.direccion || ' ', columnPositions[6], y)
-           .text(usuario.estado || ' ', columnPositions[7], y);
+           .text(usuario.nombres || ' ', columnPositions[1], y, { width: columnWidths.nombre, ellipsis: true })
+           .text(usuario.paterno || ' ', columnPositions[2], y, { width: columnWidths.paterno })
+           .text(usuario.materno || ' ', columnPositions[3], y, { width: columnWidths.materno })
+           .text(usuario.dni || ' ', columnPositions[4], y, { width: columnWidths.dni })
+           .text(usuario.codigoMedidor || ' ', columnPositions[5], y, { width: columnWidths.medidor })
+           .text(usuario.direccion || ' ', columnPositions[6], y, { width: columnWidths.direccion })
+           .text(usuario.estado || ' ', columnPositions[7], y, { width: columnWidths.estado });
 
         y += 20;
     });
