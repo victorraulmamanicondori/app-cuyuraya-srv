@@ -18,12 +18,12 @@ class CajaRepositorio {
                                                                     ESTADO)
                                               VALUES (?, ?, ?, ?, ?, ?, ?)`,
                                                      [toNullIfUndefined(numeroComprobante),
-                                                      idTipoMovimiento,
-                                                      fechaMovimiento,
+                                                      toNullIfUndefined(idTipoMovimiento),
+                                                      toNullIfUndefined(fechaMovimiento),
                                                       toNullIfUndefined(descripcion),
-                                                      monto,
-                                                      idPagoRecibo,
-                                                      estado]);
+                                                      toNullIfUndefined(monto),
+                                                      toNullIfUndefined(idPagoRecibo),
+                                                      toNullIfUndefined(estado)]);
       return resultado.insertId;
     } catch(error) {
       logger.error(`Error al registrar en caja:${error}`);
@@ -53,7 +53,7 @@ class CajaRepositorio {
                                           INNER JOIN
                                           TBL_RUBRO R
                                           ON R.ID_RUBRO = M.ID_RUBRO
-                                          WHERE R.TIPO_RUBRO = ?`, [tipoRubro]);
+                                          WHERE R.TIPO_RUBRO = ?`, [toNullIfUndefined(tipoRubro)]);
       return filas.map(fila => new CajaModelo({ idCaja: fila.ID_CAJA, 
                                                 numeroComprobante: fila.NUM_COMPROBANTE,
                                                 idTipoMovimiento: fila.ID_TIPO_MOV,

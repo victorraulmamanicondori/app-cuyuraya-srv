@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import PermisoModelo from '../modelos/PermisoModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class PermisoRepositorio {
 
@@ -29,7 +30,7 @@ class PermisoRepositorio {
       const [filas] = await conexion.execute(`SELECT P.* FROM TBL_PERMISO P 
                                           INNER JOIN TBL_ROL_PERMISO RP ON RP.ID_PERMISO = P.ID_PERMISO
                                           WHERE RP.ID_ROL = ? 
-                                          ORDER BY NOMBRE ASC`, [idRol]);
+                                          ORDER BY NOMBRE ASC`, [toNullIfUndefined(idRol)]);
       return filas.map(fila => new PermisoModelo({
                                       idPermiso: fila.ID_PERMISO,
                                       nombre: fila.NOMBRE,
@@ -58,7 +59,7 @@ class PermisoRepositorio {
                                             ON U.ID_USUARIO = UR.ID_USUARIO 
                                             WHERE U.DNI = ?
                                           ) 
-                                          ORDER BY NOMBRE ASC`, [dni]);
+                                          ORDER BY NOMBRE ASC`, [toNullIfUndefined(dni)]);
       return filas.map(fila => new PermisoModelo({
                                       idPermiso: fila.ID_PERMISO,
                                       nombre: fila.NOMBRE,
@@ -78,7 +79,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PERMISO WHERE ID_PERMISO = ?", [toNullIfUndefined(id)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new PermisoModelo({
@@ -104,8 +105,8 @@ class PermisoRepositorio {
       const [resultado] = await conexion.execute(`INSERT INTO TBL_PERMISO (NOMBRE,
                                                                    DESCRIPCION)
                                               VALUES (?, ?)`,
-                                                     [permiso.nombre,
-                                                      permiso.descripcion]);
+                                                     [toNullIfUndefined(permiso.nombre),
+                                                      toNullIfUndefined(permiso.descripcion)]);
       permiso.idPermiso = resultado.insertId;
       return permiso;
     } catch(error) {
@@ -123,9 +124,9 @@ class PermisoRepositorio {
                             SET NOMBRE = ?,
                                 DESCRIPCION = ?
                             WHERE ID_PERMISO = ?`,
-                                [permiso.nombre,
-                                 permiso.descripcion,
-                                 permiso.idPermiso]);
+                                [toNullIfUndefined(permiso.nombre),
+                                  toNullIfUndefined(permiso.descripcion),
+                                  toNullIfUndefined(permiso.idPermiso)]);
       return permiso;
     } catch(error) {
       console.log(error);
@@ -138,7 +139,7 @@ class PermisoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_PERMISO WHERE ID_PERMISO = ?", [id]);
+      await conexion.execute("DELETE FROM TBL_PERMISO WHERE ID_PERMISO = ?", [toNullIfUndefined(id)]);
     } catch(error) {
       console.log(error);
     } finally {

@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import ProvinciaModelo from '../modelos/ProvinciaModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class ProvinciaRepositorio {
 
@@ -7,7 +8,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [`${codigoDepartamento}%`]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", [toNullIfUndefined(codigoDepartamento)]);
       return filas.map(fila => new ProvinciaModelo({
                                         codigo: fila.CODIGO,
                                         nombre: fila.NOMBRE
@@ -23,7 +24,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_PROVINCIA WHERE CODIGO = ?", [toNullIfUndefined(codigoProvincia)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ProvinciaModelo({
@@ -45,7 +46,7 @@ class ProvinciaRepositorio {
       const { codigo, nombre } = provincia;
       conexion = await pool.getConnection();
       await conexion.execute(`INSERT INTO TBL_PROVINCIA (CODIGO, NOMBRE) VALUES (?, ?)`, 
-                                            [codigo, nombre]);
+                                            [toNullIfUndefined(codigo), toNullIfUndefined(nombre)]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -62,7 +63,7 @@ class ProvinciaRepositorio {
       await conexion.execute(`UPDATE TBL_PROVINCIA
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
-                                [nombre, codigo]);
+                                [toNullIfUndefined(nombre), toNullIfUndefined(codigo)]);
       return provincia;
     } catch(error) {
       console.log(error);
@@ -75,7 +76,7 @@ class ProvinciaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [codigoProvincia]);
+      await conexion.execute("DELETE FROM TBL_PROVINCIA WHERE CODIGO = ?", [toNullIfUndefined(codigoProvincia)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar provincia');

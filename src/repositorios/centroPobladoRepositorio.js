@@ -9,7 +9,7 @@ class CentroPobladoRepositorio {
     try {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
-        [`${codigoDistrito}%`]);
+        [toNullIfUndefined(codigoDistrito)]);
       return filas.map(fila => new CentroPobladoModelo({ codigo: fila.CODIGO, 
                                                          nombre: fila.NOMBRE,
                                                          area: fila.AREA }));
@@ -25,7 +25,7 @@ class CentroPobladoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [codigoCentroPoblado]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [toNullIfUndefined(codigoCentroPoblado)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new CentroPobladoModelo({ codigo: fila.CODIGO, 
@@ -47,7 +47,7 @@ class CentroPobladoRepositorio {
       const { codigo, nombre, area } = centroPoblado;
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`INSERT INTO TBL_CENTRO_POBLADO (CODIGO, NOMBRE, AREA) VALUES (?, ?, ?)`, 
-        [codigo, nombre, toNullIfUndefined(area)]);
+        [toNullIfUndefined(codigo), toNullIfUndefined(nombre), toNullIfUndefined(area)]);
       return centroPoblado;
     } catch(error) {
       console.log(error);
@@ -65,7 +65,7 @@ class CentroPobladoRepositorio {
       await conexion.execute(`UPDATE TBL_CENTRO_POBLADO
                             SET NOMBRE = ?, AREA = ?
                             WHERE CODIGO = ?`,
-                                [nombre, toNullIfUndefined(area), codigo]);
+                                [toNullIfUndefined(nombre), toNullIfUndefined(area), toNullIfUndefined(codigo)]);
       return centroPoblado;
     } catch(error) {
       console.log(error);
@@ -79,7 +79,7 @@ class CentroPobladoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [codigoCentroPoblado]);
+      await conexion.execute("DELETE FROM TBL_CENTRO_POBLADO WHERE CODIGO = ?", [toNullIfUndefined(codigoCentroPoblado)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar Centro Poblado');

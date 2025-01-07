@@ -250,70 +250,6 @@ class UsuarioControlador {
     }
   }
 
-  async imprimirReporteCargaMasiva(req, res) {
-    console.log('===================ERROR IMPRESION================');
-
-    const usuarios = req.body;
-
-    const doc = new PDFDocument({ margin: 50, layout: 'portrait' });
-
-    const fecha = new Date();
-    const dia = String(fecha.getDate()).padStart(2, '0');
-    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-    const anio = fecha.getFullYear();
-    const horas = String(fecha.getHours()).padStart(2, '0');
-    const minutos = String(fecha.getMinutes()).padStart(2, '0');
-    const segundos = String(fecha.getSeconds()).padStart(2, '0');
-
-    // Configurar la respuesta HTTP para la descarga
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader(
-        'Content-Disposition',
-        `attachment; filename=reporte_carga_usuarios_${dia}-${mes}-${anio}-${horas}_${minutos}_${segundos}.pdf`
-    );
-
-    doc.pipe(res);  // Debe llamarse antes de escribir contenido
-
-    const formattedDate = `${dia}/${mes}/${anio}`;
-    const formattedTime = `${horas}:${minutos}:${segundos}`;
-
-    // Título del documento
-    doc.font('Helvetica-Bold')
-       .fontSize(18)
-       .text('Reporte de carga masiva de usuarios', { align: 'center' })
-       .moveDown(0.5)
-       .fontSize(12)
-       .font('Helvetica')
-       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
-       .moveDown(1);
-
-    // Encabezados de tabla
-    const columnPositions = [50, 150]; // Columnas ajustadas
-    doc.font('Helvetica-Bold')
-       .fontSize(10)
-       .text('Fila', columnPositions[0], doc.y)
-       .text('Descripción', columnPositions[1], doc.y);
-    doc.moveDown(0.5)
-       .moveTo(50, doc.y).lineTo(550, doc.y).stroke();
-
-    let y = doc.y + 5;
-    usuarios.forEach((usuario) => {
-        if (y > 750) {
-            doc.addPage();
-            y = 50;
-        }
-
-        doc.font('Helvetica').fontSize(10)
-           .text(usuario.fila, columnPositions[0], y)
-           .text(usuario.errores?.length > 0
-                ? usuario.errores.join(', ')
-                : `Fila ${usuario.fila} se guardó correctamente`, columnPositions[1], y);
-        y += 20;
-    });
-
-    doc.end();  // Finaliza la escritura del documento
-  }
-
   crearPadronUsuarioPdf(req, res, usuarios, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
     const doc = new PDFDocument({ margin: 50, layout: 'landscape' });
 
@@ -323,43 +259,28 @@ class UsuarioControlador {
 
     // Obtener la fecha y hora actual
     const now = new Date();
-    const formattedDate = now.toLocaleDateString('es-PE', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-    });
-    const formattedTime = now.toLocaleTimeString('es-PE', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-    });
+    const formattedDate = now.toLocaleDateString('es-PE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const formattedTime = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
     // Título del documento
-    doc.font('Helvetica-Bold')
-       .fontSize(18)
-       .text('Padrón de Usuarios', { align: 'center' })
-       .font('Helvetica')
-       .fontSize(12)
-       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
-       .moveDown(1);
+    doc.font('Helvetica-Bold').fontSize(18).text('Padrón de Usuarios', { align: 'center' })
+       .font('Helvetica').fontSize(12).text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' }).moveDown(1);
 
     // Mostrar información del ubigeo
-    doc.font('Helvetica')
-       .fontSize(12)
+    doc.font('Helvetica').fontSize(12)
        .text(`Departamento: ${departamento?.nombre || ' '} (Código: ${departamento?.codigo || 'N/A'})`)
        .text(`Provincia: ${provincia?.nombre || ' '} (Código: ${provincia?.codigo || 'N/A'})`)
        .text(`Distrito: ${distrito?.nombre || ' '} (Código: ${distrito?.codigo || 'N/A'})`)
        .text(`Centro Poblado: ${centroPoblado?.nombre || ' '} (Código: ${centroPoblado?.codigo || 'N/A'})`)
        .text(`Comunidad Campesina: ${comunidadCampesina?.nombre || ' '} (Código: ${comunidadCampesina?.codigo || 'N/A'})`)
-       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`)
-       .moveDown(2);
+       .text(`Comunidad Nativa: ${comunidadNativa?.nombre || ' '} (Código: ${comunidadNativa?.codigo || 'N/A'})`).moveDown(2);
 
-    // Crear encabezado de la tabla
     const tableTop = doc.y;
-    const columnPositions = [50, 80, 160, 240, 300, 440, 490, 700]; // Posiciones de inicio para las columnas
+    const columnPositions = [50, 100, 200, 300, 400, 460, 540, 700]; // Ajuste según diseño
+    const maxYPosition = 500; // Límite razonable para evitar desbordamiento (ajustar según orientación)
 
-    doc.font('Helvetica-Bold')
-       .fontSize(10)
+    // Encabezado
+    doc.font('Helvetica-Bold').fontSize(10)
        .text('N°', columnPositions[0], tableTop)
        .text('Nombre', columnPositions[1], tableTop)
        .text('Paterno', columnPositions[2], tableTop)
@@ -369,32 +290,40 @@ class UsuarioControlador {
        .text('Dirección', columnPositions[6], tableTop)
        .text('Estado', columnPositions[7], tableTop);
 
-    // Línea separadora
     doc.moveTo(50, tableTop + 15).lineTo(740, tableTop + 15).stroke();
 
-    // Rellenar filas de la tabla
-    let y = tableTop + 20; // Posición inicial para las filas
+    let y = tableTop + 20;
     usuarios.forEach((usuario, index) => {
-        if (y > 750) { // Salto de página si el contenido excede
+        if (y > maxYPosition) {
             doc.addPage();
             y = 50;
+            // Repetir encabezado en cada nueva página
+            doc.font('Helvetica-Bold').fontSize(10)
+               .text('N°', columnPositions[0], y)
+               .text('Nombre', columnPositions[1], y)
+               .text('Paterno', columnPositions[2], y)
+               .text('Materno', columnPositions[3], y)
+               .text('DNI', columnPositions[4], y)
+               .text('Medidor', columnPositions[5], y)
+               .text('Dirección', columnPositions[6], y)
+               .text('Estado', columnPositions[7], y);
+            doc.moveTo(50, y + 15).lineTo(740, y + 15).stroke();
+            y += 20; // Ajuste después del encabezado
         }
 
-        doc.font('Helvetica')
-           .fontSize(10)
-           .text(index + 1, columnPositions[0], y) // Número
-           .text(usuario.nombres || ' ', columnPositions[1], y) // Nombre
-           .text(usuario.paterno || ' ', columnPositions[2], y) // Paterno
-           .text(usuario.materno || ' ', columnPositions[3], y) // Materno
-           .text(usuario.dni || ' ', columnPositions[4], y) // DNI
-           .text(usuario.codigoMedidor || ' ', columnPositions[6], y) // Codigo medidor
-           .text(usuario.direccion || ' ', columnPositions[7], y) // Dirección
-           .text(usuario.estado || ' ', columnPositions[9], y); // Estado
+        doc.font('Helvetica').fontSize(10)
+           .text(index + 1, columnPositions[0], y)
+           .text(usuario.nombres || ' ', columnPositions[1], y)
+           .text(usuario.paterno || ' ', columnPositions[2], y)
+           .text(usuario.materno || ' ', columnPositions[3], y)
+           .text(usuario.dni || ' ', columnPositions[4], y)
+           .text(usuario.codigoMedidor || ' ', columnPositions[5], y)
+           .text(usuario.direccion || ' ', columnPositions[6], y)
+           .text(usuario.estado || ' ', columnPositions[7], y);
 
-        y += 20; // Espaciado entre filas
+        y += 20;
     });
 
-    // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res);
     doc.end();
   }

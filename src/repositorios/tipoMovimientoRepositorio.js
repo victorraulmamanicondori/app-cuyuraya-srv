@@ -1,6 +1,7 @@
 import pool from '../config/db.js';
 import logger from '../config/logger.js';
 import TipoMovimientoModelo from '../modelos/TipoMovimientoModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class TipoMovimientoRepositorio {
 
@@ -8,7 +9,7 @@ class TipoMovimientoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_TIPO_MOVIMIENTO WHERE ID_RUBRO = ? AND ESTADO = ?", [idRubro, estado]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_TIPO_MOVIMIENTO WHERE ID_RUBRO = ? AND ESTADO = ?", [toNullIfUndefined(idRubro), toNullIfUndefined(estado)]);
       return filas.map(fila => new TipoMovimientoModelo({ idTipoMovimiento: fila.ID_TIPO_MOV,
                                                           concepto: fila.CONCEPTO,
                                                           idRubro: fila.ID_RUBRO,

@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import DepartamentoModelo from '../modelos/DepartamentoModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class DepartamentoRepositorio {
 
@@ -22,7 +23,7 @@ class DepartamentoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [toNullIfUndefined(codigo)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new DepartamentoModelo({ codigo: fila.CODIGO, 
@@ -42,7 +43,7 @@ class DepartamentoRepositorio {
     try {
       const { codigo, nombre } = departamento;
       conexion = await pool.getConnection();
-      await conexion.execute(`INSERT INTO TBL_DEPARTAMENTO (CODIGO, NOMBRE) VALUES (?, ?)`, [codigo, nombre]);
+      await conexion.execute(`INSERT INTO TBL_DEPARTAMENTO (CODIGO, NOMBRE) VALUES (?, ?)`, [toNullIfUndefined(codigo), toNullIfUndefined(nombre)]);
       return departamento;
     } catch(error) {
       console.log(error);
@@ -60,7 +61,7 @@ class DepartamentoRepositorio {
       await conexion.execute(`UPDATE TBL_DEPARTAMENTO
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
-                                [nombre, codigo]);
+                                [toNullIfUndefined(nombre), toNullIfUndefined(codigo)]);
       return departamento;
     } catch(error) {
       console.log(error);
@@ -74,7 +75,7 @@ class DepartamentoRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [codigo]);
+      await conexion.execute("DELETE FROM TBL_DEPARTAMENTO WHERE CODIGO = ?", [toNullIfUndefined(codigo)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar departamento');

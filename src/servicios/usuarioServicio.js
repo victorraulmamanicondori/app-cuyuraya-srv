@@ -187,7 +187,6 @@ class UsuarioServicio {
       if (!usuario.errores || usuario.errores.length === 0) {
         try {
           // Registramos o actualizamos usuarios
-          console.log(`DNI: ${dni}, HASH: ${LONGITUD_HASH}`);
 
           const hashedClave = await bcrypt.hash(dni, LONGITUD_HASH);
           const existeUsuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);

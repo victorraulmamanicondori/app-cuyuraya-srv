@@ -9,7 +9,7 @@ class ComunidadNativaRepositorio {
     try {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
-        [`${codigoDistrito}%`]);
+        [toNullIfUndefined(codigoDistrito)]);
       return filas.map(fila => new ComunidadNativaModelo({ codigo: fila.CODIGO, 
                                                             nombre: fila.NOMBRE,
                                                             familiaLinguistica: fila.FAM_LINGUISTICA,
@@ -26,7 +26,7 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [toNullIfUndefined(codigoComunidadNativa)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ComunidadNativaModelo({ codigo: fila.CODIGO, 
@@ -49,7 +49,7 @@ class ComunidadNativaRepositorio {
       const { codigo, nombre, familiaLinguistica, etnia } = comunidadNativa;
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`INSERT INTO TBL_COMUNIDAD_NATIVA (CODIGO, NOMBRE, FAM_LINGUISTICA, ETNIA) VALUES (?, ?, ?, ?)`, 
-        [codigo, nombre, toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia)]);
+        [toNullIfUndefined(codigo), toNullIfUndefined(nombre), toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia)]);
       return comunidadNativa;
     } catch(error) {
       console.log(error);
@@ -67,7 +67,7 @@ class ComunidadNativaRepositorio {
       await conexion.execute(`UPDATE TBL_COMUNIDAD_NATIVA
                             SET NOMBRE = ?, FAM_LINGUISTICA = ?, ETNIA = ?
                             WHERE CODIGO = ?`,
-                                [nombre, toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia), codigo]);
+                                [toNullIfUndefined(nombre), toNullIfUndefined(familiaLinguistica), toNullIfUndefined(etnia), toNullIfUndefined(codigo)]);
       return comunidadNativa;
     } catch(error) {
       console.log(error);
@@ -81,7 +81,7 @@ class ComunidadNativaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [codigoComunidadNativa]);
+      await conexion.execute("DELETE FROM TBL_COMUNIDAD_NATIVA WHERE CODIGO = ?", [toNullIfUndefined(codigoComunidadNativa)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar Comunidad Nativa');

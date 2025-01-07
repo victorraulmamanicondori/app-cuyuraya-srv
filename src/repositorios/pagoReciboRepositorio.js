@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import logger from '../config/logger.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class PagoReciboRepositorio {
 
@@ -14,12 +15,12 @@ class PagoReciboRepositorio {
                                                                     COMENTARIO,
                                                                     ESTADO)
                                               VALUES (?, ?, ?, ?, ?, ?)`,
-                                                     [fechaPago,
-                                                      montoPago,
-                                                      idLectura,
-                                                      numeroComprobante,
-                                                      comentario,
-                                                      estado]);
+                                                     [toNullIfUndefined(fechaPago),
+                                                      toNullIfUndefined(montoPago),
+                                                      toNullIfUndefined(idLectura),
+                                                      toNullIfUndefined(numeroComprobante),
+                                                      toNullIfUndefined(comentario),
+                                                      toNullIfUndefined(estado)]);
       return resultado.insertId;
     } catch(error) {
       logger.error(`Error al registrar pago de recibo:${error}`);

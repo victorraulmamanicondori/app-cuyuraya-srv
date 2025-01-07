@@ -2,6 +2,7 @@ import pool from '../config/db.js';
 import logger from '../config/logger.js';
 import {MedidorEstados} from '../constantes/estados.js';
 import MedidorModelo from '../modelos/MedidorModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class MedidorRepositorio {
 
@@ -9,7 +10,7 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ?", [codigoMedidor]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ?", [toNullIfUndefined(codigoMedidor)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new MedidorModelo({ 
@@ -33,7 +34,7 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_MEDIDOR = ?", [idMedidor]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_MEDIDOR = ?", [toNullIfUndefined(idMedidor)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new MedidorModelo({ 
@@ -57,7 +58,7 @@ class MedidorRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_USUARIO = ?", [idUsuario]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_MEDIDOR WHERE ID_USUARIO = ?", [toNullIfUndefined(idUsuario)]);
       if (filas.length > 0) {
         return filas.map(fila => new MedidorModelo({ 
                           idMedidor: fila.ID_MEDIDOR,
@@ -84,8 +85,8 @@ class MedidorRepositorio {
                                                                       ID_USUARIO,
                                                                       ESTADO)
                                               VALUES (?, ?, ?)`,
-                                                     [codigoMedidor,
-                                                      idUsuario,
+                                                     [toNullIfUndefined(codigoMedidor),
+                                                      toNullIfUndefined(idUsuario),
                                                       MedidorEstados.ASIGNADO]);
       const codigoAsignacion = resultado.insertId;
       return codigoAsignacion;
@@ -102,9 +103,9 @@ class MedidorRepositorio {
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`UPDATE TBL_MEDIDOR SET COD_MEDIDOR = ?, ID_USUARIO = ?
                                               WHERE ID_MEDIDOR = ?`,
-                                                     [codigoMedidor,
-                                                      idUsuario,
-                                                      idMedidor]);
+                                                     [toNullIfUndefined(codigoMedidor),
+                                                      toNullIfUndefined(idUsuario),
+                                                      toNullIfUndefined(idMedidor)]);
       const codigoAsignacion = idMedidor;
       return codigoAsignacion;
     } catch(error) {
@@ -120,7 +121,7 @@ class MedidorRepositorio {
     try {
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`DELETE FROM TBL_MEDIDOR WHERE COD_MEDIDOR = ? AND ID_USUARIO = ?`,
-               [codigoMedidor, idUsuario]);
+               [toNullIfUndefined(codigoMedidor), toNullIfUndefined(idUsuario)]);
       return resultado;
     } catch(error) {
       logger.error(`Error al desasignar medidor:${error}`);

@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import ComunidadCampesinaModelo from '../modelos/ComunidadCampesinaModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class ComunidadCampesinaRepositorio {
 
@@ -8,7 +9,7 @@ class ComunidadCampesinaRepositorio {
     try {
       conexion = await pool.getConnection();
       const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO LIKE ? ORDER BY NOMBRE ASC", 
-        [`${codigoDistrito}%`]);
+        [toNullIfUndefined(codigoDistrito)]);
       return filas.map(fila => new ComunidadCampesinaModelo({ codigo: fila.CODIGO, 
                                                               nombre: fila.NOMBRE }));
     } catch(error) {
@@ -23,7 +24,8 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", 
+        [toNullIfUndefined(codigoComunidadCampesina)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new ComunidadCampesinaModelo({ codigo: fila.CODIGO, 
@@ -44,7 +46,7 @@ class ComunidadCampesinaRepositorio {
       const { codigo, nombre } = comunidadCampesina;
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`INSERT INTO TBL_COMUNIDAD_CAMPESINA (CODIGO, NOMBRE) VALUES (?, ?)`, 
-        [codigo, nombre]);
+        [toNullIfUndefined(codigo), toNullIfUndefined(nombre)]);
       return comunidadCampesina;
     } catch(error) {
       console.log(error);
@@ -62,7 +64,7 @@ class ComunidadCampesinaRepositorio {
       await conexion.execute(`UPDATE TBL_COMUNIDAD_CAMPESINA
                             SET NOMBRE = ?
                             WHERE CODIGO = ?`,
-                                [nombre, codigo]);
+                                [toNullIfUndefined(nombre), toNullIfUndefined(codigo)]);
       return comunidadCampesina;
     } catch(error) {
       console.log(error);
@@ -76,7 +78,7 @@ class ComunidadCampesinaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [codigoComunidadCampesina]);
+      await conexion.execute("DELETE FROM TBL_COMUNIDAD_CAMPESINA WHERE CODIGO = ?", [toNullIfUndefined(codigoComunidadCampesina)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar Comunidad Campesina');
