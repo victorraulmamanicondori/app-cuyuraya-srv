@@ -1,6 +1,7 @@
 import pool from '../config/db.js';
 import logger from '../config/logger.js';
 import RubroModelo from '../modelos/RubroModelo.js';
+import { toNullIfUndefined } from '../constantes/util.js';
 
 class RubroRepositorio {
 
@@ -8,7 +9,8 @@ class RubroRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_RUBRO WHERE TIPO_RUBRO = ? AND ESTADO = ?", [tipoRubro, estado]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_RUBRO WHERE TIPO_RUBRO = ? AND ESTADO = ?", 
+        [toNullIfUndefined(tipoRubro), toNullIfUndefined(estado)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new RubroModelo({

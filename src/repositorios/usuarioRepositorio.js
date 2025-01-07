@@ -38,7 +38,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE DNI = ?", [dni]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE DNI = ?", [toNullIfUndefined(dni)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new UsuarioModelo({
@@ -204,7 +204,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("UPDATE TBL_USUARIO SET ESTADO = ? WHERE DNI = ?", [UsuarioEstados.ELIMINADO, dni]);
+      await conexion.execute("UPDATE TBL_USUARIO SET ESTADO = ? WHERE DNI = ?", [UsuarioEstados.ELIMINADO, toNullIfUndefined(dni)]);
     } catch(error) {
       logger.error(`Error al eliminar usuario por dni:${error}`);
     } finally {
@@ -231,7 +231,7 @@ class UsuarioRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE ID_USUARIO = ?", [idUsuario]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_USUARIO WHERE ID_USUARIO = ?", [toNullIfUndefined(idUsuario)]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new UsuarioModelo({

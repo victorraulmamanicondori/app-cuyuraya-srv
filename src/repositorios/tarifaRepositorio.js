@@ -33,7 +33,7 @@ class TarifaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      const [filas] = await conexion.execute("SELECT * FROM TBL_TARIFA WHERE COD_TARIFA = ? AND ESTADO = ?", [codigoTarifa, TarifaEstados.ACTIVO]);
+      const [filas] = await conexion.execute("SELECT * FROM TBL_TARIFA WHERE COD_TARIFA = ? AND ESTADO = ?", [toNullIfUndefined(codigoTarifa), TarifaEstados.ACTIVO]);
       if (filas.length > 0) {
         const fila = filas[0];
         return new TarifaModelo({
@@ -61,7 +61,13 @@ class TarifaRepositorio {
     try {
       const { codigoTarifa, descripcion, montoTarifa, m3Consumo, montoExtraPorM3 } = tarifa;
       conexion = await pool.getConnection();
-      await conexion.execute(`INSERT INTO TBL_TARIFA (COD_TARIFA, DESCRIPCION, MONTO_TARIFA, M3_CONSUMO, MONTO_EXTRA_POR_M3, ESTADO) VALUES (?, ?, ?, ?, ?, ?)`, [codigoTarifa, descripcion, montoTarifa, m3Consumo, montoExtraPorM3, TarifaEstados.ACTIVO]);
+      await conexion.execute(`INSERT INTO TBL_TARIFA (COD_TARIFA, DESCRIPCION, MONTO_TARIFA, M3_CONSUMO, MONTO_EXTRA_POR_M3, ESTADO) VALUES (?, ?, ?, ?, ?, ?)`, 
+        [toNullIfUndefined(codigoTarifa), 
+          toNullIfUndefined(descripcion), 
+          toNullIfUndefined(montoTarifa), 
+          toNullIfUndefined(m3Consumo), 
+          toNullIfUndefined(montoExtraPorM3), 
+          TarifaEstados.ACTIVO]);
       return tarifa;
     } catch(error) {
       console.log(error);
@@ -81,7 +87,10 @@ class TarifaRepositorio {
                               MONTO_TARIFA = ?,
                               ESTADO = ?
                             WHERE COD_TARIFA = ?`,
-                                [descripcion, montoTarifa, estado, codigoTarifa]);
+                                [toNullIfUndefined(descripcion), 
+                                  toNullIfUndefined(montoTarifa), 
+                                  toNullIfUndefined(estado) ? toNullIfUndefined(estado) : TarifaEstados.ACTIVO, 
+                                  toNullIfUndefined(codigoTarifa)]);
       return tarifa;
     } catch(error) {
       console.log(error);
@@ -95,7 +104,8 @@ class TarifaRepositorio {
     let conexion;
     try {
       conexion = await pool.getConnection();
-      await conexion.execute("DELETE FROM TBL_TARIFA WHERE COD_TARIFA = ?", [codigoTarifa]);
+      await conexion.execute("DELETE FROM TBL_TARIFA WHERE COD_TARIFA = ?", 
+        [toNullIfUndefined(codigoTarifa)]);
     } catch(error) {
       console.log(error);
       throw new Error('Error al tratar de eliminar tarifa');

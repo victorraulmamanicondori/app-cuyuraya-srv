@@ -187,7 +187,6 @@ class UsuarioServicio {
       if (!usuario.errores || usuario.errores.length === 0) {
         try {
           // Registramos o actualizamos usuarios
-          console.log(`DNI: ${dni}, HASH: ${LONGITUD_HASH}`);
 
           const hashedClave = await bcrypt.hash(dni, LONGITUD_HASH);
           const existeUsuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
@@ -224,8 +223,11 @@ class UsuarioServicio {
           usuario.dni = dni; // dni validato
           usuario.codigoMedidor = codigoMedidor; // codigo medidor validado
         } catch(error) {
+          logger.error(`Error en la fila ${usuario.fila}, datos validos pero no se pudo guardar, intente nuevamente.`);
           usuario.errores.push(`Error en la fila ${usuario.fila}, datos validos pero no se pudo guardar, intente nuevamente.`);
         }
+      } else {
+        logger.error(usuario.errores);
       }
     });
 
