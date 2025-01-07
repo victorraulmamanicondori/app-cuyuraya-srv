@@ -1,5 +1,3 @@
-import DetectorApi from '../api/Detector.api.js';
-import lecturaRepositorio from '../repositorios/lecturaRepositorio.js';
 import medidorRepositorio from '../repositorios/medidorRepositorio.js';
 import usuarioRepositorio from '../repositorios/usuarioRepositorio.js';
 

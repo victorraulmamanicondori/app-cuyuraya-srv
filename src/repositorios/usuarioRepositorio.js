@@ -18,8 +18,6 @@ class UsuarioRepositorio {
                                     materno: fila.MATERNO,
                                     dni: fila.DNI,
                                     direccion: fila.DIRECCION,
-                                    numeroContrato: fila.NUM_CONTRATO,
-                                    telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
                                     codigoDistrito: fila.COD_DISTRITO,
@@ -50,8 +48,6 @@ class UsuarioRepositorio {
                                     materno: fila.MATERNO,
                                     dni: fila.DNI,
                                     direccion: fila.DIRECCION,
-                                    numeroContrato: fila.NUM_CONTRATO,
-                                    telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
                                     codigoDistrito: fila.COD_DISTRITO,
@@ -96,9 +92,7 @@ class UsuarioRepositorio {
                                             U.MATERNO,
                                             U.DNI, 
                                             M.COD_MEDIDOR,
-                                            U.NUM_CONTRATO,
                                             U.DIRECCION,
-                                            U.TELEFONO,
                                             U.ESTADO
                                           FROM TBL_USUARIO AS U 
                                           LEFT JOIN TBL_MEDIDOR AS M 
@@ -121,9 +115,7 @@ class UsuarioRepositorio {
                                       paterno: fila.PATERNO,
                                       materno: fila.MATERNO,
                                       dni: fila.DNI,
-                                      numeroContrato: fila.NUM_CONTRATO,
                                       direccion: fila.DIRECCION,
-                                      telefono: fila.TELEFONO,
                                       estado: fila.ESTADO
                                   });
           usuario.codigoMedidor = fila.COD_MEDIDOR;
@@ -139,7 +131,7 @@ class UsuarioRepositorio {
   async crearUsuario(usuario) {
     let conexion;
     try {
-      logger.info(`Registradon usuario: ${JSON.stringify(usuario)}`);
+      // logger.info(`Registradon usuario: ${JSON.stringify(usuario)}`);
 
       conexion = await pool.getConnection();
       const [resultado] = await conexion.execute(`INSERT INTO TBL_USUARIO (NOMBRES,
@@ -147,22 +139,18 @@ class UsuarioRepositorio {
                                                                        MATERNO,
                                                                        DNI,
                                                                        DIRECCION,
-                                                                       NUM_CONTRATO,
-                                                                       TELEFONO,
                                                                        CLAVE,
                                                                        COD_DISTRITO,
                                                                        COD_CENTRO_POBLADO,
                                                                        COD_COMUNIDAD_CAMPESINA,
                                                                        COD_COMUNIDAD_NATIVA,
                                                                        ESTADO)
-                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                                                      [toNullIfUndefined(usuario.nombres),
                                                       toNullIfUndefined(usuario.paterno),
                                                       toNullIfUndefined(usuario.materno),
                                                       toNullIfUndefined(usuario.dni),
                                                       toNullIfUndefined(usuario.direccion),
-                                                      toNullIfUndefined(usuario.numeroContrato),
-                                                      toNullIfUndefined(usuario.telefono),
                                                       toNullIfUndefined(usuario.clave),
                                                       toNullIfUndefined(usuario.codigoDistrito),
                                                       toNullIfUndefined(usuario.codigoCentroPoblado),
@@ -188,8 +176,6 @@ class UsuarioRepositorio {
                                 PATERNO = ?,
                                 MATERNO = ?,
                                 DIRECCION = ?,
-                                NUM_CONTRATO = ?,
-                                TELEFONO = ?,
                                 COD_DISTRITO = ?,
                                 COD_CENTRO_POBLADO = ?,
                                 COD_COMUNIDAD_CAMPESINA = ?,
@@ -200,8 +186,6 @@ class UsuarioRepositorio {
                                  toNullIfUndefined(usuario.paterno),
                                  toNullIfUndefined(usuario.materno),
                                  toNullIfUndefined(usuario.direccion),
-                                 toNullIfUndefined(usuario.numeroContrato),
-                                 toNullIfUndefined(usuario.telefono),
                                  toNullIfUndefined(usuario.codigoDistrito),
                                  toNullIfUndefined(usuario.codigoCentroPoblado),
                                  toNullIfUndefined(usuario.codigoComunidadCampesina),
@@ -257,8 +241,6 @@ class UsuarioRepositorio {
                                     materno: fila.MATERNO,
                                     dni: fila.DNI,
                                     direccion: fila.DIRECCION,
-                                    numeroContrato: fila.NUM_CONTRATO,
-                                    telefono: fila.TELEFONO,
                                     clave: fila.CLAVE,
                                     estado: fila.ESTADO,
                                     codigoDistrito: fila.COD_DISTRITO,

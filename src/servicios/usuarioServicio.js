@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import logger from '../config/logger.js';
+import { LONGITUD_HASH } from '../constantes/constantes.js';
 import {UsuarioEstados} from '../constantes/estados.js';
 import centroPobladoRepositorio from '../repositorios/centroPobladoRepositorio.js';
 import comunidadCampesinaRepositorio from '../repositorios/comunidadCampesinaRepositorio.js';
@@ -84,7 +85,7 @@ class UsuarioServicio {
 
   async crearUsuario(usuario) {
     const { clave } = usuario;
-    const hashedClave = await bcrypt.hash(clave, 10);
+    const hashedClave = await bcrypt.hash(clave, LONGITUD_HASH);
     return usuarioRepositorio.crearUsuario({ ...usuario, clave: hashedClave, estado: UsuarioEstados.ACTIVO });
   }
 
@@ -107,7 +108,7 @@ class UsuarioServicio {
       throw new Error("No se puede resetear contraseña del usuario");
     }
 
-    const hashedClave = await bcrypt.hash(dni, 10);
+    const hashedClave = await bcrypt.hash(dni, LONGITUD_HASH);
     usuarioRepositorio.resetearContrasenaPorDni({ dni, clave: hashedClave });
   }
 
@@ -118,6 +119,117 @@ class UsuarioServicio {
 
   async obtenerUsuarioPorId(idUsuario) {
     return usuarioRepositorio.obtenerUsuarioPorId(idUsuario);
+  }
+
+  async cargaMasivoUsuarios(usuarios) {
+    if (!Array.isArray(usuarios)) {
+      throw new Error('El cuerpo de la solicitud debe ser un array de usuarios.');
+    }
+
+    usuarios.forEach(async usuario => {
+      // Extraer y validar campos específicos
+      const dni = usuario.dni ? `${usuario.dni}`.replace(/[Oo]/g, '0').trim() : null; // Corregir posibles letra 'O' u 'o' en lugar de '0' cero
+      const nombres = usuario.nombres ? `${usuario.nombres}`.trim() : null;
+      const paterno = usuario.paterno ? `${usuario.paterno}`.trim() : null;
+      const materno = usuario.materno ? `${usuario.materno}`.trim() : null;
+      const direccion = usuario.direccion ? `${usuario.direccion}`.trim() : null;
+      const codigoMedidor = usuario.codigoMedidor ? `${usuario.codigoMedidor}`.trim() : null;
+      const codigoDistrito = usuario.codigoDistrito ? `${usuario.codigoDistrito}`.trim() : null;
+      const codigoCentroPoblado = usuario.codigoCentroPoblado ? `${usuario.codigoCentroPoblado}`.trim() : null;
+      const codigoComunidadCampesina = usuario.codigoComunidadCampesina ? `${usuario.codigoComunidadCampesina}`.trim() : null;
+      const codigoComunidadNativa = usuario.codigoComunidadNativa ? `${usuario.codigoComunidadNativa}`.trim() : null;
+
+      // Validar campos obligatorios
+      if (dni && nombres && paterno && materno && direccion && codigoMedidor && codigoDistrito) {
+          if (/^\d{8}$/.test(dni) === false) {
+            usuario.errores.push(`Error en ${usuario.fila}, DNI invalido, debe ser 8 digitos`);
+          }
+          if (nombres.length > 255) {
+            usuario.errores.push(`Error en ${usuario.fila}, longitud maximo para nombres es 255 letras`);
+          }
+          if (paterno.length > 255) {
+            usuario.errores.push(`Error en ${usuario.fila}, longitud maximo para paterno es 255 letras`);
+          }
+          if (materno.length > 255) {
+            usuario.errores.push(`Error en ${usuario.fila}, longitud maximo para materno es 255 letras`);
+          }
+          if (direccion.length > 255) {
+            usuario.errores.push(`Error en ${usuario.fila}, longitud maximo para direccion es 255 letras`);
+          }
+      } else {
+        let mensajeError = [];
+
+        if (!dni) {
+          mensajeError.push('dni');
+        }
+        if (!nombres) {
+          mensajeError.push('nombres');
+        }
+        if (!paterno) {
+          mensajeError.push('paterno');
+        }
+        if (!materno) {
+          mensajeError.push('materno');
+        }
+        if (!direccion) {
+          mensajeError.push('direccion');
+        }
+        if (!codigoMedidor) {
+          mensajeError.push('cod. medidor o nro. predio');
+        }
+        if (!codigoDistrito) {
+          mensajeError.push('cod. distrito');
+        }
+
+        usuario.errores.push(`Datos incompletos para fila ${usuario.fila}, verifique: ${mensajeError.join(',')}`);
+      }
+
+      if (!usuario.errores || usuario.errores.length === 0) {
+        try {
+          // Registramos o actualizamos usuarios
+          console.log(`DNI: ${dni}, HASH: ${LONGITUD_HASH}`);
+
+          const hashedClave = await bcrypt.hash(dni, LONGITUD_HASH);
+          const existeUsuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
+          if (!existeUsuario) {
+            const idUsuario = await usuarioRepositorio.crearUsuario({ 
+              dni,
+              nombres,
+              paterno,
+              materno,
+              direccion,
+              codigoDistrito,
+              codigoCentroPoblado,
+              codigoComunidadCampesina,
+              codigoComunidadNativa,
+              clave: hashedClave,
+              estado: UsuarioEstados.ACTIVO
+            });
+            usuario.id = idUsuario;
+          } else {
+            const usuarioActualizado = await usuarioRepositorio.actualizarUsuario({ 
+              dni,
+              nombres,
+              paterno,
+              materno,
+              direccion,
+              codigoDistrito,
+              codigoCentroPoblado,
+              codigoComunidadCampesina,
+              codigoComunidadNativa,
+              estado: UsuarioEstados.ACTIVO
+            });
+            usuario.id = existeUsuario.idUsuario;
+          }
+          usuario.dni = dni; // dni validato
+          usuario.codigoMedidor = codigoMedidor; // codigo medidor validado
+        } catch(error) {
+          usuario.errores.push(`Error en la fila ${usuario.fila}, datos validos pero no se pudo guardar, intente nuevamente.`);
+        }
+      }
+    });
+
+    return usuarios;
   }
 }
 
