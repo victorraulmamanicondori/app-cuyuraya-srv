@@ -1,8 +1,6 @@
 class UsuarioModelo {
-  constructor({ idUsuario, nombres, paterno, materno, dni, direccion, 
-    numeroContrato, telefono, clave, idUbigeo, estado,
-    codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa,
-    numeroIntentos, fecCreacion, fecActualizacion,
+  constructor({ idUsuario, nombres, paterno, materno, dni, direccion, clave, idUbigeo, estado,
+    codigoDistrito, codigoCentroPoblado, codigoComunidadCampesina, codigoComunidadNativa, fecCreacion, fecActualizacion,
     }) {
     
     this.idUsuario = idUsuario;
@@ -11,8 +9,6 @@ class UsuarioModelo {
     this.materno = materno;
     this.dni = dni;
     this.direccion = direccion;
-    this.numeroContrato = numeroContrato;
-    this.telefono = telefono;
     this.clave = clave;
     this.idUbigeo = idUbigeo;
     this.estado = estado;
@@ -20,7 +16,6 @@ class UsuarioModelo {
     this.codigoCentroPoblado = codigoCentroPoblado;
     this.codigoComunidadCampesina = codigoComunidadCampesina;
     this.codigoComunidadNativa = codigoComunidadNativa;
-    this.numeroIntentos = numeroIntentos;
     this.fecCreacion = fecCreacion;
     this.fecActualizacion = fecActualizacion;
   }

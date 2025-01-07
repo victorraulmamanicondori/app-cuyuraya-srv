@@ -24,5 +24,9 @@ router.get('/id/:idUsuario', verificarToken, usuarioControlador.obtenerUsuarioPo
 
 router.get('/padron/:codigoDistrito', usuarioControlador.imprimirPadronUsuarios);
 
+router.post('/carga-masiva', verificarToken, usuarioControlador.cargaMasivoUsuarios);
+
+router.post('/reporte-carga-masiva', usuarioControlador.imprimirReporteCargaMasiva);
+
 export default router;
 

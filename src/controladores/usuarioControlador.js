@@ -8,6 +8,7 @@ import distritoServicio from '../servicios/distritoServicio.js';
 import centroPobladoServicio from '../servicios/centroPobladoServicio.js';
 import comunidadCampesinaServicio from '../servicios/comunidadCampesinaServicio.js';
 import comunidadNativaServicio from '../servicios/comunidadNativaServicio.js';
+import medidorServicio from '../servicios/medidorServicio.js';
 
 class UsuarioControlador {
 
@@ -16,7 +17,6 @@ class UsuarioControlador {
     this.crearPadronUsuarioPdf = this.crearPadronUsuarioPdf.bind(this);
     this.crearPdfNoExistePadronUsuario = this.crearPdfNoExistePadronUsuario.bind(this);
     this.crearPdfErrorPadronUsuario = this.crearPdfErrorPadronUsuario.bind(this);
-    this.maskData = this.maskData.bind(this);
   }
 
   async listarUsuarios(req, res) {
@@ -222,6 +222,98 @@ class UsuarioControlador {
     }
   }
 
+  async cargaMasivoUsuarios(req, res) {
+    try {
+      const usuarios = await usuarioServicio.cargaMasivoUsuarios(req.body);
+
+      usuarios.forEach(async usuario => {
+        try {
+          if (usuario.codigoMedidor && usuario.dni) {
+            const resultadoAsignacionMedidor = await medidorServicio.asignarMedidor(usuario.codigoMedidor, usuario.dni);
+          }
+        } catch(error) {
+          usuario.errores.push(`Error en fila ${usuario.fila}: ${error.message}`);
+        }
+      });
+
+      res.status(200).json({
+        codigo: 200,
+        mensaje: "",
+        datos: usuarios
+      });
+    } catch(error) {
+      logger.error(error);
+      res.status(500).json({
+        codigo: 500,
+        mensaje: error.message
+      });
+    }
+  }
+
+  async imprimirReporteCargaMasiva(req, res) {
+    console.log('===================ERROR IMPRESION================');
+
+    const usuarios = req.body;
+
+    const doc = new PDFDocument({ margin: 50, layout: 'portrait' });
+
+    const fecha = new Date();
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const horas = String(fecha.getHours()).padStart(2, '0');
+    const minutos = String(fecha.getMinutes()).padStart(2, '0');
+    const segundos = String(fecha.getSeconds()).padStart(2, '0');
+
+    // Configurar la respuesta HTTP para la descarga
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+        'Content-Disposition',
+        `attachment; filename=reporte_carga_usuarios_${dia}-${mes}-${anio}-${horas}_${minutos}_${segundos}.pdf`
+    );
+
+    doc.pipe(res);  // Debe llamarse antes de escribir contenido
+
+    const formattedDate = `${dia}/${mes}/${anio}`;
+    const formattedTime = `${horas}:${minutos}:${segundos}`;
+
+    // Título del documento
+    doc.font('Helvetica-Bold')
+       .fontSize(18)
+       .text('Reporte de carga masiva de usuarios', { align: 'center' })
+       .moveDown(0.5)
+       .fontSize(12)
+       .font('Helvetica')
+       .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
+       .moveDown(1);
+
+    // Encabezados de tabla
+    const columnPositions = [50, 150]; // Columnas ajustadas
+    doc.font('Helvetica-Bold')
+       .fontSize(10)
+       .text('Fila', columnPositions[0], doc.y)
+       .text('Descripción', columnPositions[1], doc.y);
+    doc.moveDown(0.5)
+       .moveTo(50, doc.y).lineTo(550, doc.y).stroke();
+
+    let y = doc.y + 5;
+    usuarios.forEach((usuario) => {
+        if (y > 750) {
+            doc.addPage();
+            y = 50;
+        }
+
+        doc.font('Helvetica').fontSize(10)
+           .text(usuario.fila, columnPositions[0], y)
+           .text(usuario.errores?.length > 0
+                ? usuario.errores.join(', ')
+                : `Fila ${usuario.fila} se guardó correctamente`, columnPositions[1], y);
+        y += 20;
+    });
+
+    doc.end();  // Finaliza la escritura del documento
+  }
+
   crearPadronUsuarioPdf(req, res, usuarios, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
     const doc = new PDFDocument({ margin: 50, layout: 'landscape' });
 
@@ -264,7 +356,7 @@ class UsuarioControlador {
 
     // Crear encabezado de la tabla
     const tableTop = doc.y;
-    const columnPositions = [50, 80, 160, 240, 300, 360, 440, 490, 640, 700]; // Posiciones de inicio para las columnas
+    const columnPositions = [50, 80, 160, 240, 300, 440, 490, 700]; // Posiciones de inicio para las columnas
 
     doc.font('Helvetica-Bold')
        .fontSize(10)
@@ -273,11 +365,9 @@ class UsuarioControlador {
        .text('Paterno', columnPositions[2], tableTop)
        .text('Materno', columnPositions[3], tableTop)
        .text('DNI', columnPositions[4], tableTop)
-       .text('N° Contrato', columnPositions[5], tableTop)
-       .text('Medidor', columnPositions[6], tableTop)
-       .text('Dirección', columnPositions[7], tableTop)
-       .text('Teléfono', columnPositions[8], tableTop)
-       .text('Estado', columnPositions[9], tableTop);
+       .text('Medidor', columnPositions[5], tableTop)
+       .text('Dirección', columnPositions[6], tableTop)
+       .text('Estado', columnPositions[7], tableTop);
 
     // Línea separadora
     doc.moveTo(50, tableTop + 15).lineTo(740, tableTop + 15).stroke();
@@ -290,21 +380,15 @@ class UsuarioControlador {
             y = 50;
         }
 
-        const maskedDni = this.maskData(usuario.dni);
-        const maskedTelefono = this.maskData(usuario.telefono);
-        const maskedDireccion = this.maskData(usuario.direccion, 4);
-
         doc.font('Helvetica')
            .fontSize(10)
            .text(index + 1, columnPositions[0], y) // Número
            .text(usuario.nombres || ' ', columnPositions[1], y) // Nombre
            .text(usuario.paterno || ' ', columnPositions[2], y) // Paterno
            .text(usuario.materno || ' ', columnPositions[3], y) // Materno
-           .text(maskedDni || ' ', columnPositions[4], y) // DNI
-           .text(usuario.numeroContrato || ' ', columnPositions[5], y) // Numero contrato
+           .text(usuario.dni || ' ', columnPositions[4], y) // DNI
            .text(usuario.codigoMedidor || ' ', columnPositions[6], y) // Codigo medidor
-           .text(maskedDireccion || ' ', columnPositions[7], y) // Dirección
-           .text(maskedTelefono || ' ', columnPositions[8], y) // Teléfono
+           .text(usuario.direccion || ' ', columnPositions[7], y) // Dirección
            .text(usuario.estado || ' ', columnPositions[9], y); // Estado
 
         y += 20; // Espaciado entre filas
@@ -313,13 +397,6 @@ class UsuarioControlador {
     // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res);
     doc.end();
-  }
-
-  maskData(value, visibleDigits = 3) {
-    if (!value) return ' '; // Manejo para datos nulos o indefinidos
-    const strValue = value.toString(); // Convertir a cadena si es un número
-    if (strValue.length <= visibleDigits) return '*'.repeat(strValue.length); // Si la longitud es menor o igual al visibleDigits
-    return strValue.slice(0, -visibleDigits) + '*'.repeat(visibleDigits);
   }
 
   crearPdfNoExistePadronUsuario(req, res, departamento, provincia, distrito, centroPoblado, comunidadCampesina, comunidadNativa) {
