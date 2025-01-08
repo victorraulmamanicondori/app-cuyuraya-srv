@@ -1,0 +1,66 @@
+### NOTICE
+
+**Sistema de Gestión de Agua Potable Rural**  
+**Derechos de Autor (c) Victor Raul Mamani Condori, 2025**
+
+Este proyecto incluye software de código abierto desarrollado por terceros, utilizado bajo sus respectivas licencias. A continuación se proporciona una lista de las librerías utilizadas y enlaces a sus licencias.
+
+---
+
+### Librerías y Licencias
+
+1. **bcrypt**  
+   - **Descripción**: Librería para el hashing de contraseñas.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+2. **body-parser**  
+   - **Descripción**: Middleware para analizar cuerpos de solicitudes HTTP.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+3. **cors**  
+   - **Descripción**: Middleware para habilitar CORS (Cross-Origin Resource Sharing).  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+4. **dotenv**  
+   - **Descripción**: Cargar variables de entorno desde un archivo `.env`.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+5. **express**  
+   - **Descripción**: Framework web para Node.js.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+6. **jsonwebtoken**  
+   - **Descripción**: Librería para la creación y verificación de tokens JWT.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+7. **knex**  
+   - **Descripción**: SQL query builder para Node.js.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+8. **mysql2**  
+   - **Descripción**: Conector MySQL para Node.js.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+9. **pdfkit**  
+   - **Descripción**: Generación de documentos PDF.  
+   - **Licencia**: MIT License  
+   - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+10. **winston**  
+    - **Descripción**: Logger para Node.js.  
+    - **Licencia**: MIT License  
+    - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+11. **winston-daily-rotate-file**  
+    - **Descripción**: Rotación de archivos de logs con Winston.  
+    - **Licencia**: MIT License  
+    - **Enlace**: [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+

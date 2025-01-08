@@ -16,7 +16,7 @@
     "cuyuraya"
   ],
   "author": "Victor Raul Mamani Condori",
-  "license": "ISC",
+  "license": "./LICENSE",
   "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
