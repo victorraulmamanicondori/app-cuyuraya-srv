@@ -12,4 +12,4 @@ if %errorlevel% neq 0 (
 cd /d "%~dp0"
 
 :: Ejecutar el comando npm run start en una nueva ventana de cmd
-start cmd /k "npm run start"
+start cmd /k "npm run setup:hosts"

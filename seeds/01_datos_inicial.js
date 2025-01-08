@@ -13,6 +13,16 @@ import knex from 'knex';
 
 // /seeds/initial_data.js
 export const seed = async function (knex) {
+    // Verificar si los datos ya existen
+    const existingRows = await knex('TBL_DEPARTAMENTO').count('CODIGO as count');
+    if (existingRows[0].count > 0) {
+        console.log('Datos iniciales ya insertados. Seed no ejecutado.');
+        return;
+    }
+
+    // Proceder con la limpieza e inserción si no hay datos
+    console.log('Ejecutando seed de datos iniciales...');
+
     // Limpiar datos existentes
     await knex('TBL_DEPARTAMENTO').del();
     await knex('TBL_PROVINCIA').del();
