@@ -4,11 +4,12 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "npm run setup:hosts && node src/app.js",
     "test": "mocha --timeout 10000 'test/**/*.test.js'",
     "create:db": "node createDatabase.js",
     "setup:db": "npm run create:db && npx knex migrate:latest && npx knex seed:run",
-    "rollback:db": "npx knex migrate:rollback"
+    "rollback:db": "npx knex migrate:rollback",
+    "setup:hosts": "node configureHosts.js"
   },
   "keywords": [
     "Gestion de agua",
@@ -24,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "ip": "^2.0.1",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "mysql2": "^3.12.0",
