@@ -136,6 +136,7 @@ class UsuarioServicio {
 
     for(const usuario of usuarios) {
       // Extraer y validar campos específicos
+      usuario.errores = []; // Creamos array para almacenar errores
       const dni = usuario.dni ? `${usuario.dni}`.replace(/[Oo]/g, '0').trim() : null; // Corregir posibles letra 'O' u 'o' en lugar de '0' cero
       const nombres = usuario.nombres ? `${usuario.nombres}`.trim() : null;
       const paterno = usuario.paterno ? `${usuario.paterno}`.trim() : null;
@@ -199,7 +200,7 @@ class UsuarioServicio {
           const hashedClave = await bcrypt.hash(dni, LONGITUD_HASH);
           const existeUsuario = await usuarioRepositorio.obtenerUsuarioPorDni(dni);
           if (!existeUsuario) {
-            const idUsuario = await usuarioRepositorio.crearUsuario({ 
+            const usuarioRegistrado = await usuarioRepositorio.crearUsuario({ 
               dni,
               nombres,
               paterno,
@@ -212,7 +213,7 @@ class UsuarioServicio {
               clave: hashedClave,
               estado: UsuarioEstados.ACTIVO
             });
-            usuario.id = idUsuario;
+            usuario.id = usuarioRegistrado.id;
           } else {
             const usuarioActualizado = await usuarioRepositorio.actualizarUsuario({ 
               dni,

@@ -241,6 +241,9 @@ class UsuarioControlador {
           }
         } catch(error) {
           logger.error(`Error en fila ${usuario.fila}: ${error.message}`);
+          if (!usuario.errores) {
+            usuario.errores = [];
+          }
           usuario.errores.push(`Error en fila ${usuario.fila}: ${error.message}`);
         }
       }
@@ -351,7 +354,7 @@ class UsuarioControlador {
         doc.font('Helvetica')
            .fontSize(10)
            .text(index + 1, columnPositions[0], y)
-           .text(usuario.nombres || ' ', columnPositions[1], y, { width: columnWidths.nombre, ellipsis: true })
+           .text(usuario.nombres || ' ', columnPositions[1], y, { width: columnWidths.nombre, lineBreak: true })
            .text(usuario.paterno || ' ', columnPositions[2], y, { width: columnWidths.paterno })
            .text(usuario.materno || ' ', columnPositions[3], y, { width: columnWidths.materno })
            .text(usuario.dni || ' ', columnPositions[4], y, { width: columnWidths.dni })
@@ -359,7 +362,18 @@ class UsuarioControlador {
            .text(usuario.direccion || ' ', columnPositions[6], y, { width: columnWidths.direccion })
            .text(usuario.estado || ' ', columnPositions[7], y, { width: columnWidths.estado });
 
-        y += 20;
+        // Ajustar y dinámicamente para evitar superposición, considerando la altura del nombre y direccion
+        const nombresHeight = doc.heightOfString(usuario?.nombres || ' ', {
+          width: columnWidths.nombre
+        });
+
+        const direccionHeight = doc.heightOfString(usuario?.direccion || ' ', {
+          width: columnWidths.direccion
+        });
+
+        const maximaAlturaNombresDireccion = Math.max(nombresHeight, direccionHeight);
+
+        y += Math.max(20, maximaAlturaNombresDireccion + 5); // 5 es un espaciado extra para separación
     });
 
     doc.pipe(res);
