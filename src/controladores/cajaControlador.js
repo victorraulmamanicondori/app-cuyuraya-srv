@@ -58,11 +58,9 @@ class CajaControlador {
   crearReportePorRubroPdf(req, res, tipoRubro, resultadoCaja) {
     const doc = new PDFDocument({ margin: 50 });
 
-    // Configurar la respuesta HTTP para la descarga
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=reporte_${tipoRubro}.pdf`);
 
-    // Obtener la fecha y hora actual
     const now = new Date();
     const formattedDate = now.toLocaleDateString('es-PE', {
         year: 'numeric',
@@ -75,7 +73,6 @@ class CajaControlador {
         second: '2-digit',
     });
 
-    // Título del documento
     doc.font('Helvetica-Bold')
        .fontSize(18)
        .text(`Reporte de ${tipoRubro}S de Caja`, { align: 'center' })
@@ -83,44 +80,68 @@ class CajaControlador {
        .fontSize(12)
        .text(`Fecha y hora: ${formattedDate} ${formattedTime}`, { align: 'center' })
        .moveDown(1);
-
-    // Crear encabezado de la tabla
+    
     const tableTop = doc.y;
-    const columnPositions = [50, 100, 180, 300, 360, 520]; // Posiciones de inicio para las columnas
+    const columnPositions = [50, 120, 300, 370, 520];
+    const columnWidths = {
+      mes: 60,
+      descripcion: 170,
+      fecha: 70,
+      concepto: 140,
+      monto: 100
+    };
 
     doc.font('Helvetica-Bold')
        .fontSize(10)
-       .text('Mes', columnPositions[0], tableTop)
-       .text('Fecha Corte', columnPositions[1], tableTop)
-       .text('N° Comprobante', columnPositions[2], tableTop)
-       .text('Fecha', columnPositions[3], tableTop)
-       .text('Concepto', columnPositions[4], tableTop)
-       .text('Monto', columnPositions[5], tableTop);
+       .text('Mes', columnPositions[0], tableTop, { width: columnWidths.mes })
+       .text('Descripción', columnPositions[1], tableTop, { width: columnWidths.descripcion })
+       .text('Fecha', columnPositions[2], tableTop, { width: columnWidths.fecha })
+       .text('Concepto', columnPositions[3], tableTop, { width: columnWidths.concepto })
+       .text('Monto', columnPositions[4], tableTop, { width: columnWidths.monto });
 
-    // Línea separadora
     doc.moveTo(50, tableTop + 15).lineTo(580, tableTop + 15).stroke();
 
-    // Rellenar filas de la tabla
-    let y = tableTop + 20; // Posición inicial para las filas
-    resultadoCaja.forEach((resultadoCaja, index) => {
-        if (y > 750) { // Salto de página si el contenido excede
+    let y = tableTop + 20;
+    const maxYPosition = 690;
+
+    resultadoCaja.forEach((resultadoCaja) => {
+        if (y > maxYPosition) {
             doc.addPage();
             y = 50;
-        }
+            
+            doc.font('Helvetica-Bold')
+            .fontSize(10)
+            .text('Mes', columnPositions[0], y, { width: columnWidths.mes })
+            .text('Descripción', columnPositions[1], y, { width: columnWidths.descripcion })
+            .text('Fecha', columnPositions[2], y, { width: columnWidths.fecha })
+            .text('Concepto', columnPositions[3], y, { width: columnWidths.concepto })
+            .text('Monto', columnPositions[4], y, { width: columnWidths.monto });
+            doc.moveTo(50, y + 15).lineTo(580, y + 15).stroke();
+            // Ajustar y dinámicamente para evitar superposición, considerando la altura de la descripción
+            const descripcionHeightNextPage = doc.heightOfString(resultadoCaja?.descripcion || ' ', {
+              width: columnWidths.descripcion
+            });
+            y += Math.max(20, descripcionHeightNextPage + 5); // 5 es un espaciado extra para separación
+          }
 
-        doc.font('Helvetica')
-           .fontSize(10)
-           .text(resultadoCaja?.obtenerMes() || ' ', columnPositions[0], y) // Nombre
-           .text(resultadoCaja?.fechaCorte || ' ', columnPositions[1], y) // Paterno
-           .text(resultadoCaja?.descripcion || ' ', columnPositions[2], y) // Materno
-           .text(resultadoCaja?.fechaMovimiento || ' ', columnPositions[3], y) // DNI
-           .text(resultadoCaja?.concepto || ' ', columnPositions[4], y) // Numero contrato
-           .text(resultadoCaja?.monto || ' ', columnPositions[5], y); // Estado
+        doc.font('Helvetica').fontSize(10);
 
-        y += 20; // Espaciado entre filas
+        doc.text(resultadoCaja?.obtenerMes() || ' ', columnPositions[0], y, { width: columnWidths.mes });
+        doc.text(resultadoCaja?.descripcion || ' ', columnPositions[1], y, {
+            width: columnWidths.descripcion,
+            lineBreak: true
+        });
+        doc.text(resultadoCaja?.fechaMovimiento || ' ', columnPositions[2], y, { width: columnWidths.fecha });
+        doc.text(resultadoCaja?.concepto || ' ', columnPositions[3], y, { width: columnWidths.concepto });
+        doc.text(resultadoCaja?.monto || ' ', columnPositions[4], y, { width: columnWidths.monto });
+
+        // Ajustar y dinámicamente para evitar superposición, considerando la altura de la descripción
+        const descripcionHeight = doc.heightOfString(resultadoCaja?.descripcion || ' ', {
+            width: columnWidths.descripcion
+        });
+        y += Math.max(20, descripcionHeight + 5); // 5 es un espaciado extra para separación
     });
 
-    // Finalizar el documento y enviarlo como respuesta
     doc.pipe(res);
     doc.end();
   }

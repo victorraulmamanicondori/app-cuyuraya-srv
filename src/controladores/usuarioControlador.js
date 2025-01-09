@@ -234,7 +234,7 @@ class UsuarioControlador {
     try {
       const usuarios = await usuarioServicio.cargaMasivoUsuarios(req.body);
 
-      usuarios.forEach(async usuario => {
+      for (const usuario of usuarios) {
         try {
           if (usuario.codigoMedidor && usuario.dni) {
             const resultadoAsignacionMedidor = await medidorServicio.asignarMedidor(usuario.codigoMedidor, usuario.dni);
@@ -243,14 +243,17 @@ class UsuarioControlador {
           logger.error(`Error en fila ${usuario.fila}: ${error.message}`);
           usuario.errores.push(`Error en fila ${usuario.fila}: ${error.message}`);
         }
-      });
+      }
 
       res.status(200).json({
         codigo: 200,
         mensaje: "",
         datos: usuarios
       });
+      console.log('Completo exitosamente');
+      console.log(JSON.stringify(usuarios));
     } catch(error) {
+      console.log('Entro catch error');
       logger.error(error);
       res.status(500).json({
         codigo: 500,

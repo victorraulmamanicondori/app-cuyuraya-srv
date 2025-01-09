@@ -134,7 +134,7 @@ class UsuarioServicio {
       throw new Error('El cuerpo de la solicitud debe ser un array de usuarios.');
     }
 
-    usuarios.forEach(async usuario => {
+    for(const usuario of usuarios) {
       // Extraer y validar campos específicos
       const dni = usuario.dni ? `${usuario.dni}`.replace(/[Oo]/g, '0').trim() : null; // Corregir posibles letra 'O' u 'o' en lugar de '0' cero
       const nombres = usuario.nombres ? `${usuario.nombres}`.trim() : null;
@@ -237,7 +237,7 @@ class UsuarioServicio {
       } else {
         logger.error(usuario.errores);
       }
-    });
+    }
 
     return usuarios;
   }
