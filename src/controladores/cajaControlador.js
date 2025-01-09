@@ -117,11 +117,7 @@ class CajaControlador {
             .text('Concepto', columnPositions[3], y, { width: columnWidths.concepto })
             .text('Monto', columnPositions[4], y, { width: columnWidths.monto });
             doc.moveTo(50, y + 15).lineTo(580, y + 15).stroke();
-            // Ajustar y dinámicamente para evitar superposición, considerando la altura de la descripción
-            const descripcionHeightNextPage = doc.heightOfString(resultadoCaja?.descripcion || ' ', {
-              width: columnWidths.descripcion
-            });
-            y += Math.max(20, descripcionHeightNextPage + 5); // 5 es un espaciado extra para separación
+            y += 20;
           }
 
         doc.font('Helvetica').fontSize(10);
