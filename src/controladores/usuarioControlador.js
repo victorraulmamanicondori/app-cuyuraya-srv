@@ -250,8 +250,6 @@ class UsuarioControlador {
         mensaje: "",
         datos: usuarios
       });
-      console.log('Completo exitosamente');
-      console.log(JSON.stringify(usuarios));
     } catch(error) {
       console.log('Entro catch error');
       logger.error(error);
